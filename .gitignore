@@ -1,0 +1,7 @@
+node_modules/
+resources/
+release/
+artifacts/
+electron-runtime.zip
+electron-shasums.txt
+build-tools/
