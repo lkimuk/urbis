@@ -1,8 +1,8 @@
 export const PALETTES = Object.freeze({
   atlas: Object.freeze({
     fill: '#b8cdbe',
-    border: '#526d60',
-    text: '#526d60',
+    border: '#7b9186',
+    text: '#3f584c',
     background: '#faf9f5',
   }),
   clay: Object.freeze({
@@ -48,8 +48,11 @@ export function normalizeSettings(value) {
   if ([1, 2, 3, 4].includes(value.scale)) result.scale = value.scale;
   if (Number.isFinite(value.width) && value.width >= 0.3 && value.width <= 3)
     result.width = value.width;
-  if (value.palette === '' || Object.hasOwn(PALETTES, value.palette))
+  if (value.palette === '' || Object.hasOwn(PALETTES, value.palette)) {
     result.palette = value.palette;
+    // Named presets follow the current palette; custom colors use an empty palette.
+    if (value.palette) Object.assign(result, PALETTES[value.palette]);
+  }
   if (typeof value.regionId === 'string') result.regionId = value.regionId;
   else if (typeof value.cityId === 'string') result.regionId = value.cityId;
   if (typeof value.title === 'string') result.title = value.title.slice(0, 40);
