@@ -34,15 +34,35 @@ npm run dist
 npm run smoke
 ```
 
-在独立的临时 Electron 会话中检查 392 个条目、784 份地图的读取和解码、搜索和筛选、两种模式、连续切换、IPC 参数校验以及 PNG 透明通道。截图、导出图片和检查报告写入 `desktop/artifacts/`，不会修改日常使用的偏好。验证模式不弹出保存窗口。
+在独立的临时 Electron 配置目录中，通过页面控件和公开 API 检查 392 个条目、784 份地图、搜索筛选、两种模式、连续切换、IPC 错误码、PNG 透明通道、样式重置和页面重载后的偏好恢复。启动脚本在进程退出后清理测试目录；测试不修改日常偏好，不弹出保存窗口。截图、导出图片和报告写入 `desktop/artifacts/`。
+
+`npm test` 运行 Node 内置测试框架的业务和服务回归测试；`npm run format:check` 检查源码格式；`npm run format` 统一格式。
 
 ## 资源与结构
 
-- `electron/`：窗口、隔离桥接、受限地图读取接口、系统保存窗口。
-- `renderer/`：HTML/CSS/JS 界面，使用 ECharts 6 Canvas 渲染。
+- `electron/main.cjs`：应用生命周期、窗口、安全配置和服务装配。
+- `electron/map-repository.cjs`：索引及地图文件读取，隐藏文件路径。
+- `electron/image-export.cjs`：PNG 校验、尺寸限制、文件名清理和保存；保存路径由主进程提供。
+- `electron/ipc.cjs` / `preload.cjs`：调用方验证和隔离桥接，使用普通数据结果跨进程传递错误。
+- `renderer/app.js`：控件事件、加载状态和页面协调，不直接调用 ECharts。
+- `renderer/map-view.mjs`：地图渲染、视野、标签避让和独立画布导出，不依赖控件 ID 或 IPC。
+- `renderer/settings.mjs` / `catalog.mjs`：设置校验与存储、城市筛选、请求去重和过期请求处理，可在 Node 中独立测试。
+- `renderer/desktop-api.mjs`：页面 API 适配器，将桥接结果恢复为 Promise 返回值或带错误码的异常。
 - `scripts/prepare-assets.cjs`：从仓库根目录 `registry.json`、`structure.json` 和 `js/` 生成地图库，复制本地 ECharts 及许可证。所有启动、验证、打包命令都会先运行此脚本。
 - `resources/`：自动生成的离线资源，不提交到 Git；打包后包含在应用内部。
 
 渲染进程关闭 Node.js 集成，启用隔离与沙盒，通过白名单 IPC 获取地图、保存 PNG。禁止页面导航、新窗口和权限请求；页面不请求远程脚本、字体或服务。
+
+页面通过 `createAtlasClient(window.atlas)` 获取三个 Promise 操作：
+
+| 操作                               | 输入                                      | 返回                                                          |
+| ---------------------------------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `getCities()`                      | 无                                        | 城市描述数组（含 id、名称、地区、搜索字段和地图分区名称）     |
+| `getMap({ cityId, variant })`      | variant 为 `districts` 或 `outline`       | GeoJSON，可能使用 ECharts 压缩坐标编码                        |
+| `saveImage({ dataURL, filename })` | PNG data URL 和建议文件名，不接受文件路径 | `{ canceled: true }` 或 `{ canceled: false, filePath, size }` |
+
+失败时抛出含 `code`、`message` 的异常。错误码包括 `MAP_NOT_FOUND`、`MAP_UNAVAILABLE`、`INVALID_IMAGE`、`IMAGE_TOO_LARGE`、`EXPORT_BUSY`、`SAVE_FAILED`、`UNTRUSTED_CALLER` 和 `INTERNAL_ERROR`。桥接层传输 `{ ok, value/error }` 普通数据；错误对象在页面中创建，避免 Electron 丢失自定义错误属性。
+
+地图数据仅按需加载，同一请求复用进行中的 Promise，失败可重试，过期结果不覆盖新选择。标题随当前城市一起保存；“重置”恢复外观，保留地图模式、导出选项及视野。应用使用单实例窗口；地图视图在页面卸载时释放观察器和 ECharts 实例。
 
 地图沿用本仓库的历史行政区划，并非最新区划库。程序中的“区县”数量代表地图要素数量；个别地图要素包含特殊地区。可在界面“关于地图数据”查看说明。地图数据按仓库 MIT 许可证使用；Apache ECharts 按 Apache-2.0 使用，许可证随资源打包。
