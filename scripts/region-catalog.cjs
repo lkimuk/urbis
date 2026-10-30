@@ -68,6 +68,7 @@ function appendRegions(cities, source, output) {
   }
   const read = (filename) => JSON.parse(fs.readFileSync(path.join(source, filename), 'utf8'));
   const china = read('china.json');
+  const corrections = [];
   const country = {
     id: '100000',
     name: '全国',
@@ -89,7 +90,29 @@ function appendRegions(cities, source, output) {
   const unmatched = [];
   for (const feature of china.features) {
     const { id, name } = feature.properties;
-    const data = read(id + '.json');
+    const original = read(id + '.json');
+    // Upstream 540000.json contains an empty duplicate 山南市 placeholder.
+    // Preserve the source snapshot; exclude only a provably empty duplicate at build time.
+    const features = original.features.filter((feature) => {
+      if (feature.geometry?.coordinates?.length) return true;
+      const replacement = original.features.some(
+        (other) =>
+          other !== feature &&
+          other.properties?.name === feature.properties?.name &&
+          other.geometry?.coordinates?.length,
+      );
+      if (!replacement)
+        throw new Error('Empty region geometry: ' + name + '/' + feature.properties?.name);
+      corrections.push({
+        province: name,
+        feature: feature.properties.name,
+        action: 'omit empty duplicate placeholder',
+      });
+      return false;
+    });
+    const data = { ...original, features };
+    if (new Set(features.map((feature) => feature.properties?.name)).size !== features.length)
+      throw new Error('Duplicate province feature name: ' + name);
     const province = {
       id,
       name,
@@ -145,7 +168,7 @@ function appendRegions(cities, source, output) {
   }
   fs.writeFileSync(
     path.join(output, 'region-links-report.json'),
-    JSON.stringify({ unmatched }, null, 2),
+    JSON.stringify({ unmatched, corrections }, null, 2),
   );
   return [...regions, ...cities];
 }

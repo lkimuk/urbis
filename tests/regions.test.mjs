@@ -9,7 +9,7 @@ const require = createRequire(import.meta.url);
 const { appendRegions } = require('../scripts/region-catalog.cjs');
 const root = fileURLToPath(new URL('../../', import.meta.url));
 
-test('offline snapshot has complete hierarchy, valid geometry, and fails on changed source bytes', () => {
+test('offline snapshot has complete hierarchy, renderable bounds, and fails on changed source bytes', () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-regions-'));
   try {
     const source = path.join(temp, 'source');
@@ -55,6 +55,16 @@ test('offline snapshot has complete hierarchy, valid geometry, and fails on chan
       report.unmatched.map((entry) => entry.feature),
       ['中国属钓鱼岛'],
     );
+    assert.deepEqual(report.corrections, [
+      { province: '西藏', feature: '山南市', action: 'omit empty duplicate placeholder' },
+    ]);
+    const tibet = JSON.parse(fs.readFileSync(path.join(temp, 'maps/540000-districts.json')));
+    assert.equal(tibet.features.length, 7);
+    assert.equal(
+      tibet.features.filter((feature) => feature.properties.name === '山南市').length,
+      1,
+    );
+    assert.equal(byId.get('540000').children.filter((child) => child.name === '山南市').length, 1);
     fs.appendFileSync(path.join(source, 'china.json'), ' ');
     assert.throws(() => appendRegions(cities, source, temp), /integrity mismatch/);
   } finally {
