@@ -1,7 +1,7 @@
 {
   "name": "urbis",
   "productName": "江城子",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "离线城市地图与制图工作台",
   "author": "Urbis contributors",
@@ -42,8 +42,8 @@
     ],
     "win": {
       "target": "nsis",
-      "signAndEditExecutable": false,
-      "executableName": "Urbis"
+      "executableName": "Urbis",
+      "signExecutable": false
     },
     "nsis": {
       "oneClick": false,
