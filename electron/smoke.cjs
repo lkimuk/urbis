@@ -242,7 +242,7 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
   const textStyles = await js(
     '(()=>{const o=echarts.getInstanceByDom(document.getElementById("map")).getOption();return [o.title[0].textStyle.color,o.geo[0].label.color,o.geo[0].emphasis.label.color,o.geo[0].select.label.color];})()',
   );
-  assert.deepEqual(textStyles, Array(4).fill('#526d60'));
+  assert.deepEqual(textStyles, Array(4).fill('#3f584c'));
   await screenshot('independent-text.png');
   await input('text-color', '#ff0000');
   assert.equal(
