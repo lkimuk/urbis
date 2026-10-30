@@ -1,6 +1,6 @@
 {
   "name": "city-atlas-desktop",
-  "productName": "城市图志",
+  "productName": "江城子",
   "version": "0.1.0",
   "private": true,
   "description": "离线城市地图与制图工作台",
@@ -49,7 +49,7 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "shortcutName": "城市图志",
+      "shortcutName": "江城子",
       "artifactName": "CityAtlas-Setup-${version}.${ext}"
     }
   }

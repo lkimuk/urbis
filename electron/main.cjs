@@ -24,6 +24,9 @@ if (smoke) {
     fsSync.mkdtempSync(path.join(os.tmpdir(), 'city-atlas-smoke-'));
   app.setPath('userData', testProfile);
   app.setPath('sessionData', testProfile);
+} else {
+  // Keep the existing profile when the display name changes.
+  app.setPath('userData', path.join(app.getPath('appData'), '城市图志'));
 }
 
 async function finishSmoke(code) {
@@ -37,7 +40,7 @@ function createWindow() {
     height: 960,
     minWidth: 1080,
     minHeight: 720,
-    title: '城市图志',
+    title: '江城子',
     backgroundColor: '#f3f3f3',
     show: false,
     webPreferences: {
@@ -125,7 +128,7 @@ start().catch(async (error) => {
   console.error(error);
   if (smoke) await finishSmoke(1);
   else {
-    dialog.showErrorBox('城市图志启动失败', error.message);
+    dialog.showErrorBox('江城子启动失败', error.message);
     app.exit(1);
   }
 });
