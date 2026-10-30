@@ -7,14 +7,14 @@ export const PALETTES = Object.freeze({
   }),
   clay: Object.freeze({
     fill: '#d7b399',
-    border: '#8a5a42',
-    text: '#8a5a42',
+    border: '#ab8872',
+    text: '#704832',
     background: '#fbf6ef',
   }),
   ink: Object.freeze({
     fill: '#b6c5d3',
-    border: '#435c75',
-    text: '#435c75',
+    border: '#7c90a3',
+    text: '#344d65',
     background: '#f4f6f8',
   }),
 });
