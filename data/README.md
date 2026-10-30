@@ -18,7 +18,7 @@
 
 应用仅使用天地图，共 3,293 个条目、6,586 个模式及地图文件，没有数据源切换。台湾有来源文件中的 20 个市县面，澳门为整体；缺少的细分区不以其他来源补齐。
 
-客户端旧快照和旧地图构建、导入、提取脚本已移除；仓库根 `js/` 原图库不参与客户端构建。旧库缺陷记录仅作为历史记录保留在 [历史审计](AUDIT.md)。
+客户端旧快照和旧地图构建、导入、提取脚本已移除；本项目不依赖原仓库的 `js/` 图库。旧库缺陷记录仅作为历史记录保留在 [历史审计](AUDIT.md)。
 
 ## 坐标与使用说明
 
@@ -31,7 +31,7 @@
 更新时，从官方入口下载完整的省、市、县文件，先运行只读 GIS 审计，再分别按原始字节保存为 `provinces.geojson`、`cities.geojson`、`counties.geojson`，更新 manifest 的哈希及来源日期。不要将旧 manifest 哈希用于新文件，也不要把下载日期当作全部区划日期。
 
 ```powershell
-# 在 desktop 目录执行；Shapely 2.x 仅为维护依赖
+# 在项目根目录执行；Shapely 2.x 仅为维护依赖
 python scripts/audit-tianditu.py data/tianditu --output artifacts/tianditu-verification.json
 npm run audit:maps
 python scripts/audit-generated.py resources --output artifacts/tianditu-generated.json

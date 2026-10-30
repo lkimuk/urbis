@@ -1,4 +1,4 @@
-# 江城子 · Electron 客户端
+# Urbis · 江城子
 
 离线地图工作台。仅使用天地图数据，包含全国、34 个省级、368 个城市层及 2,890 个区县层地图，共 3,293 个条目、6,586 个地图模式及文件。支持全国 → 省 → 市 → 区县点击导航和面包屑返回，中文、拼音、拼音首字母搜索，层级与地区筛选、行政区地图与纯轮廓切换、拖动缩放、名称与标题设置、三套配色、自定义颜色及线宽、1–4 倍 PNG 导出和透明背景。地图和样式偏好会保存在本机。
 
@@ -9,7 +9,8 @@
 需要 Node.js 22.12 或更新版本，以及 Windows 10/11。首次安装依赖需要联网，运行和查看地图无需联网。
 
 ```powershell
-cd desktop
+git clone https://github.com/lkimuk/urbis.git
+cd urbis
 npm ci
 npm start
 ```
@@ -26,7 +27,7 @@ npm run pack
 npm run dist
 ```
 
-输出在 `desktop/release/`。应用目录中的 `CityAtlas.exe` 依赖同目录文件；安装包文件名为 `CityAtlas-Setup-0.1.0.exe`。当前版本未配置代码签名。数据使用及对外分发须遵守来源条款，见 [数据说明](data/README.md)。
+输出在 `release/`。应用目录中的 `Urbis.exe` 依赖同目录文件；安装包文件名为 `Urbis-Setup-0.1.0.exe`。当前版本未配置代码签名。数据使用及对外分发须遵守来源条款，见 [数据说明](data/README.md)。
 
 若本机已在 `build-tools/nsis-bundle/` 准备并校验 NSIS 工具，可在 PowerShell 中设置 `ELECTRON_BUILDER_NSIS_DIR` 和 `ELECTRON_BUILDER_NSIS_RESOURCES_DIR` 为该目录的绝对路径，再执行 `npm run dist`，避免重复下载打包工具。
 
@@ -37,7 +38,7 @@ npm run smoke
 npm run audit:maps
 ```
 
-在独立的临时 Electron 配置目录中，通过页面控件和公开 API 检查 3,293 个条目、6,586 个地图模式、全国到省市区县的真实鼠标点击与面包屑返回、直辖市及港澳台湾、境界线及 PNG 导出、零网络请求、搜索筛选、两种模式、IPC 错误码、PNG 透明通道、样式重置和旧 ID 迁移后的偏好恢复。启动脚本在进程退出后清理测试目录；测试不修改日常偏好，不弹出保存窗口。截图、导出图片和报告写入 `desktop/artifacts/`。
+在独立的临时 Electron 配置目录中，通过页面控件和公开 API 检查 3,293 个条目、6,586 个地图模式、全国到省市区县的真实鼠标点击与面包屑返回、直辖市及港澳台湾、境界线及 PNG 导出、零网络请求、搜索筛选、两种模式、IPC 错误码、PNG 透明通道、样式重置和旧 ID 迁移后的偏好恢复。启动脚本在进程退出后清理测试目录；测试不修改日常偏好，不弹出保存窗口。截图、导出图片和报告写入 `artifacts/`。
 
 `npm test` 运行 Node 内置测试框架的业务和服务回归测试；`npm run format:check` 检查源码格式；`npm run format` 统一格式。
 
@@ -72,3 +73,9 @@ npm run audit:maps
 地图数据仅按需加载，同一请求复用进行中的 Promise，失败可重试，过期结果不覆盖新选择。标题随当前城市一起保存；“重置”恢复外观，保留地图模式、导出选项及视野。应用使用单实例窗口；地图视图在页面卸载时释放观察器和 ECharts 实例。
 
 主库使用 data/tianditu/ 中固定的原始快照，每次资源生成校验 SHA-256，保持 EPSG:4490 坐标声明；两种模式共享同源分区及境界线。旧 ID 迁移仅依赖 data/legacy-aliases.json 名称映射，不构建或打包旧地图。MIT 适用于相应代码，不代表地图数据授权。程序中的分区数量代表地图要素数量，页面更新时间不代表统一行政区划基准日。详见 [数据来源与维护说明](data/README.md)。
+
+## 项目来源与许可
+
+Urbis 从 [echarts-china-cities-js 的客户端目录](https://github.com/lkimuk/echarts-china-cities-js/tree/19986e7/desktop)独立，保留客户端提交历史。开发和构建不依赖原仓库。代码使用 [MIT 许可证](LICENSE)，地图数据须遵守[独立来源条款](data/README.md)。
+
+为兼容已安装版本，安装器 appId、本机配置目录及设置存储键沿用原标识；窗口及快捷方式显示“江城子”，程序及安装包使用 Urbis。

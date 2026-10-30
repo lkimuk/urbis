@@ -61,6 +61,6 @@ ECharts 6.0.0 parseGeoJSON 对 34 + 375 + 2,890 个面全部解析成功，包�
 
 需要 Python 3.10+、Shapely 2.x。从仓库根目录运行：
 
-    python desktop/scripts/audit-tianditu.py "C:/Users/ligx/Downloads/data" --output desktop/artifacts/tianditu-verification.json
+    python scripts/audit-tianditu.py "data/tianditu" --output artifacts/tianditu-verification.json
 
 脚本以只读方式检查输入，输出逐文件哈希、覆盖、几何问题、编码归组及全部父子范围比较。无效几何或集合运算失败会报错，不自动修复。结构问题、缺失／多重父级、范围差异超过 1%、重叠超过 0.1% 时返回失败。此阈值只用于异常筛查，不能作为行政边界准确性证明。Shapely 为维护核验依赖，不是客户端运行依赖。
