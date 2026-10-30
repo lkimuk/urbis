@@ -5,6 +5,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
     devicePixelRatio: window.devicePixelRatio,
   });
   const regions = new Map();
+  const boundaries = new Map();
   let model;
   let layoutFrame;
 
@@ -12,7 +13,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
     if (!model || model.settings.variant !== 'districts' || !model.settings.labels) return;
     const occupied = [];
     const data = regions.get(model.key).map((region) => {
-      const [x, y] = chart.convertToPixel({ seriesIndex: 0 }, region.getCenter());
+      const [x, y] = chart.convertToPixel({ geoIndex: 0 }, region.getCenter());
       const width = Array.from(region.name).length * 11 + 8;
       const box = { left: x - width / 2, right: x + width / 2, top: y - 9, bottom: y + 9 };
       const show = !occupied.some(
@@ -25,11 +26,11 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
       if (show) occupied.push(box);
       return { name: region.name, label: { show } };
     });
-    chart.setOption({ series: [{ id: 'region', data }] });
+    chart.setOption({ geo: { regions: data } });
   }
 
   function render({ region, key, settings }, reset = false) {
-    const previous = reset ? null : chart.getOption()?.series?.[0];
+    const previous = reset ? null : chart.getOption()?.geo?.[0];
     model = { region, key, settings };
     chart.setOption(
       {
@@ -71,47 +72,59 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           borderColor: '#c3cdbb',
           textStyle: { color: '#314b39', fontSize: 12 },
         },
-        series: [
-          {
-            id: 'region',
-            type: 'map',
-            map: key,
-            roam: true,
-            selectedMode: 'single',
-            scaleLimit: { min: 0.5, max: 12 },
-            zoom: previous?.zoom || 1,
-            ...(previous?.center ? { center: previous.center } : {}),
-            left: '10%',
-            right: '10%',
-            top: settings.showTitle ? 125 : '10%',
-            bottom: '10%',
+        geo: {
+          id: 'atlas-geo',
+          map: key,
+          roam: true,
+          selectedMode: 'single',
+          scaleLimit: { min: 0.5, max: 12 },
+          zoom: previous?.zoom || 1,
+          ...(previous?.center ? { center: previous.center } : {}),
+          left: '10%',
+          right: '10%',
+          top: settings.showTitle ? 125 : '10%',
+          bottom: '10%',
+          label: {
+            show: settings.labels && settings.variant === 'districts',
+            color: settings.border,
+            fontSize: 11,
+            fontFamily: 'Microsoft YaHei',
+          },
+          itemStyle: {
+            areaColor: settings.fill,
+            borderColor: settings.border,
+            borderWidth: settings.width,
+          },
+          emphasis: {
             label: {
-              show: settings.labels && settings.variant === 'districts',
+              show: settings.variant === 'districts' && settings.labels,
               color: settings.border,
-              fontSize: 11,
-              fontFamily: 'Microsoft YaHei',
             },
+            itemStyle: { areaColor: settings.fill, shadowBlur: 8, shadowColor: '#29463833' },
+          },
+          select: {
+            label: { color: settings.border },
             itemStyle: {
               areaColor: settings.fill,
+              borderWidth: settings.width + 1.4,
               borderColor: settings.border,
-              borderWidth: settings.width,
             },
-            emphasis: {
-              label: {
-                show: settings.variant === 'districts' && settings.labels,
-                color: settings.border,
-              },
-              itemStyle: { areaColor: settings.fill, shadowBlur: 8, shadowColor: '#29463833' },
-            },
-            select: {
-              label: { color: settings.border },
-              itemStyle: {
-                areaColor: settings.fill,
-                borderWidth: settings.width + 1.4,
-                borderColor: settings.border,
-              },
-            },
-            data: [],
+          },
+          regions: [],
+        },
+        series: [
+          { id: 'region', type: 'map', map: key, geoIndex: 0, data: [], selectedMode: false },
+          {
+            id: 'boundary-lines',
+            type: 'lines',
+            coordinateSystem: 'geo',
+            geoIndex: 0,
+            polyline: true,
+            silent: true,
+            z: 5,
+            animation: false,
+            lineStyle: { color: settings.border, width: settings.width, opacity: 1 },
+            data: (boundaries.get(key) || []).map((coords) => ({ coords })),
           },
         ],
       },
@@ -139,8 +152,16 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
   return {
     show({ region, key, geoJSON, settings }) {
       if (!regions.has(key)) {
-        echarts.registerMap(key, geoJSON);
-        const parsed = echarts.parseGeoJSON(geoJSON);
+        // ECharts receives only administrative polygons; supplemental lines share its geo transform.
+        const polygons = {
+          ...geoJSON,
+          features: geoJSON.features.filter((feature) =>
+            ['Polygon', 'MultiPolygon'].includes(feature.geometry.type),
+          ),
+        };
+        echarts.registerMap(key, polygons);
+        const parsed = echarts.parseGeoJSON(polygons);
+        boundaries.set(key, geoJSON.boundaryLines || []);
         parsed.sort((a, b) => {
           const ar = a.getBoundingRect();
           const br = b.getBoundingRect();
@@ -158,8 +179,8 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
     },
     zoom(factor) {
       if (!model) return;
-      const zoom = Math.max(0.5, Math.min(12, chart.getOption().series[0].zoom * factor));
-      chart.setOption({ series: [{ id: 'region', zoom }] });
+      const zoom = Math.max(0.5, Math.min(12, chart.getOption().geo[0].zoom * factor));
+      chart.setOption({ geo: { zoom } });
       layoutLabels();
     },
     dimensions(scale) {
@@ -181,6 +202,11 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
       try {
         exportChart = echarts.init(canvas, null, { renderer: 'canvas', devicePixelRatio: 1 });
         const option = chart.getOption();
+        option.geo.forEach((geo) => {
+          geo.selectedMap = {};
+          geo.selectedMode = false;
+          geo.silent = true;
+        });
         option.tooltip = { show: false };
         for (const series of option.series) {
           series.selectedMap = {};

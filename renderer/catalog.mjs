@@ -1,15 +1,31 @@
 const normalize = (value) => value.trim().toLowerCase().replaceAll('台', '臺').replaceAll(' ', '');
 
-export function filterRegions(regions, { query = '', province = '', level = '' } = {}) {
+export function filterRegions(
+  regions,
+  { query = '', province = '', level = '', dataset = '' } = {},
+) {
   const needle = normalize(query);
   return regions.filter(
     (region) =>
       (!level || region.level === level) &&
+      (!dataset || region.dataset === dataset) &&
       (!province || region.province === province) &&
       (!needle ||
-        [region.name, region.province, region.city || '', region.pinyin, region.initials].some(
-          (value) => normalize(value).includes(needle),
-        )),
+        [
+          region.name,
+          region.province,
+          region.city || '',
+          region.pinyin || '',
+          region.initials || '',
+        ].some((value) => normalize(value).includes(needle))),
+  );
+}
+
+export function resolveRegion(regions, id) {
+  return (
+    regions.find((region) => region.id === id) ||
+    regions.find((region) => region.dataset !== 'legacy' && region.aliases?.includes(id)) ||
+    regions.find((region) => region.level === 'country')
   );
 }
 

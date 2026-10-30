@@ -4,6 +4,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const { appendRegions } = require('./region-catalog.cjs');
 const { appendCounties } = require('./county-catalog.cjs');
+const { appendTianditu } = require('./tianditu-catalog.cjs');
 const root = path.resolve(__dirname, '../..');
 const output = path.resolve(__dirname, '../resources');
 const registry = JSON.parse(fs.readFileSync(path.join(root, 'registry.json'), 'utf8'));
@@ -69,13 +70,21 @@ cities.sort(
   (a, b) => a.province.localeCompare(b.province, 'zh-CN') || a.name.localeCompare(b.name, 'zh-CN'),
 );
 if (new Set(cities.map((city) => city.id)).size !== cities.length) throw new Error('城市标识重复');
-const regions = appendCounties(
+const legacy = appendCounties(
   appendRegions(cities, path.resolve(__dirname, '../data/regions'), output),
   output,
 );
+const regions = appendTianditu(path.resolve(__dirname, '../data/tianditu'), output, legacy);
 if (new Set(regions.map((region) => region.id)).size !== regions.length)
   throw new Error('行政区标识重复');
 fs.writeFileSync(path.join(output, 'catalog.json'), JSON.stringify(regions));
+const retained = new Set(regions.flatMap((region) => Object.values(region.variants)));
+const mapDirectory = path.join(output, 'maps');
+// Delete only obsolete generated JSON files in the fixed maps directory.
+for (const entry of fs.readdirSync(mapDirectory, { withFileTypes: true })) {
+  if (entry.isFile() && entry.name.endsWith('.json') && !retained.has(entry.name))
+    fs.unlinkSync(path.join(mapDirectory, entry.name));
+}
 fs.copyFileSync(
   require.resolve('echarts/dist/echarts.min.js'),
   path.join(output, 'vendor/echarts.min.js'),
@@ -90,6 +99,15 @@ const sourceReadme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
 const noticeStart = sourceReadme.indexOf('## License');
 if (noticeStart < 0) throw new Error('城市地图原始数据许可说明缺失');
 fs.writeFileSync(path.join(output, 'CITY-MAPS-SOURCE-NOTICE.txt'), sourceReadme.slice(noticeStart));
+fs.copyFileSync(
+  path.resolve(__dirname, '../data/tianditu/NOTICE.txt'),
+  path.join(output, 'TIANDITU-NOTICE.txt'),
+);
 console.log(
-  `已准备 ${regions.length} 个条目（全国、34 个省级、${cities.length} 个城市、${regions.filter((region) => region.level === 'county').length} 个区县）、${regions.length * 2} 份地图和离线 ECharts。`,
+  JSON.stringify({
+    regions: regions.length,
+    files: retained.size,
+    main: regions.filter((r) => r.dataset === 'tianditu').length,
+    supplements: regions.filter((r) => r.dataset === 'legacy').length,
+  }),
 );

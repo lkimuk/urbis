@@ -39,6 +39,11 @@
               autocomplete="off"
             /><kbd>Ctrl K</kbd>
           </div>
+          <label class="search-label" for="dataset">地图数据</label>
+          <select id="dataset" aria-label="数据来源">
+            <option value="tianditu">天地图 · 主数据</option>
+            <option value="legacy">历史补充 · 台湾 / 澳门</option>
+          </select>
           <label class="search-label" for="level">地图层级</label>
           <select id="level">
             <option value="">全部层级</option>
@@ -162,13 +167,13 @@
           <details class="data-note">
             <summary>关于地图数据</summary>
             <p>
-              内置全国、34 个省级地图、392 个城市及行政区条目，以及从市图提取的 3,253
-              个区县外轮廓，全部从本地读取。 数据为历史区划，名称、边界和精度可能与现行版本不同。
+              主库采用天地图 2026 年 10
+              月下载快照，全部从本地读取。页面标注局部更新，不代表所有区划具有统一基准日。
             </p>
             <p id="current-source"></p>
             <p>
-              全国及省级数据：ECharts 4.8.0
-              发布包。城市及区县数据：本仓库历史地图，原始数据来源及使用条款见随包说明。区县不含乡镇／街道分区。
+              天地图声明坐标为
+              CGCS2000，仅供地图可视化。台湾下级区及澳门旧明细作为历史补充独立查看；原始来源和条款见随包说明。未提供乡镇／街道地图。
             </p>
           </details>
         </div>

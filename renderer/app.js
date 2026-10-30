@@ -1,5 +1,11 @@
 import { DEFAULTS, PALETTES, loadSettings, saveSettings } from './settings.mjs';
-import { filterRegions, createMapLoader, regionTrail, childRegion } from './catalog.mjs';
+import {
+  filterRegions,
+  createMapLoader,
+  regionTrail,
+  childRegion,
+  resolveRegion,
+} from './catalog.mjs';
 import { createMapView } from './map-view.mjs';
 import { createAtlasClient } from './desktop-api.mjs';
 
@@ -78,6 +84,7 @@ function renderList() {
     query: $('search').value,
     province: $('province').value,
     level: $('level').value,
+    dataset: $('dataset').value,
   });
   $('results-count').textContent = matches.length + ' 个条目';
   const fragment = document.createDocumentFragment();
@@ -167,6 +174,7 @@ async function loadMap() {
 }
 
 async function selectRegion(region) {
+  $('dataset').value = region.dataset || 'tianditu';
   if (region.id !== settings.regionId) settings = { ...settings, regionId: region.id, title: '' };
   currentRegion = region;
   saveSettings(localStorage, settings);
@@ -188,8 +196,9 @@ async function selectRegion(region) {
   $('current-source').textContent =
     '当前数据：' +
     region.source +
-    ' · 历史区划' +
-    (region.level === 'county' ? ' · 区县外轮廓，无乡镇分区' : '');
+    ' · ' +
+    region.crs +
+    (region.dataset === 'legacy' ? ' · 历史补充，与主库独立显示' : ' · 仅供地图可视化');
   await loadMap();
 }
 
@@ -218,6 +227,7 @@ async function exportImage() {
 $('search').addEventListener('input', renderList);
 $('province').addEventListener('change', renderList);
 $('level').addEventListener('change', renderList);
+$('dataset').addEventListener('change', renderList);
 $('breadcrumb').addEventListener('click', (event) => {
   const button = event.target.closest('button[data-id]');
   if (button) void selectRegion(regions.find((region) => region.id === button.dataset.id));
@@ -294,18 +304,17 @@ async function initialize() {
     if (!regions.length) throw new Error('地图库为空');
     $('city-total').textContent = regions.length;
     for (const province of new Set(
-      regions.filter((region) => region.level === 'city').map((region) => region.province),
+      regions.filter((region) => region.level === 'province').map((region) => region.province),
     )) {
       const option = document.createElement('option');
       option.value = province;
       option.textContent = province;
       $('province').append(option);
     }
-    await selectRegion(
-      regions.find((region) => region.id === settings.regionId) ||
-        regions.find((region) => region.level === 'country') ||
-        regions[0],
-    );
+    const restored = resolveRegion(regions, settings.regionId) || regions[0];
+    // Preserve the user's title and style when only the data identifier changes.
+    if (restored.id !== settings.regionId) settings = { ...settings, regionId: restored.id };
+    await selectRegion(restored);
     $('city-list').querySelector('.active')?.scrollIntoView({ block: 'center' });
   } catch (error) {
     busy = false;
