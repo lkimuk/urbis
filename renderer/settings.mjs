@@ -13,7 +13,7 @@ export const DEFAULTS = Object.freeze({
   scale: 2,
   transparent: false,
   palette: 'atlas',
-  cityId: '',
+  regionId: '',
   title: '',
 });
 
@@ -33,7 +33,8 @@ export function normalizeSettings(value) {
     result.width = value.width;
   if (value.palette === '' || Object.hasOwn(PALETTES, value.palette))
     result.palette = value.palette;
-  if (typeof value.cityId === 'string') result.cityId = value.cityId;
+  if (typeof value.regionId === 'string') result.regionId = value.regionId;
+  else if (typeof value.cityId === 'string') result.regionId = value.cityId;
   if (typeof value.title === 'string') result.title = value.title.slice(0, 40);
   return result;
 }

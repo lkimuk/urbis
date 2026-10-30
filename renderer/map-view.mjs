@@ -25,21 +25,24 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
       if (show) occupied.push(box);
       return { name: region.name, label: { show } };
     });
-    chart.setOption({ series: [{ id: 'city', data }] });
+    chart.setOption({ series: [{ id: 'region', data }] });
   }
 
-  function render({ city, key, settings }, reset = false) {
+  function render({ region, key, settings }, reset = false) {
     const previous = reset ? null : chart.getOption()?.series?.[0];
-    model = { city, key, settings };
+    model = { region, key, settings };
     chart.setOption(
       {
         animation: false,
         backgroundColor: settings.transparent ? 'transparent' : settings.background,
         title: {
           show: settings.showTitle,
-          text: settings.title.trim() || city.name,
+          text: settings.title.trim() || region.name,
           subtext:
-            city.province + '  /  ' + (settings.variant === 'districts' ? '行政区划' : '城市轮廓'),
+            ({ country: '全国', province: '省级地图', city: region.province }[region.level] ||
+              region.province) +
+            '  /  ' +
+            (settings.variant === 'districts' ? '行政区划' : '区域轮廓'),
           left: 30,
           top: 25,
           textStyle: {
@@ -62,7 +65,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
         },
         series: [
           {
-            id: 'city',
+            id: 'region',
             type: 'map',
             map: key,
             roam: true,
@@ -108,7 +111,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
     );
     element.setAttribute(
       'aria-label',
-      city.name + (settings.variant === 'districts' ? '区县地图' : '轮廓地图'),
+      region.name + (settings.variant === 'districts' ? '行政区地图' : '轮廓地图'),
     );
     layoutLabels();
   }
@@ -126,7 +129,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
   observer.observe(element);
 
   return {
-    show({ city, key, geoJSON, settings }) {
+    show({ region, key, geoJSON, settings }) {
       if (!regions.has(key)) {
         echarts.registerMap(key, geoJSON);
         const parsed = echarts.parseGeoJSON(geoJSON);
@@ -137,7 +140,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
         });
         regions.set(key, parsed);
       }
-      render({ city, key, settings }, true);
+      render({ region, key, settings }, true);
     },
     update(settings) {
       if (model) render({ ...model, settings });
@@ -148,7 +151,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
     zoom(factor) {
       if (!model) return;
       const zoom = Math.max(0.5, Math.min(12, chart.getOption().series[0].zoom * factor));
-      chart.setOption({ series: [{ id: 'city', zoom }] });
+      chart.setOption({ series: [{ id: 'region', zoom }] });
       layoutLabels();
     },
     dimensions(scale) {
@@ -158,7 +161,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
       };
     },
     capturePng({ scale, transparent, background }) {
-      if (!model) throw new Error('请先选择城市');
+      if (!model) throw new Error('请先选择地图');
       const { width, height } = this.dimensions(scale);
       if (width * height > 64 * 1024 * 1024) throw new Error('图片尺寸过大，请降低导出精度');
       const canvas = document.createElement('div');

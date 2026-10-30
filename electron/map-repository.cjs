@@ -5,17 +5,17 @@ const { AtlasError } = require('./errors.cjs');
 
 async function createMapRepository(resources) {
   const catalog = JSON.parse(await fs.readFile(path.join(resources, 'catalog.json'), 'utf8'));
-  const byId = new Map(catalog.map((city) => [city.id, city]));
+  const byId = new Map(catalog.map((region) => [region.id, region]));
   // Keep filesystem details on this side of the bridge.
-  const cities = catalog.map(({ variants, ...city }) => city);
+  const regions = catalog.map(({ variants, ...region }) => region);
   return {
-    listCities: () => cities,
+    listRegions: () => regions,
     async getMap(request) {
-      const city = request && typeof request.cityId === 'string' && byId.get(request.cityId);
-      if (!city || !['districts', 'outline'].includes(request.variant)) {
+      const region = request && typeof request.regionId === 'string' && byId.get(request.regionId);
+      if (!region || !['districts', 'outline'].includes(request.variant)) {
         throw new AtlasError('MAP_NOT_FOUND', '未找到对应地图');
       }
-      const filename = city.variants[request.variant];
+      const filename = region.variants[request.variant];
       if (typeof filename !== 'string' || path.basename(filename) !== filename) {
         throw new AtlasError('MAP_UNAVAILABLE', '地图文件配置无效');
       }

@@ -2,7 +2,7 @@ const { AtlasError } = require('./errors.cjs');
 
 function registerAtlasIpc({ ipcMain, getWindow, pageURL, repository, savePng }) {
   const handlers = {
-    'atlas:cities': () => repository.listCities(),
+    'atlas:regions': () => repository.listRegions(),
     'atlas:map': (request) => repository.getMap(request),
     'atlas:save-image': (payload) => savePng(payload),
   };

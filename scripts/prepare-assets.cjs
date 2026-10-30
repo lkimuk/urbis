@@ -2,6 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+const { appendRegions } = require('./region-catalog.cjs');
 const root = path.resolve(__dirname, '../..');
 const output = path.resolve(__dirname, '../resources');
 const registry = JSON.parse(fs.readFileSync(path.join(root, 'registry.json'), 'utf8'));
@@ -67,7 +68,10 @@ cities.sort(
   (a, b) => a.province.localeCompare(b.province, 'zh-CN') || a.name.localeCompare(b.name, 'zh-CN'),
 );
 if (new Set(cities.map((city) => city.id)).size !== cities.length) throw new Error('城市标识重复');
-fs.writeFileSync(path.join(output, 'catalog.json'), JSON.stringify(cities));
+const regions = appendRegions(cities, path.resolve(__dirname, '../data/regions'), output);
+if (new Set(regions.map((region) => region.id)).size !== regions.length)
+  throw new Error('行政区标识重复');
+fs.writeFileSync(path.join(output, 'catalog.json'), JSON.stringify(regions));
 fs.copyFileSync(
   require.resolve('echarts/dist/echarts.min.js'),
   path.join(output, 'vendor/echarts.min.js'),
@@ -78,4 +82,6 @@ fs.copyFileSync(
 );
 fs.copyFileSync(require.resolve('echarts/NOTICE'), path.join(output, 'vendor/ECHARTS-NOTICE.txt'));
 fs.copyFileSync(path.join(root, 'LICENSE'), path.join(output, 'MAPS-LICENSE.txt'));
-console.log(`已准备 ${cities.length} 个城市、${cities.length * 2} 份地图和离线 ECharts。`);
+console.log(
+  `已准备 ${regions.length} 个条目（全国、34 个省级、${cities.length} 个城市）、${regions.length * 2} 份地图和离线 ECharts。`,
+);

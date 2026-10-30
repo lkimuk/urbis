@@ -1,13 +1,13 @@
 import { DEFAULTS, PALETTES, loadSettings, saveSettings } from './settings.mjs';
-import { filterCities, createMapLoader } from './catalog.mjs';
+import { filterRegions, createMapLoader, regionTrail, childRegion } from './catalog.mjs';
 import { createMapView } from './map-view.mjs';
 import { createAtlasClient } from './desktop-api.mjs';
 
 const $ = (id) => document.getElementById(id);
 const api = createAtlasClient(window.atlas);
 let settings = loadSettings(localStorage);
-let cities = [];
-let currentCity;
+let regions = [];
+let currentRegion;
 let currentMap;
 let busy = true;
 let exporting = false;
@@ -17,7 +17,10 @@ const view = createMapView({
   echarts: window.echarts,
   element: $('map'),
   onSelect: (name) => {
-    if (!busy) $('selection-status').textContent = currentCity.name + ' / ' + name;
+    if (busy) return;
+    const child = childRegion(regions, currentRegion, name);
+    if (child && settings.variant === 'districts') void selectRegion(child);
+    else $('selection-status').textContent = currentRegion.name + ' / ' + name;
   },
   onResize: updateDimensions,
 });
@@ -71,13 +74,18 @@ function updateActions() {
 }
 
 function renderList() {
-  const matches = filterCities(cities, { query: $('search').value, province: $('province').value });
+  const matches = filterRegions(regions, {
+    query: $('search').value,
+    province: $('province').value,
+    level: $('level').value,
+  });
   $('results-count').textContent = matches.length + ' 个条目';
   const fragment = document.createDocumentFragment();
   let group;
-  for (const city of matches) {
-    if (city.province !== group) {
-      group = city.province;
+  for (const region of matches) {
+    const nextGroup = region.level === 'city' ? region.province : '全国与省级地图';
+    if (nextGroup !== group) {
+      group = nextGroup;
       const heading = document.createElement('div');
       heading.className = 'province-heading';
       heading.textContent = group;
@@ -85,15 +93,15 @@ function renderList() {
     }
     const button = document.createElement('button');
     button.className = 'city-button';
-    button.dataset.id = city.id;
-    const active = city.id === currentCity?.id;
+    button.dataset.id = region.id;
+    const active = region.id === currentRegion?.id;
     button.classList.toggle('active', active);
     button.setAttribute('aria-pressed', String(active));
     const name = document.createElement('span');
-    name.textContent = city.name;
+    name.textContent = region.name;
     const arrow = document.createElement('span');
     arrow.className = 'arrow';
-    arrow.textContent = '↗';
+    arrow.textContent = { country: '全国', province: '省级', city: '城市' }[region.level];
     arrow.setAttribute('aria-hidden', 'true');
     button.append(name, arrow);
     fragment.append(button);
@@ -101,7 +109,7 @@ function renderList() {
   if (!matches.length) {
     const empty = document.createElement('p');
     empty.className = 'empty';
-    empty.textContent = '没有找到这个城市。试试城市简称、拼音，或切换至全部地区。';
+    empty.textContent = '没有找到地图。试试名称、拼音，或切换至全部层级和地区。';
     fragment.append(empty);
   }
   $('city-list').replaceChildren(fragment);
@@ -115,52 +123,62 @@ function changeSettings(patch) {
     !busy &&
     currentMap &&
     Object.keys(patch).some((key) => key !== 'scale') &&
-    currentMap.key === currentCity.id + '-' + settings.variant
+    currentMap.key === currentRegion.id + '-' + settings.variant
   )
     view.update(settings);
 }
 
 async function loadMap() {
-  if (!currentCity) return;
-  const city = currentCity;
+  if (!currentRegion) return;
+  const region = currentRegion;
   busy = true;
   updateActions();
-  $('map-message').textContent = '正在打开' + city.name + '…';
+  $('map-message').textContent = '正在打开' + region.name + '…';
   $('map-message').classList.remove('error');
   $('map-message').hidden = false;
   try {
-    const result = await load(city.id, settings.variant);
+    const result = await load(region.id, settings.variant);
     if (!result) return;
-    view.show({ city, ...result, settings });
+    view.show({ region, ...result, settings });
     currentMap = result;
     busy = false;
     $('map-message').hidden = true;
     $('map').dataset.mapKey = result.key;
     $('map-status').textContent =
-      city.name +
+      region.name +
       ' · ' +
-      (settings.variant === 'districts'
-        ? city.districtNames.length + ' 个区县 / 地图分区'
-        : '纯轮廓');
+      (settings.variant === 'districts' ? region.districtNames.length + ' 个地图分区' : '纯轮廓');
     updateActions();
   } catch (error) {
     currentMap = null;
     busy = false;
     updateActions();
     $('map-message').classList.add('error');
-    $('map-message').textContent = '地图加载失败：' + error.message + '。请重新选择城市重试。';
+    $('map-message').textContent = '地图加载失败：' + error.message + '。请重新选择地图重试。';
     $('map-status').textContent = '地图加载失败';
   }
 }
 
-async function selectCity(city) {
-  if (city.id !== settings.cityId) settings = { ...settings, cityId: city.id, title: '' };
-  currentCity = city;
+async function selectRegion(region) {
+  if (region.id !== settings.regionId) settings = { ...settings, regionId: region.id, title: '' };
+  currentRegion = region;
   saveSettings(localStorage, settings);
   syncControls();
   renderList();
-  $('breadcrumb').textContent = city.province + '  /  ' + city.name;
-  $('selection-status').textContent = '点击地图查看区县名称';
+  const trail = regionTrail(regions, region).map((item, index, items) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'text-button';
+    button.textContent = item.name;
+    button.dataset.id = item.id;
+    if (index === items.length - 1) button.setAttribute('aria-current', 'page');
+    return button;
+  });
+  $('breadcrumb').replaceChildren(...trail);
+  $('selection-status').textContent = region.children.length
+    ? '点击分区进入下一级地图'
+    : '点击地图查看分区名称';
+  $('current-source').textContent = '当前数据：' + region.source + ' · 历史区划';
   await loadMap();
 }
 
@@ -172,7 +190,7 @@ async function exportImage() {
     // Capture all export inputs before awaiting the save dialog. City/style changes cannot rename this image.
     const dataURL = view.capturePng(settings);
     const filename =
-      currentCity.name + '-' + (settings.variant === 'districts' ? '区县地图' : '轮廓地图');
+      currentRegion.name + '-' + (settings.variant === 'districts' ? '行政区地图' : '轮廓地图');
     const result = await api.saveImage({ dataURL, filename });
     if (!result.canceled)
       toast(
@@ -188,9 +206,14 @@ async function exportImage() {
 
 $('search').addEventListener('input', renderList);
 $('province').addEventListener('change', renderList);
+$('level').addEventListener('change', renderList);
+$('breadcrumb').addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-id]');
+  if (button) void selectRegion(regions.find((region) => region.id === button.dataset.id));
+});
 $('city-list').addEventListener('click', (event) => {
   const button = event.target.closest('.city-button');
-  if (button) void selectCity(cities.find((city) => city.id === button.dataset.id));
+  if (button) void selectRegion(regions.find((region) => region.id === button.dataset.id));
 });
 document.querySelectorAll('[name=variant]').forEach((input) =>
   input.addEventListener('change', () => {
@@ -256,25 +279,27 @@ async function initialize() {
   syncControls();
   updateActions();
   try {
-    cities = await api.getCities();
-    if (!cities.length) throw new Error('地图库为空');
-    $('city-total').textContent = cities.length;
-    for (const province of new Set(cities.map((city) => city.province))) {
+    regions = await api.getRegions();
+    if (!regions.length) throw new Error('地图库为空');
+    $('city-total').textContent = regions.length;
+    for (const province of new Set(
+      regions.filter((region) => region.level === 'city').map((region) => region.province),
+    )) {
       const option = document.createElement('option');
       option.value = province;
       option.textContent = province;
       $('province').append(option);
     }
-    await selectCity(
-      cities.find((city) => city.id === settings.cityId) ||
-        cities.find((city) => city.name === '南昌') ||
-        cities[0],
+    await selectRegion(
+      regions.find((region) => region.id === settings.regionId) ||
+        regions.find((region) => region.level === 'country') ||
+        regions[0],
     );
     $('city-list').querySelector('.active')?.scrollIntoView({ block: 'center' });
   } catch (error) {
     busy = false;
     updateActions();
-    $('map-message').textContent = '无法打开城市目录：' + error.message;
+    $('map-message').textContent = '无法打开地图目录：' + error.message;
     $('map-message').classList.add('error');
   }
 }

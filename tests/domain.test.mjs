@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { DEFAULTS, normalizeSettings, loadSettings, saveSettings } from '../renderer/settings.mjs';
-import { createMapLoader, filterCities } from '../renderer/catalog.mjs';
+import { createMapLoader, filterRegions, regionTrail, childRegion } from '../renderer/catalog.mjs';
 
 test('preferences reject corrupt data and keep valid custom settings', () => {
   for (const value of [null, [], true, 'bad']) assert.deepEqual(normalizeSettings(value), DEFAULTS);
@@ -12,14 +12,15 @@ test('preferences reject corrupt data and keep valid custom settings', () => {
     palette: 'toString',
     fill: 'red',
     title: 'x'.repeat(60),
-    cityId: 'beijing',
+    regionId: 'beijing',
   });
   assert.equal(settings.width, 1);
   assert.equal(settings.scale, 2);
   assert.equal(settings.palette, 'atlas');
   assert.equal(settings.fill, DEFAULTS.fill);
   assert.equal(settings.title.length, 40);
-  assert.equal(settings.cityId, 'beijing');
+  assert.equal(settings.regionId, 'beijing');
+  assert.equal(normalizeSettings({ cityId: 'beijing' }).regionId, 'beijing');
   assert.deepEqual(loadSettings({ getItem: () => '{bad' }), DEFAULTS);
   assert.doesNotThrow(() =>
     saveSettings(
@@ -34,17 +35,41 @@ test('preferences reject corrupt data and keep valid custom settings', () => {
   assert.equal(normalizeSettings({ palette: '', width: 0.3, transparent: true }).palette, '');
 });
 
+test('hierarchy resolves exact feature links, breadcrumbs, and level filters', () => {
+  const country = {
+    id: '100000',
+    name: '全国',
+    level: 'country',
+    parentId: null,
+    children: [{ name: '江西', regionId: '360000' }],
+  };
+  const province = {
+    id: '360000',
+    name: '江西',
+    level: 'province',
+    parentId: '100000',
+    children: [{ name: '南昌市', regionId: 'nc' }],
+  };
+  const city = { id: 'nc', name: '南昌', level: 'city', parentId: '360000', children: [] };
+  const regions = [country, province, city];
+  assert.deepEqual(regionTrail(regions, city), regions);
+  assert.equal(childRegion(regions, country, '江西'), province);
+  assert.equal(childRegion(regions, province, '南昌市'), city);
+  assert.equal(childRegion(regions, province, '南昌'), undefined);
+  assert.deepEqual(filterRegions(regions, { level: 'province' }), [province]);
+});
+
 test('search normalizes Taiwanese aliases, spaces and pinyin while respecting province', () => {
   const cities = [
     { id: 'a', name: '臺北', province: '台湾', pinyin: 'taibei', initials: 'tb' },
     { id: 'b', name: '北京', province: '直辖市及港澳', pinyin: 'beijing', initials: 'bj' },
   ];
   for (const query of ['台北', '臺北', ' TAI BEI ', 'tb', '台湾']) {
-    assert.equal(filterCities(cities, { query })[0].id, 'a');
+    assert.equal(filterRegions(cities, { query })[0].id, 'a');
   }
-  assert.equal(filterCities(cities, { query: 'bj' })[0].id, 'b');
-  assert.deepEqual(filterCities(cities, { query: 'bj', province: '台湾' }), []);
-  assert.deepEqual(filterCities(cities, { query: '不存在' }), []);
+  assert.equal(filterRegions(cities, { query: 'bj' })[0].id, 'b');
+  assert.deepEqual(filterRegions(cities, { query: 'bj', province: '台湾' }), []);
+  assert.deepEqual(filterRegions(cities, { query: '不存在' }), []);
 });
 
 test('map loading deduplicates concurrent requests and discards stale success', async () => {
@@ -69,8 +94,8 @@ test('map loading deduplicates concurrent requests and discards stale success', 
 test('map loading ignores stale failures and retries a failed latest request', async () => {
   let rejectOld;
   let attempts = 0;
-  const load = createMapLoader(({ cityId }) => {
-    if (cityId === 'old')
+  const load = createMapLoader(({ regionId }) => {
+    if (regionId === 'old')
       return new Promise((_, reject) => {
         rejectOld = reject;
       });

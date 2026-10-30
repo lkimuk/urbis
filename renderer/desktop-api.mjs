@@ -8,7 +8,7 @@ export function createAtlasClient(bridge) {
     throw error;
   }
   return {
-    getCities: () => invoke('getCities'),
+    getRegions: () => invoke('getRegions'),
     getMap: (request) => invoke('getMap', request),
     saveImage: (payload) => invoke('saveImage', payload),
   };

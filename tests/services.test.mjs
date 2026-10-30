@@ -95,23 +95,23 @@ test('repository hides file paths, rejects invalid requests, and reports missing
     );
     await fs.writeFile(path.join(temp, 'maps/city.json'), '{"features":[]}');
     const repository = await createMapRepository(temp);
-    assert.deepEqual(repository.listCities(), [{ id: 'city', name: '城市' }]);
+    assert.deepEqual(repository.listRegions(), [{ id: 'city', name: '城市' }]);
     for (const request of [
       null,
       {},
-      { cityId: '../catalog', variant: 'districts' },
-      { cityId: 'city', variant: 'unknown' },
+      { regionId: '../catalog', variant: 'districts' },
+      { regionId: 'city', variant: 'unknown' },
     ]) {
       await assert.rejects(repository.getMap(request), { code: 'MAP_NOT_FOUND' });
     }
-    assert.deepEqual(await repository.getMap({ cityId: 'city', variant: 'districts' }), {
+    assert.deepEqual(await repository.getMap({ regionId: 'city', variant: 'districts' }), {
       features: [],
     });
-    await assert.rejects(repository.getMap({ cityId: 'city', variant: 'outline' }), {
+    await assert.rejects(repository.getMap({ regionId: 'city', variant: 'outline' }), {
       code: 'MAP_UNAVAILABLE',
     });
     await fs.unlink(path.join(temp, 'maps/city.json'));
-    await assert.rejects(repository.getMap({ cityId: 'city', variant: 'districts' }), {
+    await assert.rejects(repository.getMap({ regionId: 'city', variant: 'districts' }), {
       code: 'MAP_UNAVAILABLE',
     });
   } finally {
@@ -128,7 +128,7 @@ test('IPC rejects untrusted frames before service invocation and preserves domai
     getWindow: () => ({ webContents }),
     pageURL: 'file:///atlas/index.html',
     repository: {
-      listCities: () => {
+      listRegions: () => {
         calls++;
         return [];
       },
@@ -140,9 +140,9 @@ test('IPC rejects untrusted frames before service invocation and preserves domai
   });
   const trusted = { sender: webContents, senderFrame: { url: 'file:///atlas/index.html' } };
   const untrusted = { ...trusted, senderFrame: { url: 'file:///other.html' } };
-  assert.equal((await handlers.get('atlas:cities')(untrusted)).error.code, 'UNTRUSTED_CALLER');
+  assert.equal((await handlers.get('atlas:regions')(untrusted)).error.code, 'UNTRUSTED_CALLER');
   assert.equal(calls, 0);
-  assert.deepEqual(await handlers.get('atlas:cities')(trusted), { ok: true, value: [] });
+  assert.deepEqual(await handlers.get('atlas:regions')(trusted), { ok: true, value: [] });
   assert.deepEqual((await handlers.get('atlas:map')(trusted, {})).error, {
     code: 'MAP_NOT_FOUND',
     message: 'missing',

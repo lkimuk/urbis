@@ -269,8 +269,9 @@ select:hover {
 }
 .city-button .arrow {
   margin-left: auto;
-  opacity: 0;
-  font-size: 15px;
+  opacity: 0.65;
+  font-size: 10px;
+  font-weight: 400;
 }
 .city-button.active .arrow {
   opacity: 1;
@@ -315,6 +316,24 @@ select:hover {
   background: #f4f4ed;
   font-size: 11px;
   color: #5e6f60;
+}
+.region-label {
+  margin-top: 14px;
+}
+#breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 0;
+}
+#breadcrumb button + button::before {
+  content: '/';
+  color: #89937f;
+  margin-right: 12px;
+}
+#breadcrumb [aria-current] {
+  color: #2d513a;
+  font-weight: 600;
 }
 .view-actions {
   display: flex;
