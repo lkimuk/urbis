@@ -34,6 +34,7 @@ npm run dist
 
 ```powershell
 npm run smoke
+npm run audit:maps
 ```
 
 在独立的临时 Electron 配置目录中，通过页面控件和公开 API 检查 3,680 个条目、7,360 个地图模式、全国到省市区县的真实鼠标点击与面包屑返回、全国和省级 PNG 导出、零网络请求、搜索筛选、两种模式、连续切换、IPC 错误码、PNG 透明通道、样式重置和页面重载后的偏好恢复。启动脚本在进程退出后清理测试目录；测试不修改日常偏好，不弹出保存窗口。截图、导出图片和报告写入 `desktop/artifacts/`。
@@ -41,6 +42,8 @@ npm run smoke
 `npm test` 运行 Node 内置测试框架的业务和服务回归测试；`npm run format:check` 检查源码格式；`npm run format` 统一格式。
 
 ## 资源与结构
+
+地图结构检查与已知边界、年代、拓扑问题详见 [地图数据审计](data/AUDIT.md)。audit:maps 验证结构及无损转换，不能证明地理内容准确或区划为现行版本。
 
 - `electron/main.cjs`：应用生命周期、窗口、安全配置和服务装配。
 - `electron/map-repository.cjs`：索引及地图文件读取，隐藏文件路径。
