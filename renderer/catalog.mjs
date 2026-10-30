@@ -42,27 +42,29 @@ export function childRegion(regions, parent, name) {
   return regions.find((region) => region.id === id);
 }
 
-// Rejected promises are removed so a transient failure can be retried.
+// Share only in-flight reads; completed maps belong to the current view.
 // Only the latest request is presented, even when requests finish out of order.
 export function createMapLoader(getMap) {
-  const cache = new Map();
+  const pendingMaps = new Map();
   let version = 0;
   return async function load(regionId, variant) {
     const request = ++version;
     const key = regionId + '-' + variant;
-    if (!cache.has(key)) {
-      const pending = Promise.resolve().then(() => getMap({ regionId, variant }));
-      cache.set(key, pending);
-      pending.catch(() => {
-        if (cache.get(key) === pending) cache.delete(key);
-      });
+    if (!pendingMaps.has(key)) {
+      pendingMaps.set(
+        key,
+        Promise.resolve().then(() => getMap({ regionId, variant })),
+      );
     }
+    const pending = pendingMaps.get(key);
     try {
-      const geoJSON = await cache.get(key);
+      const geoJSON = await pending;
       return request === version ? { key, geoJSON } : null;
     } catch (error) {
       if (request !== version) return null;
       throw error;
+    } finally {
+      if (pendingMaps.get(key) === pending) pendingMaps.delete(key);
     }
   };
 }

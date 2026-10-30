@@ -91,8 +91,12 @@ test('map loading deduplicates concurrent requests and discards stale success', 
   resolve({ features: [] });
   assert.equal(await first, null);
   assert.equal((await last).key, 'a-outline');
-  await load('a', 'outline');
   assert.equal(calls, 1);
+  const revisit = load('a', 'outline');
+  await Promise.resolve();
+  resolve({ features: [] });
+  await revisit;
+  assert.equal(calls, 2, 'Completed maps are read again instead of retained indefinitely');
 });
 
 test('map loading ignores stale failures and retries a failed latest request', async () => {

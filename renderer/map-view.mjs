@@ -1,18 +1,22 @@
+let nextMapId = 0;
+
 // This module owns ECharts and its canvas. It has no knowledge of form controls or IPC.
 export function createMapView({ echarts, element, onSelect, onResize }) {
   const chart = echarts.init(element, null, {
     renderer: 'canvas',
     devicePixelRatio: window.devicePixelRatio,
   });
-  const regions = new Map();
-  const boundaries = new Map();
+  // Replacing one registration per view releases ECharts' previous map resource.
+  const mapName = 'urbis-view-' + ++nextMapId;
+  let regions = [];
+  let boundaries = [];
   let model;
   let layoutFrame;
 
   function layoutLabels() {
     if (!model || model.settings.variant !== 'districts' || !model.settings.labels) return;
     const occupied = [];
-    const data = regions.get(model.key).map((region) => {
+    const data = regions.map((region) => {
       const [x, y] = chart.convertToPixel({ geoIndex: 0 }, region.getCenter());
       const width = Array.from(region.name).length * 11 + 8;
       const box = { left: x - width / 2, right: x + width / 2, top: y - 9, bottom: y + 9 };
@@ -29,9 +33,9 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
     chart.setOption({ geo: { regions: data } });
   }
 
-  function render({ region, key, settings }, reset = false) {
+  function render({ region, settings }, reset = false) {
     const previous = reset ? null : chart.getOption()?.geo?.[0];
-    model = { region, key, settings };
+    model = { region, settings };
     chart.setOption(
       {
         animation: false,
@@ -59,7 +63,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
         },
         geo: {
           id: 'atlas-geo',
-          map: key,
+          map: mapName,
           roam: true,
           selectedMode: 'single',
           scaleLimit: { min: 0.5, max: 12 },
@@ -98,7 +102,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           regions: [],
         },
         series: [
-          { id: 'region', type: 'map', map: key, geoIndex: 0, data: [], selectedMode: false },
+          { id: 'region', type: 'map', map: mapName, geoIndex: 0, data: [], selectedMode: false },
           {
             id: 'boundary-lines',
             type: 'lines',
@@ -109,7 +113,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
             z: 5,
             animation: false,
             lineStyle: { color: settings.border, width: settings.width, opacity: 1 },
-            data: (boundaries.get(key) || []).map((coords) => ({ coords })),
+            data: boundaries.map((coords) => ({ coords })),
           },
         ],
       },
@@ -135,26 +139,25 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
   observer.observe(element);
 
   return {
-    show({ region, key, geoJSON, settings }) {
-      if (!regions.has(key)) {
-        // ECharts receives only administrative polygons; supplemental lines share its geo transform.
-        const polygons = {
-          ...geoJSON,
-          features: geoJSON.features.filter((feature) =>
-            ['Polygon', 'MultiPolygon'].includes(feature.geometry.type),
-          ),
-        };
-        echarts.registerMap(key, polygons);
-        const parsed = echarts.parseGeoJSON(polygons);
-        boundaries.set(key, geoJSON.boundaryLines || []);
-        parsed.sort((a, b) => {
-          const ar = a.getBoundingRect();
-          const br = b.getBoundingRect();
-          return br.width * br.height - ar.width * ar.height;
-        });
-        regions.set(key, parsed);
-      }
-      render({ region, key, settings }, true);
+    show({ region, geoJSON, settings }) {
+      // Clear old geo models before replacing the registered geometry.
+      cancelAnimationFrame(layoutFrame);
+      chart.clear();
+      const polygons = {
+        ...geoJSON,
+        features: geoJSON.features.filter((feature) =>
+          ['Polygon', 'MultiPolygon'].includes(feature.geometry.type),
+        ),
+      };
+      echarts.registerMap(mapName, polygons);
+      regions = echarts.parseGeoJSON(polygons);
+      boundaries = geoJSON.boundaryLines || [];
+      regions.sort((a, b) => {
+        const ar = a.getBoundingRect();
+        const br = b.getBoundingRect();
+        return br.width * br.height - ar.width * ar.height;
+      });
+      render({ region, settings }, true);
     },
     update(settings) {
       if (model) render({ ...model, settings });
@@ -213,6 +216,10 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
       observer.disconnect();
       cancelAnimationFrame(layoutFrame);
       chart.dispose();
+      model = undefined;
+      regions = [];
+      boundaries = [];
+      echarts.registerMap(mapName, { type: 'FeatureCollection', features: [] });
     },
   };
 }
