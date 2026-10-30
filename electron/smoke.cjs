@@ -241,6 +241,8 @@ exports.run = async function run(window, output) {
     true,
   );
   window.setSize(1480, 960);
+  await js('document.getElementById("search").focus()');
+  await screenshot('search-focus.png');
   assert.deepEqual(errors, []);
   assert.deepEqual(networkRequests, []);
   await fs.writeFile(

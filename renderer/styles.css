@@ -32,8 +32,8 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 summary:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
 }
 svg {
   width: 16px;
@@ -110,6 +110,13 @@ input[type='search']:hover,
 input[type='text']:hover,
 select:hover {
   border-color: #858585;
+}
+input[type='search']:focus,
+input[type='text']:focus,
+select:focus-visible,
+input[type='color']:focus-visible {
+  border-color: var(--accent);
+  outline: none;
 }
 input:disabled {
   background: #eaeaea;
@@ -388,8 +395,6 @@ h3 {
 }
 .palette.active {
   border-color: var(--accent);
-  outline: 1px solid var(--accent);
-  outline-offset: -1px;
 }
 .swatch {
   display: block;
