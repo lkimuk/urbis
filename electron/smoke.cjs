@@ -205,10 +205,23 @@ exports.run = async function run(window, output) {
   );
   await screenshot('national.png');
   await exportPng(false);
-  for (const name of ['全国', '江西', '台湾', '新疆']) {
+  for (const name of ['全国', '江西', '台湾', '新疆', '西藏']) {
     await input('level', name === '全国' ? 'country' : 'province', 'change');
     await select(name, 'districts');
     await select(name, 'outline');
+  }
+  await select('西藏', 'districts');
+  assert.equal(
+    await js(
+      '(async () => { const data = await window.atlas.getMap({regionId:"540000",variant:"districts"}); return data.features.filter(f => f.properties.name === "山南市").length; })()',
+    ),
+    1,
+  );
+  await screenshot('tibet-audited.png');
+  await input('level', 'city', 'change');
+  for (const variant of ['districts', 'outline']) {
+    await select('平顶山', variant);
+    await screenshot('pingdingshan-' + variant + '.png');
   }
   await input('search', '');
   await input('level', 'city', 'change');

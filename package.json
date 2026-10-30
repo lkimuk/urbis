@@ -13,6 +13,7 @@
     "format:check": "prettier --check .",
     "postinstall": "node node_modules/electron/install.js",
     "prepare:assets": "node scripts/prepare-assets.cjs",
+    "audit:maps": "npm run prepare:assets && node scripts/audit-maps.cjs",
     "start": "npm run prepare:assets && node scripts/launch.cjs",
     "smoke": "npm run prepare:assets && node scripts/launch.cjs --smoke-test",
     "pack": "npm run prepare:assets && electron-builder --dir",
