@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "source": "天地图行政区划下载",
+  "url": "https://cloudcenter.tianditu.gov.cn/administrativeDivision",
+  "downloaded": "2026-10-30",
+  "pageUpdate": "2026年10月，局部数据更新",
+  "crs": "EPSG:4490",
+  "notice": "本数据仅供地图可视化使用。页面更新时间不是全部区划的统一基准日；离线再分发授权未由此确认。",
+  "files": [
+    {
+      "filename": "provinces.geojson",
+      "original": "中国_省.geojson",
+      "sha256": "3af8294f9ad61cc2bf84c1bb7e4bbf86a6336c68d754b699a0e6ddc33ef81486"
+    },
+    {
+      "filename": "cities.geojson",
+      "original": "中国_市.geojson",
+      "sha256": "d7a6f05b7e58cf758d74bd71ed0ea2ce981ef99436e4881e9a68098c3cd80b3b"
+    },
+    {
+      "filename": "counties.geojson",
+      "original": "中国_县.geojson",
+      "sha256": "b9b56d88af8ef9343e09d98941389b2009423c185ca9cddb85239db51a212efc"
+    }
+  ]
+}
