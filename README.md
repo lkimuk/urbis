@@ -1,6 +1,6 @@
 # 城市图志 · Electron 客户端
 
-离线地图工作台。内置全国、34 个省级地图及本仓库原有的 392 个城市及行政区条目，加上从现有市图生成的 3,253 个区县外轮廓，共 3,680 个条目、7,360 个地图模式（4,107 个独立地图文件）。支持全国 → 省 → 市 → 区县点击导航和面包屑返回，中文、拼音、拼音首字母搜索，层级与地区筛选、行政区地图与纯轮廓切换、拖动缩放、名称与标题设置、三套配色、自定义颜色及线宽、1–4 倍 PNG 导出和透明背景。地图和样式偏好会保存在本机。
+离线地图工作台。天地图主库包含全国、34 个省级、368 个城市层及 2,890 个区县层地图，共 3,293 个条目；另有 399 个台湾和澳门历史补充，独立查看。合计 3,692 个条目、7,384 个地图模式、7,008 个独立地图文件。支持全国 → 省 → 市 → 区县点击导航和面包屑返回，中文、拼音、拼音首字母搜索，数据源、层级与地区筛选、行政区地图与纯轮廓切换、拖动缩放、名称与标题设置、三套配色、自定义颜色及线宽、1–4 倍 PNG 导出和透明背景。地图和样式偏好会保存在本机。
 
 首次使用默认打开全国地图，后续恢复上次选择。支持全国 → 省 → 市 → 区县，区县可单独查看外轮廓和导出，不含乡镇／街道分区。直辖市及港澳可从省级图直接进入区县。纯轮廓模式不进入下级，各层级共用同一渲染和导出模块。
 
@@ -26,7 +26,7 @@ npm run pack
 npm run dist
 ```
 
-输出在 `desktop/release/`。应用目录中的 `CityAtlas.exe` 必须与其他文件一起分发；安装包 `CityAtlas-Setup-0.1.0.exe` 可以单独分发。当前版本未配置代码签名。
+输出在 `desktop/release/`。应用目录中的 `CityAtlas.exe` 依赖同目录文件；安装包文件名为 `CityAtlas-Setup-0.1.0.exe`。当前版本未配置代码签名。数据使用及对外分发须遵守来源条款，见 [数据说明](data/README.md)。
 
 若本机已在 `build-tools/nsis-bundle/` 准备并校验 NSIS 工具，可在 PowerShell 中设置 `ELECTRON_BUILDER_NSIS_DIR` 和 `ELECTRON_BUILDER_NSIS_RESOURCES_DIR` 为该目录的绝对路径，再执行 `npm run dist`，避免重复下载打包工具。
 
@@ -37,13 +37,13 @@ npm run smoke
 npm run audit:maps
 ```
 
-在独立的临时 Electron 配置目录中，通过页面控件和公开 API 检查 3,680 个条目、7,360 个地图模式、全国到省市区县的真实鼠标点击与面包屑返回、全国和省级 PNG 导出、零网络请求、搜索筛选、两种模式、连续切换、IPC 错误码、PNG 透明通道、样式重置和页面重载后的偏好恢复。启动脚本在进程退出后清理测试目录；测试不修改日常偏好，不弹出保存窗口。截图、导出图片和报告写入 `desktop/artifacts/`。
+在独立的临时 Electron 配置目录中，通过页面控件和公开 API 检查 3,692 个条目、7,384 个地图模式、全国到省市区县的真实鼠标点击与面包屑返回、直辖市及港澳台湾、历史补充独立切换、境界线及 PNG 导出、零网络请求、搜索筛选、两种模式、IPC 错误码、PNG 透明通道、样式重置和旧 ID 迁移后的偏好恢复。启动脚本在进程退出后清理测试目录；测试不修改日常偏好，不弹出保存窗口。截图、导出图片和报告写入 `desktop/artifacts/`。
 
 `npm test` 运行 Node 内置测试框架的业务和服务回归测试；`npm run format:check` 检查源码格式；`npm run format` 统一格式。
 
 ## 资源与结构
 
-地图结构检查与已知边界、年代、拓扑问题详见 [地图数据审计](data/AUDIT.md)。audit:maps 验证结构及无损转换，不能证明地理内容准确或区划为现行版本。
+主库原件检查与覆盖限制详见 [天地图核验](data/TIANDITU-AUDIT.md)，旧库问题见 [历史地图数据审计](data/AUDIT.md)。audit:maps 验证结构及无损转换，不能证明地理内容准确或区划为现行版本。
 
 - `electron/main.cjs`：应用生命周期、窗口、安全配置和服务装配。
 - `electron/map-repository.cjs`：索引及地图文件读取，隐藏文件路径。
@@ -56,21 +56,22 @@ npm run audit:maps
 - `scripts/county-catalog.cjs`：从城市分区要素生成独立区县地图及点击链接；不下载数据，不虚构乡镇边界。
 - `scripts/region-catalog.cjs`：校验已入库的全国和省级快照，生成地图、父子关系、可进入的城市链接及未匹配报告。
 - `scripts/import-regions.cjs`：维护时从 SHA-512 固定的上游发布包导入原始地图，记录逐文件 SHA-256。
-- `scripts/prepare-assets.cjs`：从仓库根目录 `registry.json`、`structure.json` 和 `js/` 生成地图库，复制本地 ECharts 及许可证。所有启动、验证、打包命令都会先运行此脚本。
+- `scripts/tianditu-catalog.cjs`：校验天地图固定快照，生成统一主库、轮廓并集、境界线、父子关系和旧 ID 别名。polygon-clipping 与 pinyin-pro 仅在构建时使用。
+- `scripts/prepare-assets.cjs`：协调主库与历史补充生成，清除过期生成地图，复制本地 ECharts 及来源说明。所有启动、地图验证、打包命令都会先运行此脚本。
 - `resources/`：自动生成的离线资源，不提交到 Git；打包后包含在应用内部。
 
 渲染进程关闭 Node.js 集成，启用隔离与沙盒，通过白名单 IPC 获取地图、保存 PNG。禁止页面导航、新窗口和权限请求；页面不请求远程脚本、字体或服务。
 
 页面通过 `createAtlasClient(window.atlas)` 获取三个 Promise 操作：
 
-| 操作                               | 输入                                      | 返回                                                                               |
-| ---------------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------- |
-| `getRegions()`                     | 无                                        | 行政区描述数组（含 id、level、parentId、children、名称、搜索字段、分区名称及来源） |
-| `getMap({ regionId, variant })`    | variant 为 `districts` 或 `outline`       | GeoJSON，可能使用 ECharts 压缩坐标编码                                             |
-| `saveImage({ dataURL, filename })` | PNG data URL 和建议文件名，不接受文件路径 | `{ canceled: true }` 或 `{ canceled: false, filePath, size }`                      |
+| 操作                               | 输入                                      | 返回                                                                                                                                           |
+| ---------------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `getRegions()`                     | 无                                        | 行政区描述数组（含 id、level、parentId、children、名称、搜索字段、分区名称、dataset、source、crs、sourceId、aliases；历史补充不保证 sourceId） |
+| `getMap({ regionId, variant })`    | variant 为 `districts` 或 `outline`       | GeoJSON；主库有 boundaryLines 经纬度折线数组，历史补充可能使用 ECharts 压缩坐标编码                                                            |
+| `saveImage({ dataURL, filename })` | PNG data URL 和建议文件名，不接受文件路径 | `{ canceled: true }` 或 `{ canceled: false, filePath, size }`                                                                                  |
 
 失败时抛出含 `code`、`message` 的异常。错误码包括 `MAP_NOT_FOUND`、`MAP_UNAVAILABLE`、`INVALID_IMAGE`、`IMAGE_TOO_LARGE`、`EXPORT_BUSY`、`SAVE_FAILED`、`UNTRUSTED_CALLER` 和 `INTERNAL_ERROR`。桥接层传输 `{ ok, value/error }` 普通数据；错误对象在页面中创建，避免 Electron 丢失自定义错误属性。
 
 地图数据仅按需加载，同一请求复用进行中的 Promise，失败可重试，过期结果不覆盖新选择。标题随当前城市一起保存；“重置”恢复外观，保留地图模式、导出选项及视野。应用使用单实例窗口；地图视图在页面卸载时释放观察器和 ECharts 实例。
 
-全国及省级数据采用 ECharts 4.8.0 发布包的固定历史快照，原件、来源、SHA 校验值和上游许可文件提交在 data/regions/，每次资源生成先校验字节完整性。城市及区县数据沿用本仓库历史地图；MIT 适用于打包代码，原始地图数据条款见根 README License 段落，随资源复制到 CITY-MAPS-SOURCE-NOTICE.txt。所有地图均非现行区划数据库，程序中的分区数量代表地图要素数量。详见 [数据来源与维护说明](data/README.md)。
+主库使用 data/tianditu/ 中固定的原始快照，每次资源生成校验 SHA-256，保持 EPSG:4490 坐标声明；两种模式共享同源分区及境界线。旧库仅为台湾及澳门历史补充和偏好映射提供输入。MIT 适用于相应代码，不代表地图数据授权。程序中的分区数量代表地图要素数量，页面更新时间不代表统一行政区划基准日。详见 [数据来源与维护说明](data/README.md)。
