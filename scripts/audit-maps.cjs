@@ -22,7 +22,6 @@ const load = (filename) => {
     files.set(filename, JSON.parse(fs.readFileSync(path.join(resources, 'maps', filename))));
   return files.get(filename);
 };
-let comparisons = 0;
 for (const region of catalog) {
   if (region.parentId) assert.ok(byId.has(region.parentId), region.id);
   assert.equal(new Set(region.districtNames).size, region.districtNames.length, region.id);
@@ -48,23 +47,20 @@ for (const region of catalog) {
     region.districtNames,
     region.id,
   );
-  if (region.dataset === 'tianditu') {
-    for (const feature of districts.features)
-      assert.deepEqual(feature, originals.get(feature.properties.gb), region.id);
-    const polygons = districts.features.map((feature) =>
-      feature.geometry.type === 'Polygon'
-        ? [feature.geometry.coordinates]
-        : feature.geometry.coordinates,
-    );
-    const expected = polygons.length === 1 ? polygons[0] : clipping.union(...polygons);
-    assert.deepEqual(
-      outline.features[0].geometry,
-      { type: 'MultiPolygon', coordinates: expected },
-      region.id,
-    );
-    assert.deepEqual(outline.boundaryLines, districts.boundaryLines, region.id);
-    comparisons++;
-  }
+  for (const feature of districts.features)
+    assert.deepEqual(feature, originals.get(feature.properties.gb), region.id);
+  const polygons = districts.features.map((feature) =>
+    feature.geometry.type === 'Polygon'
+      ? [feature.geometry.coordinates]
+      : feature.geometry.coordinates,
+  );
+  const expected = polygons.length === 1 ? polygons[0] : clipping.union(...polygons);
+  assert.deepEqual(
+    outline.features[0].geometry,
+    { type: 'MultiPolygon', coordinates: expected },
+    region.id,
+  );
+  assert.deepEqual(outline.boundaryLines, districts.boundaryLines, region.id);
 }
 for (const [filename, original] of files) {
   const data = structuredClone(original),
@@ -89,7 +85,6 @@ console.log(
   JSON.stringify(
     {
       regions: catalog.length,
-      main: comparisons,
       modes: catalog.length * 2,
       files: files.size,
       aliases: aliases.size,

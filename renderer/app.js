@@ -84,7 +84,6 @@ function renderList() {
     query: $('search').value,
     province: $('province').value,
     level: $('level').value,
-    dataset: $('dataset').value,
   });
   $('results-count').textContent = matches.length + ' 个条目';
   const fragment = document.createDocumentFragment();
@@ -174,7 +173,6 @@ async function loadMap() {
 }
 
 async function selectRegion(region) {
-  $('dataset').value = region.dataset || 'tianditu';
   if (region.id !== settings.regionId) settings = { ...settings, regionId: region.id, title: '' };
   currentRegion = region;
   saveSettings(localStorage, settings);
@@ -194,11 +192,7 @@ async function selectRegion(region) {
     ? '点击分区进入下一级地图'
     : '点击地图查看分区名称';
   $('current-source').textContent =
-    '当前数据：' +
-    region.source +
-    ' · ' +
-    region.crs +
-    (region.dataset === 'legacy' ? ' · 历史补充，与主库独立显示' : ' · 仅供地图可视化');
+    '当前数据：' + region.source + ' · ' + region.crs + ' · 仅供地图可视化';
   await loadMap();
 }
 
@@ -227,7 +221,6 @@ async function exportImage() {
 $('search').addEventListener('input', renderList);
 $('province').addEventListener('change', renderList);
 $('level').addEventListener('change', renderList);
-$('dataset').addEventListener('change', renderList);
 $('breadcrumb').addEventListener('click', (event) => {
   const button = event.target.closest('button[data-id]');
   if (button) void selectRegion(regions.find((region) => region.id === button.dataset.id));

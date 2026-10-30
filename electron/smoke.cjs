@@ -60,17 +60,14 @@ exports.run = async function run(window, output) {
   }
   await waitFor('document.getElementById("map").dataset.ready==="true"');
   const catalog = await js('atlas.getRegions()');
-  assert.equal(catalog.length, 3692);
-  const main = catalog.filter((r) => r.dataset === 'tianditu');
-  assert.equal(main.length, 3293);
-  assert.equal(catalog.filter((r) => r.dataset === 'legacy').length, 399);
+  assert.equal(catalog.length, 3293);
+  assert.equal(await js('document.getElementById("dataset")'), null);
   assert.equal(await js('typeof require'), 'undefined');
   assert.ok(catalog.every((r) => !Object.hasOwn(r, 'variants')));
   const byId = new Map(catalog.map((r) => [r.id, r]));
   async function select(id, variant = 'districts') {
     const region = byId.get(id);
     assert.ok(region, id);
-    await input('dataset', region.dataset, 'change');
     await input('level', region.level, 'change');
     await input('province', '', 'change');
     await input('search', region.name);
@@ -123,7 +120,7 @@ exports.run = async function run(window, output) {
   const validation = await js(
     '(async()=>{let count=0,lines=0;for(const r of await atlas.getRegions())for(const variant of ["districts","outline"]){const data=await atlas.getMap({regionId:r.id,variant});const parsed=echarts.parseGeoJSON(data);if(parsed.length!==data.features.length)throw Error(r.id);for(const part of parsed){const b=part.getBoundingRect();if(![b.x,b.y,b.width,b.height].every(Number.isFinite)||b.width<=0||b.height<=0)throw Error(r.id);}lines+=(data.boundaryLines||[]).length;count++;}return {count,lines};})()',
   );
-  assert.equal(validation.count, 7384);
+  assert.equal(validation.count, 6586);
   assert.ok(validation.lines > 0);
   assert.equal(
     await js(
@@ -137,8 +134,7 @@ exports.run = async function run(window, output) {
     ),
     'INVALID_IMAGE',
   );
-  console.log('PASS: all 7384 modes, decoded bounds, boundary lines, isolated API');
-  await input('dataset', 'tianditu', 'change');
+  console.log('PASS: all 6586 modes, decoded bounds, boundary lines, isolated API');
   await input('level', '', 'change');
   for (const query of ['nanchang', 'nc', '南昌', '台北', 'bj', 'jiangxi', 'jx', 'shaanxi']) {
     await input('search', query);
@@ -169,15 +165,7 @@ exports.run = async function run(window, output) {
   await clickMapRegion('中西区', 'tdt-county-810101');
   await select('820000');
   await screenshot('macau.png');
-  await select('tai2_bei3');
-  await screenshot('legacy-taipei.png');
-  assert.ok(
-    (await js('document.getElementById("current-source").textContent')).includes('历史补充'),
-  );
-  const legacyCounty = catalog.find((r) => r.dataset === 'legacy' && r.parentId === 'tai2_bei3');
-  await select(legacyCounty.id);
-  await exportPng();
-  console.log('PASS: real map clicks, Taiwan, Hong Kong, separate historical detail');
+  console.log('PASS: real map clicks, Taiwan, Hong Kong and Macau');
   await select('540000');
   await screenshot('tibet-audited.png');
   for (const variant of ['districts', 'outline']) {
@@ -222,8 +210,6 @@ exports.run = async function run(window, output) {
     JSON.stringify(
       {
         regions: catalog.length,
-        main: main.length,
-        supplements: 399,
         maps: validation.count,
         boundarySegments: validation.lines,
         image: size,
@@ -234,7 +220,7 @@ exports.run = async function run(window, output) {
           'real map clicks',
           'boundary line layer',
           'PNG alpha',
-          'main and supplement navigation',
+          'single-source navigation',
           'legacy preference migration',
           'reload',
         ],

@@ -32,25 +32,6 @@ function readSnapshot(source) {
   return { manifest, layers };
 }
 
-const simplified = (name) =>
-  name
-    .replace(
-      /[臺縣東門連雲園義蘭蓮]/g,
-      (c) =>
-        ({
-          臺: '台',
-          縣: '县',
-          東: '东',
-          門: '门',
-          連: '连',
-          雲: '云',
-          園: '园',
-          義: '义',
-          蘭: '兰',
-          蓮: '莲',
-        })[c],
-    )
-    .replace(/市$/, '');
 const provinceName = (name) =>
   name.replace(/省$|市$|特别行政区$|壮族自治区$|回族自治区$|维吾尔自治区$|自治区$/g, '');
 const coordinates = (feature) =>
@@ -100,11 +81,9 @@ function clipLines(features, box) {
   return result;
 }
 
-function appendTianditu(source, output, legacy) {
+function buildCatalog(source, output, aliasesById) {
   const { manifest, layers } = readSnapshot(source);
-  const catalog = [],
-    usedLegacy = new Set(),
-    unmatched = [];
+  const catalog = [];
   const write = (filename, value) =>
     fs.writeFileSync(path.join(output, 'maps', filename), JSON.stringify(value));
   const searchFields = (name) => ({
@@ -117,17 +96,6 @@ function appendTianditu(source, output, legacy) {
     const name =
       level === 'province' ? provinceName(feature.properties.name) : feature.properties.name;
     const id = forcedId || 'tdt-' + feature.properties.gb.slice(3);
-    const old = ['city', 'province'].includes(level)
-      ? legacy.filter(
-          (r) =>
-            r.level === 'city' &&
-            simplified(r.name) === simplified(name) &&
-            (r.province === (level === 'province' ? name : parent?.province) ||
-              r.province === '直辖市及港澳'),
-        )
-      : [];
-    const aliases = old.length === 1 && !usedLegacy.has(old[0].id) ? [old[0].id] : [];
-    aliases.forEach((alias) => usedLegacy.add(alias));
     const region = {
       id,
       name,
@@ -136,13 +104,12 @@ function appendTianditu(source, output, legacy) {
       province: level === 'province' ? name : parent?.province || '全国',
       city: level === 'county' ? parent.name : '',
       ...searchFields(name),
-      aliases,
+      aliases: aliasesById[id] || [],
       children: [],
       districtNames: members.map((f) => f.properties.name),
       source: '天地图 · 2026-10 下载',
       crs: manifest.crs,
       sourceId: feature.properties.gb || '156000000',
-      dataset: 'tianditu',
       variants: { districts: id + '-districts.json', outline: id + '-outline.json' },
     };
     // Derive outline from exactly the displayed districts, never the old shape_only files.
@@ -240,53 +207,14 @@ function appendTianditu(source, output, legacy) {
     );
     if (parent.level === 'province') county.city = parent.name;
     parent.children.push({ name: feature.properties.name, regionId: county.id });
-    const oldParent = legacy.find(
-      (r) =>
-        r.level === 'city' &&
-        (city?.aliases.includes(r.id) ||
-          (parent.level === 'province' && simplified(r.name) === simplified(parent.name))),
-    );
-    if (oldParent) {
-      const oldCounties = legacy.filter(
-        (r) => r.parentId === oldParent.id && simplified(r.name) === simplified(county.name),
-      );
-      if (oldCounties.length === 1) county.aliases.push(oldCounties[0].id);
-    }
   }
-  // Keep only explicitly separate Taiwan/Macau historical supplements, never mix coordinates.
-  const supplements = legacy.filter(
-    (r) => r.level === 'city' && (r.province === '台湾' || r.id === 'aomen'),
-  );
-  for (const old of supplements) {
-    const province = provinces.get(old.id === 'aomen' ? '156820000' : '156710000');
-    const children = legacy.filter((r) => r.parentId === old.id && r.level === 'county');
-    for (const item of [old, ...children]) {
-      item.dataset = 'legacy';
-      item.source = '原城市图库 · 历史补充（独立查看）';
-      item.crs = '原来源未统一声明';
-      item.aliases = [];
-      item.province = province.name;
-      if (item === old) item.parentId = province.id;
-      catalog.push(item);
-    }
-    // The original files already exist from legacy extraction.
-  }
-  for (const old of legacy.filter((r) => r.level === 'city'))
-    if (!usedLegacy.has(old.id) && !supplements.includes(old))
-      unmatched.push({
-        id: old.id,
-        name: old.name,
-        reason: 'No unambiguous current match; preference falls back to national map',
-      });
-  fs.writeFileSync(
-    path.join(output, 'tianditu-links-report.json'),
-    JSON.stringify({ unmatched }, null, 2),
-  );
   fs.copyFileSync(path.join(source, 'manifest.json'), path.join(output, 'TIANDITU-manifest.json'));
+  const ids = new Set(catalog.map((region) => region.id));
+  for (const id of Object.keys(aliasesById))
+    if (!ids.has(id)) throw Error('Alias target missing: ' + id);
   const rank = { country: 0, province: 1, city: 2, county: 3 };
   catalog.sort(
     (a, b) =>
-      b.dataset.localeCompare(a.dataset) ||
       rank[a.level] - rank[b.level] ||
       a.province.localeCompare(b.province, 'zh-CN') ||
       (a.city || '').localeCompare(b.city || '', 'zh-CN') ||
@@ -294,4 +222,4 @@ function appendTianditu(source, output, legacy) {
   );
   return catalog;
 }
-module.exports = { appendTianditu, readSnapshot, clipLines };
+module.exports = { buildCatalog, readSnapshot, clipLines };

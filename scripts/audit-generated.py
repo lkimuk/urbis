@@ -15,8 +15,6 @@ def audit(resources):
     checked = 0
     maximum = 0
     for region in catalog:
-        if region.get('dataset') != 'tianditu':
-            continue
         geometries = {}
         for variant, filename in region['variants'].items():
             data = json.loads((resources / 'maps' / filename).read_text(encoding='utf-8'))
