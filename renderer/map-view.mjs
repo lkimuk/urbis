@@ -39,19 +39,6 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
         title: {
           show: settings.showTitle,
           text: settings.title.trim() || region.name,
-          subtext:
-            ({
-              country: '全国',
-              province: '省级地图',
-              city: region.province,
-              county: region.province + ' / ' + region.city,
-            }[region.level] || region.province) +
-            '  /  ' +
-            (region.level === 'county'
-              ? '区县轮廓'
-              : settings.variant === 'districts'
-                ? '行政区划'
-                : '区域轮廓'),
           left: 30,
           top: 25,
           textStyle: {
@@ -60,8 +47,6 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
             fontSize: 25,
             fontWeight: 'normal',
           },
-          subtextStyle: { color: settings.text, fontFamily: 'Microsoft YaHei', fontSize: 10 },
-          itemGap: 12,
         },
         tooltip: {
           trigger: 'item',
@@ -82,7 +67,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           ...(previous?.center ? { center: previous.center } : {}),
           left: '10%',
           right: '10%',
-          top: settings.showTitle ? 125 : '10%',
+          top: settings.showTitle ? 90 : '10%',
           bottom: '10%',
           label: {
             show: settings.labels && settings.variant === 'districts',

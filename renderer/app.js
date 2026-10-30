@@ -26,7 +26,6 @@ const view = createMapView({
     if (busy) return;
     const child = childRegion(regions, currentRegion, name);
     if (child && settings.variant === 'districts') void selectRegion(child);
-    else $('selection-status').textContent = currentRegion.name + ' / ' + name;
   },
   onResize: updateDimensions,
 });
@@ -73,7 +72,7 @@ function syncControls() {
 
 function updateActions() {
   $('export').disabled = busy || exporting || !currentMap;
-  $('export').textContent = exporting ? '正在保存…' : '导出 PNG 图片';
+  $('export').textContent = exporting ? '正在保存…' : '导出 PNG';
   $('map').setAttribute('aria-busy', String(busy));
   $('map').dataset.ready = String(!busy && Boolean(currentMap));
   for (const id of ['zoom-in', 'zoom-out', 'reset-view']) $(id).disabled = busy || !currentMap;
@@ -157,10 +156,6 @@ async function loadMap() {
     busy = false;
     $('map-message').hidden = true;
     $('map').dataset.mapKey = result.key;
-    $('map-status').textContent =
-      region.name +
-      ' · ' +
-      (settings.variant === 'districts' ? region.districtNames.length + ' 个地图分区' : '纯轮廓');
     updateActions();
   } catch (error) {
     currentMap = null;
@@ -168,7 +163,6 @@ async function loadMap() {
     updateActions();
     $('map-message').classList.add('error');
     $('map-message').textContent = '地图加载失败：' + error.message + '。请重新选择地图重试。';
-    $('map-status').textContent = '地图加载失败';
   }
 }
 
@@ -188,11 +182,7 @@ async function selectRegion(region) {
     return button;
   });
   $('breadcrumb').replaceChildren(...trail);
-  $('selection-status').textContent = region.children.length
-    ? '点击分区进入下一级地图'
-    : '点击地图查看分区名称';
-  $('current-source').textContent =
-    '当前数据：' + region.source + ' · ' + region.crs + ' · 仅供地图可视化';
+  $('current-source').textContent = region.source + ' · ' + region.crs;
   await loadMap();
 }
 
@@ -295,7 +285,6 @@ async function initialize() {
   try {
     regions = await api.getRegions();
     if (!regions.length) throw new Error('地图库为空');
-    $('city-total').textContent = regions.length;
     for (const province of new Set(
       regions.filter((region) => region.level === 'province').map((region) => region.province),
     )) {
