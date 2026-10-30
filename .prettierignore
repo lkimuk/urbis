@@ -1,0 +1,9 @@
+node_modules/
+resources/
+release/
+release-*/
+artifacts/
+build-tools/
+package-lock.json
+electron-runtime.zip
+electron-shasums.txt
