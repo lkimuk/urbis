@@ -198,6 +198,40 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
   await screenshot('county.png');
   await exportPng();
   await select('110000');
+  async function checkBeijingLabels() {
+    const labels = await js(
+      'echarts.getInstanceByDom(document.getElementById("map")).getOption().graphic[0].elements.filter(e=>e.type==="text").map(e=>({text:e.style.text,x:e.style.x,y:e.style.y}))',
+    );
+    assert.equal(labels.length, 16, 'All Beijing district labels must be visible');
+    assert.equal(new Set(labels.map((label) => label.text)).size, 16);
+    const drawn = await js(
+      '(()=>{const chart=echarts.getInstanceByDom(document.getElementById("map"));chart.getZr().flush();return chart.getZr().storage.getDisplayList().filter(e=>e.type==="tspan"&&!e.ignore&&!e.invisible).map(e=>e.style.text);})()',
+    );
+    for (const label of labels)
+      assert.ok(drawn.includes(label.text), 'Label must be actually drawn: ' + label.text);
+    assert.ok(
+      await js(
+        'echarts.getInstanceByDom(document.getElementById("map")).getOption().graphic[0].elements.some(e=>e.type==="polyline")',
+      ),
+      'Tiny districts must have leader lines',
+    );
+  }
+  await checkBeijingLabels();
+  await screenshot('beijing-labels.png');
+  window.setSize(1080, 720);
+  await screenshot('beijing-labels-compact.png');
+  await checkBeijingLabels();
+  window.setSize(1480, 960);
+  await screenshot('beijing-labels-restored.png');
+  await click('#labels');
+  assert.equal(
+    await js(
+      'echarts.getInstanceByDom(document.getElementById("map")).getOption().graphic[0].elements.filter(e=>e.type==="text").length',
+    ),
+    0,
+  );
+  await click('#labels');
+  await checkBeijingLabels();
   await input('border-color', '#ffffff');
   const textStyles = await js(
     '(()=>{const o=echarts.getInstanceByDom(document.getElementById("map")).getOption();return [o.title[0].textStyle.color,o.geo[0].label.color,o.geo[0].emphasis.label.color,o.geo[0].select.label.color];})()',
@@ -297,6 +331,7 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
         networkRequests,
         checks: [
           'all modes',
+          'shape-aware labels and leader lines at normal and compact sizes',
           'bounded map registration',
           'list identity and keyboard focus',
           'shared palette swatches',
