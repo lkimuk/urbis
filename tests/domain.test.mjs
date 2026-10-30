@@ -21,6 +21,10 @@ test('preferences reject corrupt data and keep valid custom settings', () => {
   assert.equal(settings.title.length, 40);
   assert.equal(settings.regionId, 'beijing');
   assert.equal(normalizeSettings({ cityId: 'beijing' }).regionId, 'beijing');
+  assert.equal(normalizeSettings({ border: '#ffffff' }).text, DEFAULTS.text);
+  assert.equal(normalizeSettings({ border: '#ffffff', palette: 'clay' }).text, '#8a5a42');
+  assert.equal(normalizeSettings({ text: 'invalid' }).text, DEFAULTS.text);
+  assert.equal(normalizeSettings({ border: '#ffffff', text: '#123456' }).text, '#123456');
   assert.deepEqual(loadSettings({ getItem: () => '{bad' }), DEFAULTS);
   assert.doesNotThrow(() =>
     saveSettings(

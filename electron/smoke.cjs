@@ -158,6 +158,34 @@ exports.run = async function run(window, output) {
   await screenshot('county.png');
   await exportPng();
   await select('110000');
+  await input('border-color', '#ffffff');
+  const textStyles = await js(
+    '(()=>{const o=echarts.getInstanceByDom(document.getElementById("map")).getOption();return [o.title[0].textStyle.color,o.title[0].subtextStyle.color,o.geo[0].label.color,o.geo[0].emphasis.label.color,o.geo[0].select.label.color];})()',
+  );
+  assert.deepEqual(textStyles, Array(5).fill('#526d60'));
+  await screenshot('independent-text.png');
+  await input('text-color', '#ff0000');
+  assert.equal(
+    await js(
+      'echarts.getInstanceByDom(document.getElementById("map")).getOption().geo[0].itemStyle.borderColor',
+    ),
+    '#ffffff',
+  );
+  await exportPng();
+  const textPixels = nativeImage
+    .createFromPath(path.join(output, '北京-行政区地图.png'))
+    .toBitmap();
+  let redPixels = 0;
+  for (let i = 0; i < textPixels.length; i += 4)
+    if (
+      textPixels[i] < 20 &&
+      textPixels[i + 1] < 20 &&
+      textPixels[i + 2] > 230 &&
+      textPixels[i + 3] === 255
+    )
+      redPixels++;
+  assert.ok(redPixels > 20, 'Export must contain the independently colored text');
+  await click('[data-palette=atlas]');
   await clickMapRegion('东城区', 'tdt-county-110101');
   await select('710000');
   await clickMapRegion('台北市', 'tdt-county-710009');
@@ -197,12 +225,14 @@ exports.run = async function run(window, output) {
   await ready('tdt-county-360102');
   assert.equal(await js('document.getElementById("map-title").value'), '旧标题');
   await input('map-title', '保存标题');
+  await input('text-color', '#123456');
   await new Promise((resolve) => {
     window.webContents.once('did-finish-load', resolve);
     window.webContents.reload();
   });
   await ready('tdt-county-360102');
   assert.equal(await js('document.getElementById("map-title").value'), '保存标题');
+  assert.equal(await js('document.getElementById("text-color").value'), '#123456');
   assert.deepEqual(errors, []);
   assert.deepEqual(networkRequests, []);
   await fs.writeFile(
@@ -220,6 +250,7 @@ exports.run = async function run(window, output) {
           'real map clicks',
           'boundary line layer',
           'PNG alpha',
+          'independent text color and PNG export',
           'single-source navigation',
           'legacy preference migration',
           'reload',
