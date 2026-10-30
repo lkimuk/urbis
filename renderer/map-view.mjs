@@ -1,3 +1,5 @@
+import { layoutRegionLabels } from './label-layout.mjs';
+
 let nextMapId = 0;
 
 // This module owns ECharts and its canvas. It has no knowledge of form controls or IPC.
@@ -12,25 +14,76 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
   let boundaries = [];
   let model;
   let layoutFrame;
+  let labelRevision = 0;
 
   function layoutLabels() {
-    if (!model || model.settings.variant !== 'districts' || !model.settings.labels) return;
-    const occupied = [];
-    const data = regions.map((region) => {
-      const [x, y] = chart.convertToPixel({ geoIndex: 0 }, region.getCenter());
-      const width = Array.from(region.name).length * 11 + 8;
-      const box = { left: x - width / 2, right: x + width / 2, top: y - 9, bottom: y + 9 };
-      const show = !occupied.some(
-        (other) =>
-          box.left < other.right &&
-          box.right > other.left &&
-          box.top < other.bottom &&
-          box.bottom > other.top,
-      );
-      if (show) occupied.push(box);
-      return { name: region.name, label: { show } };
-    });
-    chart.setOption({ geo: { regions: data } });
+    if (!model) return;
+    const { settings } = model;
+    let labels = [];
+    if (settings.variant === 'districts' && settings.labels) {
+      const project = (point) => chart.convertToPixel({ geoIndex: 0 }, point);
+      const projected = regions.map((region) => ({
+        name: region.name,
+        polygons: region.geometries
+          .filter((geometry) => geometry.type === 'polygon')
+          .map((geometry) =>
+            [geometry.exterior, ...(geometry.interiors || [])].map((ring) => ring.map(project)),
+          ),
+      }));
+      labels = layoutRegionLabels(projected, {
+        width: chart.getWidth(),
+        height: chart.getHeight(),
+        measureText: (text) =>
+          echarts.format.getTextRect(text, '12px "Microsoft YaHei", sans-serif').width,
+        reserved: settings.showTitle
+          ? [
+              {
+                left: 24,
+                top: 20,
+                right: Math.min(
+                  chart.getWidth() - 10,
+                  40 +
+                    echarts.format.getTextRect(
+                      settings.title.trim() || model.region.name,
+                      '25px SimSun',
+                    ).width,
+                ),
+                bottom: 62,
+              },
+            ]
+          : [],
+        lines: boundaries.map((line) => line.map(project)),
+      });
+    }
+    const children = [];
+    for (const label of labels) {
+      if (label.line)
+        children.push({
+          type: 'polyline',
+          z: 19,
+          silent: true,
+          shape: { points: label.line },
+          style: { stroke: settings.text, lineWidth: 0.8, opacity: 0.8, fill: null },
+        });
+      children.push({
+        type: 'text',
+        z: 20,
+        silent: true,
+        style: {
+          x: label.x,
+          y: label.y,
+          text: label.name,
+          fill: settings.text,
+          font: '12px "Microsoft YaHei", sans-serif',
+          align: 'center',
+          verticalAlign: 'middle',
+        },
+      });
+    }
+    chart.setOption(
+      { graphic: { id: 'region-labels-' + ++labelRevision, elements: children } },
+      { replaceMerge: ['graphic'] },
+    );
   }
 
   function render({ region, settings }, reset = false) {
@@ -74,7 +127,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           top: settings.showTitle ? 90 : '10%',
           bottom: '10%',
           label: {
-            show: settings.labels && settings.variant === 'districts',
+            show: false,
             color: settings.text,
             fontSize: 11,
             fontFamily: 'Microsoft YaHei',
@@ -86,13 +139,13 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           },
           emphasis: {
             label: {
-              show: settings.variant === 'districts' && settings.labels,
+              show: false,
               color: settings.text,
             },
             itemStyle: { areaColor: settings.fill, shadowBlur: 8, shadowColor: '#29463833' },
           },
           select: {
-            label: { color: settings.text },
+            label: { show: false, color: settings.text },
             itemStyle: {
               areaColor: settings.fill,
               borderWidth: settings.width + 1.4,
@@ -179,6 +232,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
     },
     capturePng({ scale, transparent, background }) {
       if (!model) throw new Error('请先选择地图');
+      layoutLabels();
       const { width, height } = this.dimensions(scale);
       if (width * height > 64 * 1024 * 1024) throw new Error('图片尺寸过大，请降低导出精度');
       const canvas = document.createElement('div');
