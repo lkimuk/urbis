@@ -38,7 +38,7 @@ function createWindow() {
     minWidth: 1080,
     minHeight: 720,
     title: '城市图志',
-    backgroundColor: '#f4f3ee',
+    backgroundColor: '#f3f3f3',
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
