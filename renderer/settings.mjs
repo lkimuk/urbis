@@ -1,7 +1,22 @@
 export const PALETTES = Object.freeze({
-  atlas: Object.freeze({ fill: '#b8cdbe', border: '#526d60', background: '#faf9f5' }),
-  clay: Object.freeze({ fill: '#d7b399', border: '#8a5a42', background: '#fbf6ef' }),
-  ink: Object.freeze({ fill: '#b6c5d3', border: '#435c75', background: '#f4f6f8' }),
+  atlas: Object.freeze({
+    fill: '#b8cdbe',
+    border: '#526d60',
+    text: '#526d60',
+    background: '#faf9f5',
+  }),
+  clay: Object.freeze({
+    fill: '#d7b399',
+    border: '#8a5a42',
+    text: '#8a5a42',
+    background: '#fbf6ef',
+  }),
+  ink: Object.freeze({
+    fill: '#b6c5d3',
+    border: '#435c75',
+    text: '#435c75',
+    background: '#f4f6f8',
+  }),
 });
 
 export const DEFAULTS = Object.freeze({
@@ -23,7 +38,9 @@ export function normalizeSettings(value) {
   for (const key of ['labels', 'showTitle', 'transparent']) {
     if (typeof value[key] === 'boolean') result[key] = value[key];
   }
-  for (const key of ['fill', 'border', 'background']) {
+  // Older preferences have no text color; use the palette's readable default, not a custom border.
+  result.text = PALETTES[value.palette]?.text || DEFAULTS.text;
+  for (const key of ['fill', 'border', 'text', 'background']) {
     if (typeof value[key] === 'string' && /^#[a-f0-9]{6}$/i.test(value[key]))
       result[key] = value[key];
   }

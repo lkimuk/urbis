@@ -53,7 +53,7 @@ function syncControls() {
   $('show-title').checked = settings.showTitle;
   $('map-title').disabled = !settings.showTitle;
   $('map-title').value = settings.title;
-  for (const key of ['fill', 'border', 'background']) {
+  for (const key of ['fill', 'border', 'text', 'background']) {
     $(key + '-color').value = settings[key];
     $(key + '-value').textContent = settings[key].toUpperCase();
   }
@@ -242,7 +242,7 @@ for (const [id, key] of [
 ]) {
   $(id).addEventListener('change', () => changeSettings({ [key]: $(id).checked }));
 }
-for (const key of ['fill', 'border', 'background']) {
+for (const key of ['fill', 'border', 'text', 'background']) {
   $(key + '-color').addEventListener('input', () =>
     changeSettings({ [key]: $(key + '-color').value, palette: '' }),
   );
@@ -261,8 +261,8 @@ document.querySelectorAll('[data-palette]').forEach((button) =>
 );
 $('reset-style').addEventListener('click', () => {
   // Reset appearance, preserving the selected map mode, export options, and current view.
-  const { fill, border, background, width, labels, showTitle, palette, title } = DEFAULTS;
-  changeSettings({ fill, border, background, width, labels, showTitle, palette, title });
+  const { fill, border, text, background, width, labels, showTitle, palette, title } = DEFAULTS;
+  changeSettings({ fill, border, text, background, width, labels, showTitle, palette, title });
 });
 $('reset-view').addEventListener('click', () => view.reset());
 $('zoom-in').addEventListener('click', () => view.zoom(1.25));

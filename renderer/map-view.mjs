@@ -55,12 +55,12 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           left: 30,
           top: 25,
           textStyle: {
-            color: settings.border,
+            color: settings.text,
             fontFamily: 'SimSun, serif',
             fontSize: 25,
             fontWeight: 'normal',
           },
-          subtextStyle: { color: settings.border, fontFamily: 'Microsoft YaHei', fontSize: 10 },
+          subtextStyle: { color: settings.text, fontFamily: 'Microsoft YaHei', fontSize: 10 },
           itemGap: 12,
         },
         tooltip: {
@@ -86,7 +86,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           bottom: '10%',
           label: {
             show: settings.labels && settings.variant === 'districts',
-            color: settings.border,
+            color: settings.text,
             fontSize: 11,
             fontFamily: 'Microsoft YaHei',
           },
@@ -98,12 +98,12 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           emphasis: {
             label: {
               show: settings.variant === 'districts' && settings.labels,
-              color: settings.border,
+              color: settings.text,
             },
             itemStyle: { areaColor: settings.fill, shadowBlur: 8, shadowColor: '#29463833' },
           },
           select: {
-            label: { color: settings.border },
+            label: { color: settings.text },
             itemStyle: {
               areaColor: settings.fill,
               borderWidth: settings.width + 1.4,
