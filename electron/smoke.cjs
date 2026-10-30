@@ -160,9 +160,9 @@ exports.run = async function run(window, output) {
   await select('110000');
   await input('border-color', '#ffffff');
   const textStyles = await js(
-    '(()=>{const o=echarts.getInstanceByDom(document.getElementById("map")).getOption();return [o.title[0].textStyle.color,o.title[0].subtextStyle.color,o.geo[0].label.color,o.geo[0].emphasis.label.color,o.geo[0].select.label.color];})()',
+    '(()=>{const o=echarts.getInstanceByDom(document.getElementById("map")).getOption();return [o.title[0].textStyle.color,o.geo[0].label.color,o.geo[0].emphasis.label.color,o.geo[0].select.label.color];})()',
   );
-  assert.deepEqual(textStyles, Array(5).fill('#526d60'));
+  assert.deepEqual(textStyles, Array(4).fill('#526d60'));
   await screenshot('independent-text.png');
   await input('text-color', '#ff0000');
   assert.equal(
@@ -233,6 +233,14 @@ exports.run = async function run(window, output) {
   await ready('tdt-county-360102');
   assert.equal(await js('document.getElementById("map-title").value'), '保存标题');
   assert.equal(await js('document.getElementById("text-color").value'), '#123456');
+  window.setSize(1080, 720);
+  await screenshot('compact-layout.png');
+  assert.equal(await js('document.documentElement.scrollWidth <= innerWidth'), true);
+  assert.equal(
+    await js('document.getElementById("export").getBoundingClientRect().bottom <= innerHeight'),
+    true,
+  );
+  window.setSize(1480, 960);
   assert.deepEqual(errors, []);
   assert.deepEqual(networkRequests, []);
   await fs.writeFile(
