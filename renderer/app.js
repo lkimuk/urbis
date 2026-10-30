@@ -171,7 +171,11 @@ async function selectRegion(region) {
   currentRegion = region;
   saveSettings(localStorage, settings);
   syncControls();
-  renderList();
+  for (const button of $('city-list').querySelectorAll('.active, [data-id="' + region.id + '"]')) {
+    const active = button.dataset.id === region.id;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  }
   const trail = regionTrail(regions, region).map((item, index, items) => {
     const button = document.createElement('button');
     button.type = 'button';
@@ -280,6 +284,11 @@ window.addEventListener(
 );
 
 async function initialize() {
+  for (const button of document.querySelectorAll('[data-palette]')) {
+    const palette = PALETTES[button.dataset.palette];
+    button.style.setProperty('--swatch-fill', palette.fill);
+    button.style.setProperty('--swatch-border', palette.border);
+  }
   syncControls();
   updateActions();
   try {
@@ -296,6 +305,7 @@ async function initialize() {
     const restored = resolveRegion(regions, settings.regionId) || regions[0];
     // Preserve the user's title and style when only the data identifier changes.
     if (restored.id !== settings.regionId) settings = { ...settings, regionId: restored.id };
+    renderList();
     await selectRegion(restored);
     $('city-list').querySelector('.active')?.scrollIntoView({ block: 'center' });
   } catch (error) {

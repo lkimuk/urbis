@@ -400,15 +400,7 @@ h3 {
   display: block;
   width: 100%;
   height: 15px;
-}
-.swatch.atlas {
-  background: linear-gradient(90deg, #b8cdbe 60%, #526d60 60%);
-}
-.swatch.clay {
-  background: linear-gradient(90deg, #d7b399 60%, #8a5a42 60%);
-}
-.swatch.ink {
-  background: linear-gradient(90deg, #b6c5d3 60%, #435c75 60%);
+  background: linear-gradient(90deg, var(--swatch-fill) 60%, var(--swatch-border) 60%);
 }
 .color-row {
   display: flex;
