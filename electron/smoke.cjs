@@ -224,6 +224,11 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
   }
   await checkBeijingLabels();
   await screenshot('beijing-labels.png');
+  for (const palette of ['clay', 'ink']) {
+    await click('[data-palette=' + palette + ']');
+    await screenshot('beijing-' + palette + '.png');
+  }
+  await click('[data-palette=atlas]');
   window.setSize(1080, 720);
   await screenshot('beijing-labels-compact.png');
   await checkBeijingLabels();
