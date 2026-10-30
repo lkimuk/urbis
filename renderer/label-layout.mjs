@@ -120,122 +120,73 @@ function interiorPoint(polygons, width, height, viewport) {
   return best;
 }
 
-function segmentHitsBox(a, b, box) {
-  let start = 0,
-    end = 1;
-  for (let axis = 0; axis < 2; axis++) {
-    const min = axis ? box.top : box.left,
-      max = axis ? box.bottom : box.right;
-    const delta = b[axis] - a[axis];
-    if (delta === 0) {
-      if (a[axis] < min || a[axis] > max) return false;
-    } else {
-      const t1 = (min - a[axis]) / delta,
-        t2 = (max - a[axis]) / delta;
-      start = Math.max(start, Math.min(t1, t2));
-      end = Math.min(end, Math.max(t1, t2));
-      if (start > end) return false;
-    }
-  }
-  return true;
-}
-
-// Spatial buckets keep external-label searches independent of total coastline complexity.
-function boundaryIndex(regions, viewport, lines) {
-  const buckets = new Map(),
-    size = 32;
-  function cells(box, visit) {
-    const left = Math.max(viewport.left, box.left),
-      right = Math.min(viewport.right, box.right);
-    const top = Math.max(viewport.top, box.top),
-      bottom = Math.min(viewport.bottom, box.bottom);
-    for (let x = Math.floor(left / size); x <= Math.floor(right / size); x++)
-      for (let y = Math.floor(top / size); y <= Math.floor(bottom / size); y++) visit(x + ':' + y);
-  }
-  function addLine(ring) {
-    for (let i = 1; i < ring.length; i++) {
-      const a = ring[i - 1],
-        b = ring[i];
-      cells(
-        {
-          left: Math.min(a[0], b[0]),
-          right: Math.max(a[0], b[0]),
-          top: Math.min(a[1], b[1]),
-          bottom: Math.max(a[1], b[1]),
-        },
-        (key) => {
-          if (!buckets.has(key)) buckets.set(key, []);
-          buckets.get(key).push([a, b]);
-        },
-      );
-    }
-  }
-  for (const region of regions)
-    for (const polygon of region.polygons) for (const ring of polygon) addLine([...ring, ring[0]]);
-  for (const line of lines) addLine(line);
-  return (box) => {
-    let hit = false;
-    cells(box, (key) => {
-      if (!hit) hit = (buckets.get(key) || []).some(([a, b]) => segmentHitsBox(a, b, box));
-    });
-    return hit;
-  };
-}
-
-export function layoutRegionLabels(
-  regions,
-  { width, height, measureText, reserved = [], lines = [] },
-) {
+// Small labels take nearby slots first; larger regions have space to yield to them.
+// Offsets are intentionally bounded: without leader lines a distant name is misleading.
+export function layoutRegionLabels(regions, { width, height, measureText, reserved = [] }) {
   const viewport = { left: 10, right: width - 10, top: 10, bottom: height - 10 };
   const occupied = [...reserved],
-    labels = [],
-    outside = [],
-    leaderLines = [];
-  const hitsBoundary = boundaryIndex(regions, viewport, lines);
-  const fits = (box) =>
-    box.left >= viewport.left &&
-    box.right <= viewport.right &&
-    box.top >= viewport.top &&
-    box.bottom <= viewport.bottom &&
-    !occupied.some((other) => intersects(box, other, 3)) &&
-    !leaderLines.some(([a, b]) => segmentHitsBox(a, b, box));
-  for (const region of regions) {
+    labels = [];
+  const candidates = regions.flatMap((region) => {
     const textWidth = measureText(region.name) + 8,
       textHeight = 20;
     const point = interiorPoint(region.polygons, textWidth, textHeight, viewport);
-    if (!point) continue; // The region is completely outside the current view.
-    const box = boxAt(point.x, point.y, textWidth, textHeight);
-    const label = { name: region.name, x: point.x, y: point.y, anchor: [point.x, point.y], box };
-    if (point.d >= 1.04 && fits(box) && !hitsBoundary(box)) {
-      occupied.push(box);
-      labels.push(label);
-    } else outside.push({ ...label, textWidth, textHeight });
-  }
-  outside.sort((a, b) => a.y - b.y || a.x - b.x);
-  for (const label of outside) {
-    let best;
-    for (let radius = 12; radius <= 250; radius += 12) {
-      for (let i = 0; i < 24; i++) {
-        const angle = (i * Math.PI) / 12;
-        const x = label.anchor[0] + Math.cos(angle) * (radius + label.textWidth / 2);
-        const y = label.anchor[1] + Math.sin(angle) * (radius + label.textHeight / 2);
-        const box = boxAt(x, y, label.textWidth, label.textHeight);
-        if (!fits(box) || hitsBoundary(box)) continue;
-        const end = [
-          Math.max(box.left, Math.min(box.right, label.anchor[0])),
-          Math.max(box.top, Math.min(box.bottom, label.anchor[1])),
-        ];
-        if (occupied.some((other) => segmentHitsBox(label.anchor, end, other))) continue;
-        const score = Math.hypot(x - label.anchor[0], y - label.anchor[1]);
-        if (!best || score < best.score)
-          best = { ...label, x, y, box, line: [label.anchor, end], score };
-      }
-      if (best) break;
+    return point
+      ? [
+          {
+            name: region.name,
+            anchor: [point.x, point.y],
+            textWidth,
+            textHeight,
+            clearance: point.d,
+          },
+        ]
+      : [];
+  });
+  candidates.sort((a, b) => a.clearance - b.clearance || a.anchor[0] - b.anchor[0]);
+  for (const label of candidates) {
+    const [ax, ay] = label.anchor;
+    const neighbor = candidates
+      .filter(
+        (other) =>
+          other !== label &&
+          Math.abs(other.anchor[0] - ax) < (label.textWidth + other.textWidth) / 2 &&
+          Math.abs(other.anchor[1] - ay) < 24,
+      )
+      .sort(
+        (a, b) =>
+          Math.hypot(a.anchor[0] - ax, a.anchor[1] - ay) -
+          Math.hypot(b.anchor[0] - ax, b.anchor[1] - ay),
+      )[0];
+    const direction = neighbor && ax <= neighbor.anchor[0] ? -1 : 1;
+    const offsets =
+      label.clearance < 1.04 && neighbor
+        ? [
+            [0, direction * 12],
+            [0, 0],
+          ]
+        : [[0, 0]];
+    for (const distance of [12, 24, 36]) {
+      offsets.push([0, direction * distance], [0, -direction * distance]);
+      for (const dx of [-12, 12])
+        offsets.push([dx, direction * distance], [dx, -direction * distance]);
     }
-    if (best) {
-      leaderLines.push(best.line);
-      occupied.push(best.box);
-      labels.push(best);
+    offsets.push([-24, 0], [24, 0], [-36, 0], [36, 0]);
+    for (const [dx, dy] of offsets) {
+      const x = ax + dx,
+        y = ay + dy,
+        box = boxAt(x, y, label.textWidth, label.textHeight);
+      if (
+        box.left < viewport.left ||
+        box.right > viewport.right ||
+        box.top < viewport.top ||
+        box.bottom > viewport.bottom ||
+        occupied.some((other) => intersects(box, other, 3))
+      )
+        continue;
+      const displaced = label.clearance < 1.04 || dx !== 0 || dy !== 0;
+      labels.push({ name: label.name, x, y, anchor: label.anchor, box, displaced });
+      occupied.push(box);
+      break;
     }
   }
   return labels;

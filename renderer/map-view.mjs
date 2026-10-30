@@ -52,19 +52,10 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
               },
             ]
           : [],
-        lines: boundaries.map((line) => line.map(project)),
       });
     }
     const children = [];
     for (const label of labels) {
-      if (label.line)
-        children.push({
-          type: 'polyline',
-          z: 19,
-          silent: true,
-          shape: { points: label.line },
-          style: { stroke: settings.text, lineWidth: 0.8, opacity: 0.8, fill: null },
-        });
       children.push({
         type: 'text',
         z: 20,
@@ -74,6 +65,9 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           y: label.y,
           text: label.name,
           fill: settings.text,
+          stroke: label.displaced ? settings.background : null,
+          lineWidth: label.displaced ? 2 : 0,
+          strokeFirst: true,
           font: '12px "Microsoft YaHei", sans-serif',
           align: 'center',
           verticalAlign: 'middle',
