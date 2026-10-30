@@ -19,9 +19,11 @@ from shapely.validation import explain_validity
 def audit(directory):
     report = {"files": {}, "comparisons": []}
     layers = {}
-    for level, filename in [("province", "中国_省.geojson"),
-                            ("city", "中国_市.geojson"),
-                            ("county", "中国_县.geojson")]:
+    for level, filename, stored in [("province", "中国_省.geojson", "provinces.geojson"),
+                                    ("city", "中国_市.geojson", "cities.geojson"),
+                                    ("county", "中国_县.geojson", "counties.geojson")]:
+        if not (directory / filename).exists():
+            filename = stored
         raw = (directory / filename).read_bytes()
         data = json.loads(raw.decode("utf-8-sig"))
         if data.get("type") != "FeatureCollection":
