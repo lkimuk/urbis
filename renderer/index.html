@@ -1,59 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <title>城市图志</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="../resources/vendor/echarts.min.js" defer></script>
-  <script src="app.js" defer></script>
-</head>
-<body>
-  <header class="app-header">
-    <a class="brand" href="#" aria-label="城市图志"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 8 12 4l8 4 9-4v21l-9 4-8-4-9 4ZM12 4v21m8-17v21"/></svg><span>城市图志<small>CITY ATLAS</small></span></a>
-    <div class="header-caption">每一座城，都有自己的形状。</div>
-    <span class="offline"><i></i> 离线地图工作台</span>
-  </header>
-  <main class="workspace">
-    <aside class="library" aria-label="城市选择">
-      <div class="library-head"><div class="eyebrow">01 / 探索城市</div><h1>从一座城开始<span id="city-total">—</span></h1>
-        <label class="search-label" for="search">搜索城市</label>
-        <div class="search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="search" type="search" placeholder="城市名 / 拼音 / 首字母" autocomplete="off"><kbd>Ctrl K</kbd></div>
-        <label class="search-label" for="province">按地区浏览</label><select id="province"><option value="">全部地区</option></select>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>城市图志</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="../resources/vendor/echarts.min.js" defer></script>
+    <script src="app.js" type="module"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand" aria-label="城市图志">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M3 8 12 4l8 4 9-4v21l-9 4-8-4-9 4ZM12 4v21m8-17v21" /></svg
+        ><span>城市图志<small>CITY ATLAS</small></span>
       </div>
-      <div class="list-caption"><span id="results-count">正在整理城市目录…</span><span>城市 / 地区</span></div>
-      <div id="city-list" class="city-list" aria-label="城市列表"></div>
-      <p class="library-foot">地图有边界，探索无止境。<span>本地地图库 · 无需联网</span></p>
-    </aside>
-    <section class="studio" aria-label="地图预览">
-      <div class="studio-toolbar"><span id="breadcrumb">地图工作台</span><div class="view-actions"><button id="zoom-out" class="icon-button" aria-label="缩小地图" title="缩小">−</button><button id="reset-view" class="text-button">适应画布</button><button id="zoom-in" class="icon-button" aria-label="放大地图" title="放大">＋</button></div></div>
-      <div class="canvas-area"><div class="paper" id="paper"><div id="map" role="img" aria-label="城市地图正在加载"></div><div id="map-message" class="map-message" role="status">正在打开地图…</div></div><div class="canvas-hint"><span>拖动平移 · 滚轮缩放 · 点击查看区县</span><span>预览画布</span></div></div>
-      <footer class="studio-footer"><span id="map-status">准备就绪</span><span id="selection-status">选择城市，查看它的轮廓</span></footer>
-    </section>
-    <aside class="inspector" aria-label="制图设置">
-      <div class="inspector-head"><div class="eyebrow">02 / 绘制地图</div><h2>让地图成为作品</h2></div>
-      <div class="inspector-scroll">
-        <section class="setting-section"><h3>地图内容</h3><fieldset class="segmented"><legend class="sr-only">地图类型</legend><label><input type="radio" name="variant" value="districts" checked><span>区县边界</span></label><label><input type="radio" name="variant" value="outline"><span>纯轮廓</span></label></fieldset>
-          <label class="toggle-row" for="labels"><span>显示区县名称</span><input id="labels" type="checkbox" role="switch" checked></label>
-          <label class="toggle-row" for="show-title"><span>显示地图标题</span><input id="show-title" type="checkbox" role="switch" checked></label>
-          <label class="field-label" for="map-title">标题文字</label><input id="map-title" type="text" maxlength="40" placeholder="随城市自动更新">
-        </section>
-        <section class="setting-section"><div class="section-heading"><h3>色彩与线条</h3><button id="reset-style" class="text-button">重置</button></div>
-          <div class="palettes" aria-label="配色方案"><button class="palette active" data-palette="atlas" aria-pressed="true"><i class="swatch atlas"></i>青山</button><button class="palette" data-palette="clay" aria-pressed="false"><i class="swatch clay"></i>陶土</button><button class="palette" data-palette="ink" aria-pressed="false"><i class="swatch ink"></i>墨蓝</button></div>
-          <label class="color-row" for="fill-color"><span>地图填充</span><span class="color-control"><output id="fill-value">#B8CDBE</output><input id="fill-color" type="color" value="#b8cdbe"></span></label>
-          <label class="color-row" for="border-color"><span>边界线条</span><span class="color-control"><output id="border-value">#526D60</output><input id="border-color" type="color" value="#526d60"></span></label>
-          <label class="color-row" for="background-color"><span>画布背景</span><span class="color-control"><output id="background-value">#FAF9F5</output><input id="background-color" type="color" value="#faf9f5"></span></label>
-          <label class="range-label" for="line-width"><span>线条粗细</span><output id="line-width-value">1 px</output></label><input id="line-width" type="range" min="0.3" max="3" step="0.1" value="1">
-        </section>
-        <section class="setting-section export-section"><h3>导出作品</h3><label class="field-label" for="export-scale">图片精度</label><select id="export-scale"><option value="1">标准 · 1 倍</option><option value="2" selected>高清 · 2 倍</option><option value="3">超清 · 3 倍</option><option value="4">印刷 · 4 倍</option></select><p id="export-size" class="export-size"></p>
-          <label class="toggle-row" for="transparent"><span>透明背景</span><input id="transparent" type="checkbox" role="switch"></label>
-        </section>
-        <details class="data-note"><summary>关于地图数据</summary><p>内置 392 个城市及行政区条目，使用本仓库历史地图数据。名称与边界可能与现行行政区划不同；出图前请核对用途所需的版本。</p><p>地图数据：echarts-china-cities-js（MIT）。渲染：Apache ECharts（Apache-2.0）。</p></details>
-      </div>
-      <div class="export-action"><button id="export" class="primary-button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>导出 PNG 图片</button></div>
-    </aside>
-  </main>
-  <div id="toast" class="toast" role="status" hidden></div>
-</body>
+      <div class="header-caption">每一座城，都有自己的形状。</div>
+      <span class="offline"><i></i> 离线地图工作台</span>
+    </header>
+    <main class="workspace">
+      <aside class="library" aria-label="城市选择">
+        <div class="library-head">
+          <div class="eyebrow">01 / 探索城市</div>
+          <h1>从一座城开始<span id="city-total">—</span></h1>
+          <label class="search-label" for="search">搜索城市</label>
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10.5" cy="10.5" r="6.5" />
+              <path d="m16 16 4 4" /></svg
+            ><input
+              id="search"
+              type="search"
+              placeholder="城市名 / 拼音 / 首字母"
+              autocomplete="off"
+            /><kbd>Ctrl K</kbd>
+          </div>
+          <label class="search-label" for="province">按地区浏览</label
+          ><select id="province">
+            <option value="">全部地区</option>
+          </select>
+        </div>
+        <div class="list-caption">
+          <span id="results-count">正在整理城市目录…</span><span>城市 / 地区</span>
+        </div>
+        <div id="city-list" class="city-list" aria-label="城市列表"></div>
+        <p class="library-foot">地图有边界，探索无止境。<span>本地地图库 · 无需联网</span></p>
+      </aside>
+      <section class="studio" aria-label="地图预览">
+        <div class="studio-toolbar">
+          <span id="breadcrumb">地图工作台</span>
+          <div class="view-actions">
+            <button id="zoom-out" class="icon-button" aria-label="缩小地图" title="缩小">−</button
+            ><button id="reset-view" class="text-button">适应画布</button
+            ><button id="zoom-in" class="icon-button" aria-label="放大地图" title="放大">＋</button>
+          </div>
+        </div>
+        <div class="canvas-area">
+          <div class="paper" id="paper">
+            <div id="map" role="img" aria-label="城市地图正在加载"></div>
+            <div id="map-message" class="map-message" role="status">正在打开地图…</div>
+          </div>
+          <div class="canvas-hint">
+            <span>拖动平移 · 滚轮缩放 · 点击查看区县</span><span>预览画布</span>
+          </div>
+        </div>
+        <footer class="studio-footer">
+          <span id="map-status">准备就绪</span
+          ><span id="selection-status">选择城市，查看它的轮廓</span>
+        </footer>
+      </section>
+      <aside class="inspector" aria-label="制图设置">
+        <div class="inspector-head">
+          <div class="eyebrow">02 / 绘制地图</div>
+          <h2>让地图成为作品</h2>
+        </div>
+        <div class="inspector-scroll">
+          <section class="setting-section">
+            <h3>地图内容</h3>
+            <fieldset class="segmented">
+              <legend class="sr-only">地图类型</legend>
+              <label
+                ><input type="radio" name="variant" value="districts" checked /><span
+                  >区县边界</span
+                ></label
+              ><label
+                ><input type="radio" name="variant" value="outline" /><span>纯轮廓</span></label
+              >
+            </fieldset>
+            <label class="toggle-row" for="labels"
+              ><span>显示区县名称</span><input id="labels" type="checkbox" role="switch" checked
+            /></label>
+            <label class="toggle-row" for="show-title"
+              ><span>显示地图标题</span
+              ><input id="show-title" type="checkbox" role="switch" checked
+            /></label>
+            <label class="field-label" for="map-title">标题文字</label
+            ><input id="map-title" type="text" maxlength="40" placeholder="随城市自动更新" />
+          </section>
+          <section class="setting-section">
+            <div class="section-heading">
+              <h3>色彩与线条</h3>
+              <button id="reset-style" class="text-button">重置</button>
+            </div>
+            <div class="palettes" aria-label="配色方案">
+              <button class="palette active" data-palette="atlas" aria-pressed="true">
+                <i class="swatch atlas"></i>青山</button
+              ><button class="palette" data-palette="clay" aria-pressed="false">
+                <i class="swatch clay"></i>陶土</button
+              ><button class="palette" data-palette="ink" aria-pressed="false">
+                <i class="swatch ink"></i>墨蓝
+              </button>
+            </div>
+            <label class="color-row" for="fill-color"
+              ><span>地图填充</span
+              ><span class="color-control"
+                ><output id="fill-value">#B8CDBE</output
+                ><input id="fill-color" type="color" value="#b8cdbe" /></span
+            ></label>
+            <label class="color-row" for="border-color"
+              ><span>边界线条</span
+              ><span class="color-control"
+                ><output id="border-value">#526D60</output
+                ><input id="border-color" type="color" value="#526d60" /></span
+            ></label>
+            <label class="color-row" for="background-color"
+              ><span>画布背景</span
+              ><span class="color-control"
+                ><output id="background-value">#FAF9F5</output
+                ><input id="background-color" type="color" value="#faf9f5" /></span
+            ></label>
+            <label class="range-label" for="line-width"
+              ><span>线条粗细</span><output id="line-width-value">1 px</output></label
+            ><input id="line-width" type="range" min="0.3" max="3" step="0.1" value="1" />
+          </section>
+          <section class="setting-section export-section">
+            <h3>导出作品</h3>
+            <label class="field-label" for="export-scale">图片精度</label
+            ><select id="export-scale">
+              <option value="1">标准 · 1 倍</option>
+              <option value="2" selected>高清 · 2 倍</option>
+              <option value="3">超清 · 3 倍</option>
+              <option value="4">印刷 · 4 倍</option>
+            </select>
+            <p id="export-size" class="export-size"></p>
+            <label class="toggle-row" for="transparent"
+              ><span>透明背景</span><input id="transparent" type="checkbox" role="switch"
+            /></label>
+          </section>
+          <details class="data-note">
+            <summary>关于地图数据</summary>
+            <p>
+              内置 392
+              个城市及行政区条目，使用本仓库历史地图数据。名称与边界可能与现行行政区划不同；出图前请核对用途所需的版本。
+            </p>
+            <p>地图数据：echarts-china-cities-js（MIT）。渲染：Apache ECharts（Apache-2.0）。</p>
+          </details>
+        </div>
+        <div class="export-action">
+          <button id="export" class="primary-button" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" /></svg
+            >导出 PNG 图片
+          </button>
+        </div>
+      </aside>
+    </main>
+    <div id="toast" class="toast" role="status" hidden></div>
+  </body>
 </html>
