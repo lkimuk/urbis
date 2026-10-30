@@ -1,10 +1,10 @@
 {
-  "name": "city-atlas-desktop",
+  "name": "urbis",
   "productName": "江城子",
   "version": "0.1.0",
   "private": true,
   "description": "离线城市地图与制图工作台",
-  "author": "City Atlas contributors",
+  "author": "Urbis contributors",
   "license": "MIT",
   "main": "electron/main.cjs",
   "scripts": {
@@ -43,14 +43,14 @@
     "win": {
       "target": "nsis",
       "signAndEditExecutable": false,
-      "executableName": "CityAtlas"
+      "executableName": "Urbis"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "shortcutName": "江城子",
-      "artifactName": "CityAtlas-Setup-${version}.${ext}"
+      "artifactName": "Urbis-Setup-${version}.${ext}"
     }
   }
 }
