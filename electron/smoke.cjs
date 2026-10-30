@@ -1,10 +1,8 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs/promises');
 const path = require('node:path');
-const { nativeImage } = require('electron');
-
-exports.run = async function run(window, output) {
-  await fs.mkdir(output, { recursive: true });
+// Attach before navigation so startup failures and requests are included.
+exports.observe = function observe(window) {
   const errors = [],
     networkRequests = [];
   window.webContents.session.webRequest.onBeforeRequest(
@@ -17,6 +15,12 @@ exports.run = async function run(window, output) {
   window.webContents.on('console-message', (event) => {
     if (event.level === 'error') errors.push(event.message);
   });
+  return { errors, networkRequests };
+};
+
+exports.run = async function run(window, output, { errors, networkRequests }) {
+  const { nativeImage } = require('electron');
+  await fs.mkdir(output, { recursive: true });
   const js = (code) =>
     window.webContents.executeJavaScript(
       '(async()=>{const {createAtlasClient}=await import("./desktop-api.mjs");const atlas=createAtlasClient(window.atlas);return (' +
@@ -64,6 +68,13 @@ exports.run = async function run(window, output) {
   assert.equal(await js('document.getElementById("dataset")'), null);
   assert.equal(await js('typeof require'), 'undefined');
   assert.ok(catalog.every((r) => !Object.hasOwn(r, 'variants')));
+  assert.equal(
+    await js(
+      '(async()=>{const {PALETTES}=await import("./settings.mjs");return [...document.querySelectorAll("[data-palette]")].every(button=>{const p=PALETTES[button.dataset.palette];return button.style.getPropertyValue("--swatch-fill")===p.fill && button.style.getPropertyValue("--swatch-border")===p.border;});})()',
+    ),
+    true,
+    'Swatches must use the shared palette',
+  );
   const byId = new Map(catalog.map((r) => [r.id, r]));
   async function select(id, variant = 'districts') {
     const region = byId.get(id);
@@ -71,7 +82,16 @@ exports.run = async function run(window, output) {
     await input('level', region.level, 'change');
     await input('province', '', 'change');
     await input('search', region.name);
-    await click('.city-button[data-id="' + id + '"]');
+    const selector = '.city-button[data-id="' + id + '"]';
+    assert.equal(
+      await js(
+        '(()=>{const list=document.getElementById("city-list"),first=list.firstChild,button=document.querySelector(' +
+          JSON.stringify(selector) +
+          ');button.focus();button.click();return list.firstChild===first && button.isConnected && document.activeElement===button && button.getAttribute("aria-pressed")==="true";})()',
+      ),
+      true,
+      'Selection must preserve list nodes and keyboard focus',
+    );
     await click('[name=variant][value=' + variant + ']');
     await ready(id);
     assert.equal(await js('document.getElementById("map").dataset.mapKey'), id + '-' + variant);
@@ -135,6 +155,26 @@ exports.run = async function run(window, output) {
     'INVALID_IMAGE',
   );
   console.log('PASS: all 6586 modes, decoded bounds, boundary lines, isolated API');
+  const registration = await js(
+    'echarts.getInstanceByDom(document.getElementById("map")).getOption().geo[0].map',
+  );
+  for (const region of catalog.filter((r) => r.level === 'county').slice(0, 16)) {
+    await select(region.id);
+    const displayed = await js(
+      '(()=>{const name=echarts.getInstanceByDom(document.getElementById("map")).getOption().geo[0].map;return {registration:name,names:echarts.getMap(name).geoJSON.features.map(f=>f.properties.name)};})()',
+    );
+    assert.equal(displayed.registration, registration, 'Browsing must replace one registration');
+    assert.deepEqual(
+      displayed.names,
+      region.districtNames,
+      'Reused registration must show new geometry',
+    );
+    assert.equal(
+      await js('echarts.getMap(' + JSON.stringify(region.id + '-districts') + ') || null'),
+      null,
+      'No per-region ECharts registration may accumulate',
+    );
+  }
   await input('level', '', 'change');
   for (const query of ['nanchang', 'nc', '南昌', '台北', 'bj', 'jiangxi', 'jx', 'shaanxi']) {
     await input('search', query);
@@ -257,6 +297,10 @@ exports.run = async function run(window, output) {
         networkRequests,
         checks: [
           'all modes',
+          'bounded map registration',
+          'list identity and keyboard focus',
+          'shared palette swatches',
+          'startup console and network monitoring',
           'real map clicks',
           'boundary line layer',
           'PNG alpha',

@@ -68,9 +68,11 @@ function createWindow() {
     else dialog.showErrorBox('界面加载失败', description);
   });
   if (smoke) {
+    const checks = require('./smoke.cjs');
+    const observation = checks.observe(window);
     window.webContents.once('did-finish-load', async () => {
       try {
-        await require('./smoke.cjs').run(window, output);
+        await checks.run(window, output, observation);
         await finishSmoke(0);
       } catch (error) {
         console.error(error);
