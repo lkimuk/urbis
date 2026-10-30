@@ -39,10 +39,18 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           show: settings.showTitle,
           text: settings.title.trim() || region.name,
           subtext:
-            ({ country: '全国', province: '省级地图', city: region.province }[region.level] ||
-              region.province) +
+            ({
+              country: '全国',
+              province: '省级地图',
+              city: region.province,
+              county: region.province + ' / ' + region.city,
+            }[region.level] || region.province) +
             '  /  ' +
-            (settings.variant === 'districts' ? '行政区划' : '区域轮廓'),
+            (region.level === 'county'
+              ? '区县轮廓'
+              : settings.variant === 'districts'
+                ? '行政区划'
+                : '区域轮廓'),
           left: 30,
           top: 25,
           textStyle: {

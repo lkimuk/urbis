@@ -35,7 +35,7 @@
             ><input
               id="search"
               type="search"
-              placeholder="省市名称 / 城市拼音"
+              placeholder="省市区县名称 / 拼音"
               autocomplete="off"
             /><kbd>Ctrl K</kbd>
           </div>
@@ -45,6 +45,7 @@
             <option value="country">全国地图</option>
             <option value="province">省级地图</option>
             <option value="city">城市地图</option>
+            <option value="county">区县地图</option>
           </select>
           <label class="search-label region-label" for="province">按地区浏览</label
           ><select id="province">
@@ -52,7 +53,7 @@
           </select>
         </div>
         <div class="list-caption">
-          <span id="results-count">正在整理地图目录…</span><span>全国 / 省 / 市</span>
+          <span id="results-count">正在整理地图目录…</span><span>全国 / 省 / 市 / 县</span>
         </div>
         <div id="city-list" class="city-list" aria-label="地图列表"></div>
         <p class="library-foot">地图有边界，探索无止境。<span>本地地图库 · 无需联网</span></p>
@@ -161,12 +162,13 @@
           <details class="data-note">
             <summary>关于地图数据</summary>
             <p>
-              内置全国、34 个省级地图及原有 392 个城市及行政区条目，全部从本地读取。
-              数据为历史区划，名称、边界和精度可能与现行版本不同。
+              内置全国、34 个省级地图、392 个城市及行政区条目，以及从市图提取的 3,253
+              个区县外轮廓，全部从本地读取。 数据为历史区划，名称、边界和精度可能与现行版本不同。
             </p>
             <p id="current-source"></p>
             <p>
-              全国及省级数据：ECharts 4.8.0 发布包。城市数据：本仓库。许可证和来源随离线资源打包。
+              全国及省级数据：ECharts 4.8.0
+              发布包。城市及区县数据：本仓库历史地图，原始数据来源及使用条款见随包说明。区县不含乡镇／街道分区。
             </p>
           </details>
         </div>

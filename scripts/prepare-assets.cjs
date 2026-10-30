@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const { appendRegions } = require('./region-catalog.cjs');
+const { appendCounties } = require('./county-catalog.cjs');
 const root = path.resolve(__dirname, '../..');
 const output = path.resolve(__dirname, '../resources');
 const registry = JSON.parse(fs.readFileSync(path.join(root, 'registry.json'), 'utf8'));
@@ -68,7 +69,10 @@ cities.sort(
   (a, b) => a.province.localeCompare(b.province, 'zh-CN') || a.name.localeCompare(b.name, 'zh-CN'),
 );
 if (new Set(cities.map((city) => city.id)).size !== cities.length) throw new Error('城市标识重复');
-const regions = appendRegions(cities, path.resolve(__dirname, '../data/regions'), output);
+const regions = appendCounties(
+  appendRegions(cities, path.resolve(__dirname, '../data/regions'), output),
+  output,
+);
 if (new Set(regions.map((region) => region.id)).size !== regions.length)
   throw new Error('行政区标识重复');
 fs.writeFileSync(path.join(output, 'catalog.json'), JSON.stringify(regions));
@@ -82,6 +86,10 @@ fs.copyFileSync(
 );
 fs.copyFileSync(require.resolve('echarts/NOTICE'), path.join(output, 'vendor/ECHARTS-NOTICE.txt'));
 fs.copyFileSync(path.join(root, 'LICENSE'), path.join(output, 'MAPS-LICENSE.txt'));
+const sourceReadme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
+const noticeStart = sourceReadme.indexOf('## License');
+if (noticeStart < 0) throw new Error('城市地图原始数据许可说明缺失');
+fs.writeFileSync(path.join(output, 'CITY-MAPS-SOURCE-NOTICE.txt'), sourceReadme.slice(noticeStart));
 console.log(
-  `已准备 ${regions.length} 个条目（全国、34 个省级、${cities.length} 个城市）、${regions.length * 2} 份地图和离线 ECharts。`,
+  `已准备 ${regions.length} 个条目（全国、34 个省级、${cities.length} 个城市、${regions.filter((region) => region.level === 'county').length} 个区县）、${regions.length * 2} 份地图和离线 ECharts。`,
 );

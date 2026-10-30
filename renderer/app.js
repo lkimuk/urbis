@@ -83,7 +83,12 @@ function renderList() {
   const fragment = document.createDocumentFragment();
   let group;
   for (const region of matches) {
-    const nextGroup = region.level === 'city' ? region.province : '全国与省级地图';
+    const nextGroup =
+      region.level === 'county'
+        ? region.province + ' / ' + region.city
+        : region.level === 'city'
+          ? region.province
+          : '全国与省级地图';
     if (nextGroup !== group) {
       group = nextGroup;
       const heading = document.createElement('div');
@@ -101,7 +106,9 @@ function renderList() {
     name.textContent = region.name;
     const arrow = document.createElement('span');
     arrow.className = 'arrow';
-    arrow.textContent = { country: '全国', province: '省级', city: '城市' }[region.level];
+    arrow.textContent = { country: '全国', province: '省级', city: '城市', county: '区县' }[
+      region.level
+    ];
     arrow.setAttribute('aria-hidden', 'true');
     button.append(name, arrow);
     fragment.append(button);
@@ -178,7 +185,11 @@ async function selectRegion(region) {
   $('selection-status').textContent = region.children.length
     ? '点击分区进入下一级地图'
     : '点击地图查看分区名称';
-  $('current-source').textContent = '当前数据：' + region.source + ' · 历史区划';
+  $('current-source').textContent =
+    '当前数据：' +
+    region.source +
+    ' · 历史区划' +
+    (region.level === 'county' ? ' · 区县外轮廓，无乡镇分区' : '');
   await loadMap();
 }
 

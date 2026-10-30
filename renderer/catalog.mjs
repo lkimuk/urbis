@@ -7,8 +7,8 @@ export function filterRegions(regions, { query = '', province = '', level = '' }
       (!level || region.level === level) &&
       (!province || region.province === province) &&
       (!needle ||
-        [region.name, region.province, region.pinyin, region.initials].some((value) =>
-          normalize(value).includes(needle),
+        [region.name, region.province, region.city || '', region.pinyin, region.initials].some(
+          (value) => normalize(value).includes(needle),
         )),
   );
 }
