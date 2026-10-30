@@ -97,11 +97,12 @@ exports.run = async function run(window, output) {
   }
 
   await waitFor('document.getElementById("map").dataset.ready === "true"');
-  assert.equal(await js('document.querySelectorAll(".city-button").length'), 427);
+  assert.equal(await js('document.querySelectorAll(".city-button").length'), 3680);
   assert.equal(await js('typeof require'), 'undefined');
   assert.equal(await js('typeof currentRegion'), 'undefined');
   const cities = await js('window.atlas.getRegions()');
-  assert.equal(cities.length, 427);
+  assert.equal(cities.length, 3680);
+  assert.equal(cities.filter((region) => region.level === 'county').length, 3253);
   assert.equal(cities.filter((region) => region.level === 'province').length, 34);
   assert.ok(cities.every((city) => !Object.hasOwn(city, 'variants')));
   await screenshot('workbench.png');
@@ -115,13 +116,13 @@ exports.run = async function run(window, output) {
   assert.equal(await js('document.querySelectorAll(".city-button").length'), 0);
   await input('search', '');
   await input('province', '江西', 'change');
-  assert.equal(await js('document.querySelectorAll(".city-button").length'), 12);
+  assert.equal(await js('document.querySelectorAll(".city-button").length'), 112);
   await input('province', '', 'change');
 
   const validated = await js(
     '(async () => { let count = 0; for (const city of await window.atlas.getRegions()) for (const variant of ["districts", "outline"]) { const data = await window.atlas.getMap({regionId:city.id,variant}); const regions = echarts.parseGeoJSON(data); if (!regions.length) throw Error(city.id); for (const region of regions) { const b = region.getBoundingRect(); if (![b.x,b.y,b.width,b.height].every(Number.isFinite)) throw Error(city.id); } count++; } return count; })()',
   );
-  assert.equal(validated, 854);
+  assert.equal(validated, 7360);
   const invalid = await js(
     '(async () => { try { await window.atlas.getMap({regionId:"../package",variant:"districts"}); return null; } catch(e) { return {message:e.message,code:e.code}; } })()',
   );
@@ -131,7 +132,7 @@ exports.run = async function run(window, output) {
     '(async () => { try { await window.atlas.saveImage({dataURL:"data:image/png;base64,aGVsbG8="}); return false; } catch(e) { return e.code === "INVALID_IMAGE"; } })()',
   );
   assert.equal(badImage, true);
-  console.log('PASS: search, province filters, all 854 maps, API error contracts');
+  console.log('PASS: search, province filters, all 7360 map variants, API error contracts');
 
   for (const name of ['北京', '南昌', '臺北', '香港', '乌鲁木齐', '海口']) {
     await input('level', 'city', 'change');
@@ -166,6 +167,38 @@ exports.run = async function run(window, output) {
   await waitFor(
     'document.getElementById("map").dataset.mapKey === "nan2_chang1-districts" && document.getElementById("map").dataset.ready === "true"',
   );
+  const eastLake = cities.find(
+    (region) =>
+      region.level === 'county' && region.parentId === 'nan2_chang1' && region.name === '东湖区',
+  );
+  await clickMapRegion('东湖区');
+  await waitFor(
+    'document.getElementById("map").dataset.mapKey === ' +
+      JSON.stringify(eastLake.id + '-districts') +
+      ' && document.getElementById("map").dataset.ready === "true"',
+  );
+  assert.equal(await js('document.querySelectorAll("#breadcrumb button").length'), 4);
+  await input('search', '');
+  await screenshot('county.png');
+  await exportPng(false);
+  await input('level', 'county', 'change');
+  await input('search', '东湖区');
+  assert.equal(await js('document.querySelectorAll(".city-button").length'), 1);
+  await select('东湖区', 'outline');
+  await input('level', 'city', 'change');
+  await select('臺北', 'districts');
+  const taipeiCounty = cities.find(
+    (region) => region.level === 'county' && region.parentId === 'tai2_bei3',
+  );
+  await input('level', 'county', 'change');
+  await select(taipeiCounty.name, 'districts');
+  await input('level', 'province', 'change');
+  await select('北京', 'districts');
+  await clickMapRegion('东城区');
+  await waitFor(
+    'document.querySelector("#breadcrumb [aria-current]").textContent === "东城区" && document.getElementById("map").dataset.ready === "true"',
+  );
+  await input('level', '', 'change');
   await click('#breadcrumb button[data-id="100000"]');
   await waitFor(
     'document.getElementById("map").dataset.mapKey === "100000-districts" && document.getElementById("map").dataset.ready === "true"',
@@ -211,6 +244,14 @@ exports.run = async function run(window, output) {
   await waitFor('document.getElementById("map").dataset.ready === "true"');
   assert.equal(await js('document.getElementById("map-title").value'), '重启后仍保留');
   assert.equal(await js('document.getElementById("map").dataset.mapKey'), 'beijing-outline');
+  await input('level', 'county', 'change');
+  await select('东湖区', 'outline');
+  await new Promise((resolve) => {
+    window.webContents.once('did-finish-load', resolve);
+    window.webContents.reload();
+  });
+  await waitFor('document.getElementById("map").dataset.ready === "true"');
+  assert.equal(await js('document.getElementById("map").dataset.mapKey'), eastLake.id + '-outline');
   assert.deepEqual(errors, []);
   assert.deepEqual(networkRequests, []);
   await fs.writeFile(
@@ -219,12 +260,14 @@ exports.run = async function run(window, output) {
       {
         cities: 392,
         provinces: 34,
-        regions: 427,
+        regions: 3680,
+        counties: 3253,
         maps: validated,
         image: opaque,
         checks: [
           'DOM interactions',
-          'national-province-city map clicks and breadcrumbs',
+          'national-province-city-county map clicks and breadcrumbs',
+          'county PNG export and preferences reload',
           'search',
           'filter',
           'render',
