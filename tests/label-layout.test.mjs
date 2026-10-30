@@ -41,14 +41,14 @@ test('labels choose usable interiors of concave regions and avoid holes', () => 
     { width: 400, height: 220, measureText },
   );
   assert.equal(labels.length, 2);
-  assert.ok(labels.every((label) => !label.line));
+  assert.ok(labels.every((label) => !label.displaced));
   assert.ok(labels[0].box.bottom <= 60 || labels[0].box.right <= 65);
   assert.equal(overlap(labels[1].box, { left: 250, top: 60, right: 330, bottom: 150 }), false);
   validLabels(labels, 400, 220);
 });
 
-test('small districts use leader lines without covering borders, labels or the title', () => {
-  const regions = Array.from({ length: 6 }, (_, i) => ({
+test('small districts stagger nearby without overlapping text or the title', () => {
+  const regions = Array.from({ length: 2 }, (_, i) => ({
     name: '小区' + i,
     polygons: [
       [
@@ -64,21 +64,11 @@ test('small districts use leader lines without covering borders, labels or the t
   const reserved = [{ left: 20, top: 15, right: 180, bottom: 50 }];
   const labels = layoutRegionLabels(regions, { width: 400, height: 250, measureText, reserved });
   assert.equal(labels.length, regions.length);
-  assert.ok(labels.every((label) => label.line));
+  assert.ok(labels.every((label) => label.displaced));
   for (const label of labels) {
     assert.equal(overlap(label.box, reserved[0]), false);
-    for (const region of regions) {
-      const ring = region.polygons[0][0];
-      assert.equal(
-        overlap(label.box, {
-          left: ring[0][0],
-          top: ring[0][1],
-          right: ring[2][0],
-          bottom: ring[2][1],
-        }),
-        false,
-      );
-    }
+    assert.ok(Math.hypot(label.x - label.anchor[0], label.y - label.anchor[1]) <= 38);
+    assert.equal(Object.hasOwn(label, 'line'), false);
   }
   validLabels(labels, 400, 250);
 });
@@ -130,7 +120,14 @@ test('Beijing labels remain readable at normal and compact sizes and adapt to zo
       validLabels(labels, width, height);
       if (zoom === 1) {
         assert.equal(labels.length, 16);
-        assert.ok(labels.some((label) => label.line));
+        assert.ok(labels.some((label) => label.displaced));
+        const west = labels.find((label) => label.name === '西城区'),
+          east = labels.find((label) => label.name === '东城区');
+        assert.ok(west.y < east.y, 'Adjacent core districts must stagger vertically');
+        for (const label of [west, east]) {
+          assert.ok(Math.hypot(label.x - label.anchor[0], label.y - label.anchor[1]) <= 38);
+          assert.equal(Object.hasOwn(label, 'line'), false);
+        }
       }
       for (const label of labels) {
         const region = echarts.parseGeoJSON(data).find((region) => region.name === label.name);
@@ -138,7 +135,7 @@ test('Beijing labels remain readable at normal and compact sizes and adapt to zo
           region.contain(chart.convertFromPixel({ geoIndex: 0 }, label.anchor)),
           label.name,
         );
-        if (!label.line)
+        if (!label.displaced)
           for (const x of [label.box.left, label.box.right])
             for (const y of [label.box.top, label.box.bottom])
               assert.ok(

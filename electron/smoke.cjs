@@ -209,11 +209,17 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
     );
     for (const label of labels)
       assert.ok(drawn.includes(label.text), 'Label must be actually drawn: ' + label.text);
-    assert.ok(
+    assert.equal(
       await js(
         'echarts.getInstanceByDom(document.getElementById("map")).getOption().graphic[0].elements.some(e=>e.type==="polyline")',
       ),
-      'Tiny districts must have leader lines',
+      false,
+      'Labels must not use leader lines',
+    );
+    assert.ok(
+      labels.find((label) => label.text === '西城区').y <
+        labels.find((label) => label.text === '东城区').y,
+      'Core districts must stagger locally',
     );
   }
   await checkBeijingLabels();
@@ -331,7 +337,7 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
         networkRequests,
         checks: [
           'all modes',
-          'shape-aware labels and leader lines at normal and compact sizes',
+          'shape-aware labels and nearby offsets at normal and compact sizes',
           'bounded map registration',
           'list identity and keyboard focus',
           'shared palette swatches',
