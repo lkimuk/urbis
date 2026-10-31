@@ -19,7 +19,8 @@
     "start": "npm run prepare:assets && node scripts/launch.cjs",
     "smoke": "npm run prepare:assets && node scripts/launch.cjs --smoke-test",
     "pack": "npm run prepare:assets && electron-builder --dir",
-    "dist": "npm run prepare:assets && electron-builder --win nsis"
+    "dist": "npm run prepare:assets && electron-builder --win nsis",
+    "dist:mac": "npm run prepare:assets && electron-builder --mac dmg --arm64 --x64"
   },
   "devDependencies": {
     "echarts": "6.0.0",
@@ -41,6 +42,11 @@
       "resources/**",
       "package.json"
     ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.graphics-design",
+      "artifactName": "Urbis-${version}-mac-${arch}.${ext}"
+    },
     "win": {
       "target": "nsis",
       "executableName": "Urbis",
