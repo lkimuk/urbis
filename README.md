@@ -19,13 +19,11 @@
 
 最新版本为 [v1.0.0](https://github.com/lkimuk/urbis/releases/tag/v1.0.0)，历史版本见 [Releases](https://github.com/lkimuk/urbis/releases) 页面。
 
-| 平台                   | 安装包                                                                                                                          | 说明                                          |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| Windows 10 / 11（x64） | [Urbis-1.0.0-windows-x64-setup.exe](https://github.com/lkimuk/urbis/releases/download/v1.0.0/Urbis-1.0.0-windows-x64-setup.exe) | NSIS 安装包，可选择安装目录并创建桌面快捷方式 |
-| macOS（Apple Silicon） | [Urbis-1.0.0-mac-arm64.dmg](https://github.com/lkimuk/urbis/releases/download/v1.0.0/Urbis-1.0.0-mac-arm64.dmg)                 | 适用于 M1 及之后的芯片                        |
-| macOS（Intel）         | [Urbis-1.0.0-mac-x64.dmg](https://github.com/lkimuk/urbis/releases/download/v1.0.0/Urbis-1.0.0-mac-x64.dmg)                     | 适用于 Intel 芯片                             |
-
-安装包未配置代码签名，首次运行需要手动放行：Windows 如提示“已保护你的电脑”，选择“更多信息 → 仍要运行”；macOS 请右键点击应用图标选择“打开”，或在“系统设置 → 隐私与安全性”中允许。
+| 平台                   | 安装包                                                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Windows 10 / 11（x64） | [Urbis-1.0.0-windows-x64-setup.exe](https://github.com/lkimuk/urbis/releases/download/v1.0.0/Urbis-1.0.0-windows-x64-setup.exe) |
+| macOS（Apple Silicon） | [Urbis-1.0.0-mac-arm64.dmg](https://github.com/lkimuk/urbis/releases/download/v1.0.0/Urbis-1.0.0-mac-arm64.dmg)                 |
+| macOS（Intel）         | [Urbis-1.0.0-mac-x64.dmg](https://github.com/lkimuk/urbis/releases/download/v1.0.0/Urbis-1.0.0-mac-x64.dmg)                     |
 
 ## 开发
 
