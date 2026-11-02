@@ -3,10 +3,10 @@
   "counts": {
     "country": 1,
     "province": 30,
-    "city": 87,
-    "county": 9
+    "city": 152,
+    "county": 25
   },
-  "total": 127,
+  "total": 208,
   "missingProvinceIds": ["620000", "710000", "810000", "820000"],
   "unavailableSources": [
     {
@@ -23,12 +23,8 @@
       "provinceId": "130000",
       "provinceName": "河北",
       "expected": 11,
-      "covered": 0,
+      "covered": 4,
       "missing": [
-        {
-          "regionId": "tdt-130100",
-          "regionName": "石家庄市"
-        },
         {
           "regionId": "tdt-130200",
           "regionName": "唐山市"
@@ -52,18 +48,6 @@
         {
           "regionId": "tdt-130700",
           "regionName": "张家口市"
-        },
-        {
-          "regionId": "tdt-130800",
-          "regionName": "承德市"
-        },
-        {
-          "regionId": "tdt-130900",
-          "regionName": "沧州市"
-        },
-        {
-          "regionId": "tdt-131000",
-          "regionName": "廊坊市"
         },
         {
           "regionId": "tdt-131100",
@@ -134,39 +118,11 @@
       "provinceId": "210000",
       "provinceName": "辽宁",
       "expected": 14,
-      "covered": 0,
+      "covered": 9,
       "missing": [
         {
           "regionId": "tdt-210100",
           "regionName": "沈阳市"
-        },
-        {
-          "regionId": "tdt-210200",
-          "regionName": "大连市"
-        },
-        {
-          "regionId": "tdt-210300",
-          "regionName": "鞍山市"
-        },
-        {
-          "regionId": "tdt-210400",
-          "regionName": "抚顺市"
-        },
-        {
-          "regionId": "tdt-210500",
-          "regionName": "本溪市"
-        },
-        {
-          "regionId": "tdt-210600",
-          "regionName": "丹东市"
-        },
-        {
-          "regionId": "tdt-210700",
-          "regionName": "锦州市"
-        },
-        {
-          "regionId": "tdt-210800",
-          "regionName": "营口市"
         },
         {
           "regionId": "tdt-210900",
@@ -181,16 +137,8 @@
           "regionName": "盘锦市"
         },
         {
-          "regionId": "tdt-211200",
-          "regionName": "铁岭市"
-        },
-        {
           "regionId": "tdt-211300",
           "regionName": "朝阳市"
-        },
-        {
-          "regionId": "tdt-211400",
-          "regionName": "葫芦岛市"
         }
       ]
     },
@@ -198,45 +146,8 @@
       "provinceId": "220000",
       "provinceName": "吉林",
       "expected": 9,
-      "covered": 0,
-      "missing": [
-        {
-          "regionId": "tdt-220100",
-          "regionName": "长春市"
-        },
-        {
-          "regionId": "tdt-220200",
-          "regionName": "吉林市"
-        },
-        {
-          "regionId": "tdt-220300",
-          "regionName": "四平市"
-        },
-        {
-          "regionId": "tdt-220400",
-          "regionName": "辽源市"
-        },
-        {
-          "regionId": "tdt-220500",
-          "regionName": "通化市"
-        },
-        {
-          "regionId": "tdt-220600",
-          "regionName": "白山市"
-        },
-        {
-          "regionId": "tdt-220700",
-          "regionName": "松原市"
-        },
-        {
-          "regionId": "tdt-220800",
-          "regionName": "白城市"
-        },
-        {
-          "regionId": "tdt-222400",
-          "regionName": "延边朝鲜族自治州"
-        }
-      ]
+      "covered": 9,
+      "missing": []
     },
     {
       "provinceId": "230000",
@@ -302,7 +213,7 @@
       "provinceId": "320000",
       "provinceName": "江苏",
       "expected": 13,
-      "covered": 1,
+      "covered": 6,
       "missing": [
         {
           "regionId": "tdt-320100",
@@ -311,26 +222,6 @@
         {
           "regionId": "tdt-320200",
           "regionName": "无锡市"
-        },
-        {
-          "regionId": "tdt-320300",
-          "regionName": "徐州市"
-        },
-        {
-          "regionId": "tdt-320400",
-          "regionName": "常州市"
-        },
-        {
-          "regionId": "tdt-320500",
-          "regionName": "苏州市"
-        },
-        {
-          "regionId": "tdt-320600",
-          "regionName": "南通市"
-        },
-        {
-          "regionId": "tdt-320700",
-          "regionName": "连云港市"
         },
         {
           "regionId": "tdt-320800",
@@ -358,23 +249,15 @@
       "provinceId": "330000",
       "provinceName": "浙江",
       "expected": 11,
-      "covered": 0,
+      "covered": 3,
       "missing": [
         {
           "regionId": "tdt-330100",
           "regionName": "杭州市"
         },
         {
-          "regionId": "tdt-330200",
-          "regionName": "宁波市"
-        },
-        {
           "regionId": "tdt-330300",
           "regionName": "温州市"
-        },
-        {
-          "regionId": "tdt-330400",
-          "regionName": "嘉兴市"
         },
         {
           "regionId": "tdt-330500",
@@ -395,10 +278,6 @@
         {
           "regionId": "tdt-330900",
           "regionName": "舟山市"
-        },
-        {
-          "regionId": "tdt-331000",
-          "regionName": "台州市"
         },
         {
           "regionId": "tdt-331100",
@@ -442,43 +321,11 @@
       "provinceId": "350000",
       "provinceName": "福建",
       "expected": 9,
-      "covered": 0,
+      "covered": 8,
       "missing": [
-        {
-          "regionId": "tdt-350100",
-          "regionName": "福州市"
-        },
-        {
-          "regionId": "tdt-350200",
-          "regionName": "厦门市"
-        },
         {
           "regionId": "tdt-350300",
           "regionName": "莆田市"
-        },
-        {
-          "regionId": "tdt-350400",
-          "regionName": "三明市"
-        },
-        {
-          "regionId": "tdt-350500",
-          "regionName": "泉州市"
-        },
-        {
-          "regionId": "tdt-350600",
-          "regionName": "漳州市"
-        },
-        {
-          "regionId": "tdt-350700",
-          "regionName": "南平市"
-        },
-        {
-          "regionId": "tdt-350800",
-          "regionName": "龙岩市"
-        },
-        {
-          "regionId": "tdt-350900",
-          "regionName": "宁德市"
         }
       ]
     },
@@ -486,12 +333,8 @@
       "provinceId": "360000",
       "provinceName": "江西",
       "expected": 11,
-      "covered": 0,
+      "covered": 1,
       "missing": [
-        {
-          "regionId": "tdt-360100",
-          "regionName": "南昌市"
-        },
         {
           "regionId": "tdt-360200",
           "regionName": "景德镇市"
@@ -538,12 +381,8 @@
       "provinceId": "370000",
       "provinceName": "山东",
       "expected": 16,
-      "covered": 0,
+      "covered": 2,
       "missing": [
-        {
-          "regionId": "tdt-370100",
-          "regionName": "济南市"
-        },
         {
           "regionId": "tdt-370200",
           "regionName": "青岛市"
@@ -585,10 +424,6 @@
           "regionName": "日照市"
         },
         {
-          "regionId": "tdt-371300",
-          "regionName": "临沂市"
-        },
-        {
           "regionId": "tdt-371400",
           "regionName": "德州市"
         },
@@ -610,15 +445,11 @@
       "provinceId": "410000",
       "provinceName": "河南",
       "expected": 18,
-      "covered": 0,
+      "covered": 3,
       "missing": [
         {
           "regionId": "tdt-410100",
           "regionName": "郑州市"
-        },
-        {
-          "regionId": "tdt-410200",
-          "regionName": "开封市"
         },
         {
           "regionId": "tdt-410300",
@@ -661,10 +492,6 @@
           "regionName": "三门峡市"
         },
         {
-          "regionId": "tdt-411300",
-          "regionName": "南阳市"
-        },
-        {
           "regionId": "tdt-411400",
           "regionName": "商丘市"
         },
@@ -677,10 +504,6 @@
           "regionName": "周口市"
         },
         {
-          "regionId": "tdt-411700",
-          "regionName": "驻马店市"
-        },
-        {
           "regionId": "tdt-419001",
           "regionName": "济源市"
         }
@@ -690,12 +513,8 @@
       "provinceId": "420000",
       "provinceName": "湖北",
       "expected": 17,
-      "covered": 11,
+      "covered": 12,
       "missing": [
-        {
-          "regionId": "tdt-420800",
-          "regionName": "荆门市"
-        },
         {
           "regionId": "tdt-421100",
           "regionName": "黄冈市"
@@ -736,39 +555,15 @@
       "provinceId": "450000",
       "provinceName": "广西",
       "expected": 14,
-      "covered": 0,
+      "covered": 10,
       "missing": [
-        {
-          "regionId": "tdt-450100",
-          "regionName": "南宁市"
-        },
-        {
-          "regionId": "tdt-450200",
-          "regionName": "柳州市"
-        },
-        {
-          "regionId": "tdt-450300",
-          "regionName": "桂林市"
-        },
-        {
-          "regionId": "tdt-450400",
-          "regionName": "梧州市"
-        },
         {
           "regionId": "tdt-450500",
           "regionName": "北海市"
         },
         {
-          "regionId": "tdt-450600",
-          "regionName": "防城港市"
-        },
-        {
           "regionId": "tdt-450700",
           "regionName": "钦州市"
-        },
-        {
-          "regionId": "tdt-450800",
-          "regionName": "贵港市"
         },
         {
           "regionId": "tdt-450900",
@@ -777,22 +572,6 @@
         {
           "regionId": "tdt-451000",
           "regionName": "百色市"
-        },
-        {
-          "regionId": "tdt-451100",
-          "regionName": "贺州市"
-        },
-        {
-          "regionId": "tdt-451200",
-          "regionName": "河池市"
-        },
-        {
-          "regionId": "tdt-451300",
-          "regionName": "来宾市"
-        },
-        {
-          "regionId": "tdt-451400",
-          "regionName": "崇左市"
         }
       ]
     },
@@ -800,7 +579,7 @@
       "provinceId": "460000",
       "provinceName": "海南",
       "expected": 19,
-      "covered": 0,
+      "covered": 2,
       "missing": [
         {
           "regionId": "tdt-460100",
@@ -821,14 +600,6 @@
         {
           "regionId": "tdt-469001",
           "regionName": "五指山市"
-        },
-        {
-          "regionId": "tdt-469002",
-          "regionName": "琼海市"
-        },
-        {
-          "regionId": "tdt-469005",
-          "regionName": "文昌市"
         },
         {
           "regionId": "tdt-469006",
@@ -884,7 +655,7 @@
       "provinceId": "510000",
       "provinceName": "四川",
       "expected": 21,
-      "covered": 1,
+      "covered": 7,
       "missing": [
         {
           "regionId": "tdt-510100",
@@ -895,28 +666,12 @@
           "regionName": "自贡市"
         },
         {
-          "regionId": "tdt-510400",
-          "regionName": "攀枝花市"
-        },
-        {
           "regionId": "tdt-510500",
           "regionName": "泸州市"
         },
         {
           "regionId": "tdt-510600",
           "regionName": "德阳市"
-        },
-        {
-          "regionId": "tdt-510700",
-          "regionName": "绵阳市"
-        },
-        {
-          "regionId": "tdt-510800",
-          "regionName": "广元市"
-        },
-        {
-          "regionId": "tdt-510900",
-          "regionName": "遂宁市"
         },
         {
           "regionId": "tdt-511000",
@@ -935,20 +690,12 @@
           "regionName": "眉山市"
         },
         {
-          "regionId": "tdt-511500",
-          "regionName": "宜宾市"
-        },
-        {
           "regionId": "tdt-511700",
           "regionName": "达州市"
         },
         {
           "regionId": "tdt-511800",
           "regionName": "雅安市"
-        },
-        {
-          "regionId": "tdt-511900",
-          "regionName": "巴中市"
         },
         {
           "regionId": "tdt-512000",
@@ -972,19 +719,11 @@
       "provinceId": "520000",
       "provinceName": "贵州",
       "expected": 9,
-      "covered": 0,
+      "covered": 2,
       "missing": [
         {
           "regionId": "tdt-520100",
           "regionName": "贵阳市"
-        },
-        {
-          "regionId": "tdt-520200",
-          "regionName": "六盘水市"
-        },
-        {
-          "regionId": "tdt-520300",
-          "regionName": "遵义市"
         },
         {
           "regionId": "tdt-520400",
@@ -1439,12 +1178,8 @@
       "provinceId": "120000",
       "provinceName": "天津",
       "expected": 16,
-      "covered": 3,
+      "covered": 6,
       "missing": [
-        {
-          "regionId": "tdt-county-120102",
-          "regionName": "河东区"
-        },
         {
           "regionId": "tdt-county-120103",
           "regionName": "河西区"
@@ -1482,16 +1217,8 @@
           "regionName": "滨海新区"
         },
         {
-          "regionId": "tdt-county-120117",
-          "regionName": "宁河区"
-        },
-        {
           "regionId": "tdt-county-120118",
           "regionName": "静海区"
-        },
-        {
-          "regionId": "tdt-county-120119",
-          "regionName": "蓟州区"
         }
       ]
     },
@@ -1567,12 +1294,8 @@
       "provinceId": "500000",
       "provinceName": "重庆",
       "expected": 37,
-      "covered": 1,
+      "covered": 14,
       "missing": [
-        {
-          "regionId": "tdt-county-500101",
-          "regionName": "万州区"
-        },
         {
           "regionId": "tdt-county-500102",
           "regionName": "涪陵区"
@@ -1582,20 +1305,12 @@
           "regionName": "渝中区"
         },
         {
-          "regionId": "tdt-county-500104",
-          "regionName": "大渡口区"
-        },
-        {
           "regionId": "tdt-county-500106",
           "regionName": "沙坪坝区"
         },
         {
           "regionId": "tdt-county-500107",
           "regionName": "九龙坡区"
-        },
-        {
-          "regionId": "tdt-county-500108",
-          "regionName": "南岸区"
         },
         {
           "regionId": "tdt-county-500109",
@@ -1608,14 +1323,6 @@
         {
           "regionId": "tdt-county-500111",
           "regionName": "大足区"
-        },
-        {
-          "regionId": "tdt-county-500113",
-          "regionName": "巴南区"
-        },
-        {
-          "regionId": "tdt-county-500114",
-          "regionName": "黔江区"
         },
         {
           "regionId": "tdt-county-500115",
@@ -1632,10 +1339,6 @@
         {
           "regionId": "tdt-county-500118",
           "regionName": "永川区"
-        },
-        {
-          "regionId": "tdt-county-500119",
-          "regionName": "南川区"
         },
         {
           "regionId": "tdt-county-500120",
@@ -1666,36 +1369,8 @@
           "regionName": "两江新区"
         },
         {
-          "regionId": "tdt-county-500229",
-          "regionName": "城口县"
-        },
-        {
-          "regionId": "tdt-county-500230",
-          "regionName": "丰都县"
-        },
-        {
-          "regionId": "tdt-county-500231",
-          "regionName": "垫江县"
-        },
-        {
-          "regionId": "tdt-county-500233",
-          "regionName": "忠县"
-        },
-        {
-          "regionId": "tdt-county-500235",
-          "regionName": "云阳县"
-        },
-        {
           "regionId": "tdt-county-500236",
           "regionName": "奉节县"
-        },
-        {
-          "regionId": "tdt-county-500237",
-          "regionName": "巫山县"
-        },
-        {
-          "regionId": "tdt-county-500238",
-          "regionName": "巫溪县"
         },
         {
           "regionId": "tdt-county-500240",

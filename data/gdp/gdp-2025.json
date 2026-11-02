@@ -347,6 +347,50 @@
       "publishedOn": "2026-01-30"
     },
     {
+      "regionId": "tdt-130100",
+      "regionName": "石家庄市",
+      "level": "city",
+      "sourceName": "石家庄市",
+      "value": 8651.7,
+      "sourceId": "annual-2025-tdt-130100",
+      "sourceFile": "city-2025-v6article-tdt-130100-20.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-26"
+    },
+    {
+      "regionId": "tdt-130800",
+      "regionName": "承德市",
+      "level": "city",
+      "sourceName": "承德市",
+      "value": 2001.7,
+      "sourceId": "annual-2025-tdt-130800",
+      "sourceFile": "city-2025-v3article-tdt-130800-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-22"
+    },
+    {
+      "regionId": "tdt-130900",
+      "regionName": "沧州市",
+      "level": "city",
+      "sourceName": "沧州市",
+      "value": 4930.9,
+      "sourceId": "annual-2025-tdt-130900",
+      "sourceFile": "city-2025-v6article-tdt-130900-4.html",
+      "status": "preliminary",
+      "publishedOn": "2026-02-04"
+    },
+    {
+      "regionId": "tdt-131000",
+      "regionName": "廊坊市",
+      "level": "city",
+      "sourceName": "廊坊市",
+      "value": 4040.5,
+      "sourceId": "annual-2025-tdt-131000",
+      "sourceFile": "city-2025-v3article-tdt-131000-0.pdf",
+      "status": "preliminary",
+      "publishedOn": "2026-06-04"
+    },
+    {
       "regionId": "tdt-150100",
       "regionName": "呼和浩特市",
       "level": "city",
@@ -479,6 +523,259 @@
       "publishedOn": "2026-02-02"
     },
     {
+      "regionId": "tdt-210200",
+      "regionName": "大连市",
+      "level": "city",
+      "sourceName": "大连市",
+      "value": 10002.1,
+      "sourceId": "annual-2025-tdt-210200",
+      "sourceFile": "city-2025-v3article-tdt-210200-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-20"
+    },
+    {
+      "regionId": "tdt-210300",
+      "regionName": "鞍山市",
+      "level": "city",
+      "sourceName": "鞍山市",
+      "value": 2180.4,
+      "sourceId": "annual-2025-tdt-210300",
+      "sourceFile": "city-2025-v3article-tdt-210300-1.html",
+      "status": "preliminary",
+      "publishedOn": "2026-02-03"
+    },
+    {
+      "regionId": "tdt-210400",
+      "regionName": "抚顺市",
+      "level": "city",
+      "sourceName": "抚顺市",
+      "value": 1003.8,
+      "sourceId": "annual-2025-tdt-210400",
+      "sourceFile": "city-2025-v4media-v3article-tdt-210400-1-0.png",
+      "status": "preliminary",
+      "publishedOn": "2026-06-14"
+    },
+    {
+      "regionId": "tdt-210500",
+      "regionName": "本溪市",
+      "level": "city",
+      "sourceName": "本溪市",
+      "value": 1006.0,
+      "sourceId": "annual-2025-tdt-210500",
+      "sourceFile": "city-2025-v4article-tdt-210500-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-02-02"
+    },
+    {
+      "regionId": "tdt-210600",
+      "regionName": "丹东市",
+      "level": "city",
+      "sourceName": "丹东市",
+      "value": 1019.2,
+      "sourceId": "annual-2025-tdt-210600",
+      "sourceFile": "city-2025-v3article-tdt-210600-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-16"
+    },
+    {
+      "regionId": "tdt-210700",
+      "regionName": "锦州市",
+      "level": "city",
+      "sourceName": "锦州市",
+      "value": 1365.3,
+      "sourceId": "annual-2025-tdt-210700",
+      "sourceFile": "city-2025-v4article-tdt-210700-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-09"
+    },
+    {
+      "regionId": "tdt-210800",
+      "regionName": "营口市",
+      "level": "city",
+      "sourceName": "营口市",
+      "value": 1570.2,
+      "sourceId": "annual-2025-tdt-210800",
+      "sourceFile": "city-2025-v4article-tdt-210800-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-27"
+    },
+    {
+      "regionId": "tdt-211200",
+      "regionName": "铁岭市",
+      "level": "city",
+      "sourceName": "铁岭市",
+      "value": 788.9,
+      "sourceId": "annual-2025-tdt-211200",
+      "sourceFile": "city-2025-v3article-tdt-211200-0.pdf",
+      "status": "preliminary",
+      "publishedOn": "2026-06-24"
+    },
+    {
+      "regionId": "tdt-211400",
+      "regionName": "葫芦岛市",
+      "level": "city",
+      "sourceName": "葫芦岛市",
+      "value": 1013.7,
+      "sourceId": "annual-2025-tdt-211400",
+      "sourceFile": "city-2025-v2a-tdt-211400-1.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-26"
+    },
+    {
+      "regionId": "tdt-220100",
+      "regionName": "长春市",
+      "level": "city",
+      "sourceName": "长春市",
+      "value": 8005.59,
+      "sourceId": "annual-2025-tdt-220100",
+      "sourceFile": "city-2025-v2link-tdt-220100-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-09-09"
+    },
+    {
+      "regionId": "tdt-220200",
+      "regionName": "吉林市",
+      "level": "city",
+      "sourceName": "吉林市",
+      "value": 1702.3,
+      "sourceId": "annual-2025-tdt-220200",
+      "sourceFile": "city-2025-v2link-tdt-220200-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-08-25"
+    },
+    {
+      "regionId": "tdt-220300",
+      "regionName": "四平市",
+      "level": "city",
+      "sourceName": "四平市",
+      "value": 601.6,
+      "sourceId": "annual-2025-tdt-220300",
+      "sourceFile": "city-2025-v2link-tdt-220300-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-09-08"
+    },
+    {
+      "regionId": "tdt-220400",
+      "regionName": "辽源市",
+      "level": "city",
+      "sourceName": "辽源市",
+      "value": 547.09,
+      "sourceId": "annual-2025-tdt-220400",
+      "sourceFile": "city-2025-v2link-tdt-220400-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-09-07"
+    },
+    {
+      "regionId": "tdt-220500",
+      "regionName": "通化市",
+      "level": "city",
+      "sourceName": "通化市",
+      "value": 592.14,
+      "sourceId": "annual-2025-tdt-220500",
+      "sourceFile": "city-2025-v2link-tdt-220500-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-09-08"
+    },
+    {
+      "regionId": "tdt-220600",
+      "regionName": "白山市",
+      "level": "city",
+      "sourceName": "白山市",
+      "value": 590.17,
+      "sourceId": "annual-2025-tdt-220600",
+      "sourceFile": "city-2025-v2link-tdt-220600-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-09-07"
+    },
+    {
+      "regionId": "tdt-220700",
+      "regionName": "松原市",
+      "level": "city",
+      "sourceName": "松原市",
+      "value": 1030.6,
+      "sourceId": "annual-2025-tdt-220700",
+      "sourceFile": "city-2025-v2link-tdt-220700-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-09-07"
+    },
+    {
+      "regionId": "tdt-220800",
+      "regionName": "白城市",
+      "level": "city",
+      "sourceName": "白城市",
+      "value": 626.52,
+      "sourceId": "annual-2025-tdt-220800",
+      "sourceFile": "city-2025-v2link-tdt-220800-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-09-07"
+    },
+    {
+      "regionId": "tdt-222400",
+      "regionName": "延边朝鲜族自治州",
+      "level": "city",
+      "sourceName": "延边朝鲜族自治州",
+      "value": 1064.08,
+      "sourceId": "annual-2025-tdt-222400",
+      "sourceFile": "city-2025-v2link-tdt-222400-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-09-08"
+    },
+    {
+      "regionId": "tdt-320300",
+      "regionName": "徐州市",
+      "level": "city",
+      "sourceName": "徐州市",
+      "value": 9957.22,
+      "sourceId": "annual-2025-tdt-320300",
+      "sourceFile": "city-2025-v3article-tdt-320300-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-17"
+    },
+    {
+      "regionId": "tdt-320400",
+      "regionName": "常州市",
+      "level": "city",
+      "sourceName": "常州市",
+      "value": 11158.7,
+      "sourceId": "annual-2025-tdt-320400",
+      "sourceFile": "city-2025-v4article-tdt-320400-1.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-06"
+    },
+    {
+      "regionId": "tdt-320500",
+      "regionName": "苏州市",
+      "level": "city",
+      "sourceName": "苏州市",
+      "value": 27695.1,
+      "sourceId": "annual-2025-tdt-320500",
+      "sourceFile": "city-2025-v2link-tdt-320500-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-02-02"
+    },
+    {
+      "regionId": "tdt-320600",
+      "regionName": "南通市",
+      "level": "city",
+      "sourceName": "南通市",
+      "value": 12801.5,
+      "sourceId": "annual-2025-tdt-320600",
+      "sourceFile": "city-2025-v3article-tdt-320600-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-02-03"
+    },
+    {
+      "regionId": "tdt-320700",
+      "regionName": "连云港市",
+      "level": "city",
+      "sourceName": "连云港市",
+      "value": 4830.94,
+      "sourceId": "annual-2025-tdt-320700",
+      "sourceFile": "city-2025-v6article-tdt-320700-22.html",
+      "status": "preliminary",
+      "publishedOn": "2026-02-04"
+    },
+    {
       "regionId": "tdt-321100",
       "regionName": "镇江市",
       "level": "city",
@@ -488,6 +785,39 @@
       "sourceFile": "city-2025-a-tdt-321100.html",
       "status": "preliminary",
       "publishedOn": "2026-05-27"
+    },
+    {
+      "regionId": "tdt-330200",
+      "regionName": "宁波市",
+      "level": "city",
+      "sourceName": "宁波市",
+      "value": 18716.0,
+      "sourceId": "annual-2025-tdt-330200",
+      "sourceFile": "city-2025-v3-ningbo.html",
+      "status": "preliminary",
+      "publishedOn": "2026-01-26"
+    },
+    {
+      "regionId": "tdt-330400",
+      "regionName": "嘉兴市",
+      "level": "city",
+      "sourceName": "嘉兴市",
+      "value": 7851.06,
+      "sourceId": "annual-2025-tdt-330400",
+      "sourceFile": "city-2025-v2a-tdt-330400-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-30"
+    },
+    {
+      "regionId": "tdt-331000",
+      "regionName": "台州市",
+      "level": "city",
+      "sourceName": "台州市",
+      "value": 7005.87,
+      "sourceId": "annual-2025-tdt-331000",
+      "sourceFile": "city-2025-v2a-tdt-331000-1.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-14"
     },
     {
       "regionId": "tdt-340200",
@@ -600,6 +930,160 @@
       "publishedOn": "2026-04-14"
     },
     {
+      "regionId": "tdt-350100",
+      "regionName": "福州市",
+      "level": "city",
+      "sourceName": "福州市",
+      "value": 15112.32,
+      "sourceId": "annual-2025-tdt-350100",
+      "sourceFile": "city-2025-v3article-tdt-350100-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-14"
+    },
+    {
+      "regionId": "tdt-350200",
+      "regionName": "厦门市",
+      "level": "city",
+      "sourceName": "厦门市",
+      "value": 8980.37,
+      "sourceId": "annual-2025-tdt-350200",
+      "sourceFile": "city-2025-v3article-tdt-350200-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-15"
+    },
+    {
+      "regionId": "tdt-350400",
+      "regionName": "三明市",
+      "level": "city",
+      "sourceName": "三明市",
+      "value": 2511.98,
+      "sourceId": "annual-2025-tdt-350400",
+      "sourceFile": "city-2025-v4article-tdt-350400-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-15"
+    },
+    {
+      "regionId": "tdt-350500",
+      "regionName": "泉州市",
+      "level": "city",
+      "sourceName": "泉州市",
+      "value": 13778.34,
+      "sourceId": "annual-2025-tdt-350500",
+      "sourceFile": "city-2025-v3article-tdt-350500-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-03-31"
+    },
+    {
+      "regionId": "tdt-350600",
+      "regionName": "漳州市",
+      "level": "city",
+      "sourceName": "漳州市",
+      "value": 6154.12,
+      "sourceId": "annual-2025-tdt-350600",
+      "sourceFile": "city-2025-v4article-tdt-350600-3.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-11"
+    },
+    {
+      "regionId": "tdt-350700",
+      "regionName": "南平市",
+      "level": "city",
+      "sourceName": "南平市",
+      "value": 2189.73,
+      "sourceId": "annual-2025-tdt-350700",
+      "sourceFile": "city-2025-v4article-tdt-350700-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-21"
+    },
+    {
+      "regionId": "tdt-350800",
+      "regionName": "龙岩市",
+      "level": "city",
+      "sourceName": "龙岩市",
+      "value": 3578.55,
+      "sourceId": "annual-2025-tdt-350800",
+      "sourceFile": "city-2025-v3article-tdt-350800-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-15"
+    },
+    {
+      "regionId": "tdt-350900",
+      "regionName": "宁德市",
+      "level": "city",
+      "sourceName": "宁德市",
+      "value": 4251.72,
+      "sourceId": "annual-2025-tdt-350900",
+      "sourceFile": "city-2025-v3article-tdt-350900-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-24"
+    },
+    {
+      "regionId": "tdt-360100",
+      "regionName": "南昌市",
+      "level": "city",
+      "sourceName": "南昌市",
+      "value": 8141.69,
+      "sourceId": "annual-2025-tdt-360100",
+      "sourceFile": "city-2025-v4media-v2a-tdt-360100-0-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-04-21"
+    },
+    {
+      "regionId": "tdt-370100",
+      "regionName": "济南市",
+      "level": "city",
+      "sourceName": "济南市",
+      "value": 14210.0,
+      "sourceId": "annual-2025-tdt-370100",
+      "sourceFile": "city-2025-v2a-tdt-370100-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-08"
+    },
+    {
+      "regionId": "tdt-371300",
+      "regionName": "临沂市",
+      "level": "city",
+      "sourceName": "临沂市",
+      "value": 6862.2,
+      "sourceId": "annual-2025-tdt-371300",
+      "sourceFile": "city-2025-v2a-tdt-371300-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-03-23"
+    },
+    {
+      "regionId": "tdt-410200",
+      "regionName": "开封市",
+      "level": "city",
+      "sourceName": "开封市",
+      "value": 2860.06,
+      "sourceId": "annual-2025-tdt-410200",
+      "sourceFile": "city-2025-v2a-tdt-410200-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-12"
+    },
+    {
+      "regionId": "tdt-411300",
+      "regionName": "南阳市",
+      "level": "city",
+      "sourceName": "南阳市",
+      "value": 5167.86,
+      "sourceId": "annual-2025-tdt-411300",
+      "sourceFile": "city-2025-v2a-tdt-411300-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-20"
+    },
+    {
+      "regionId": "tdt-411700",
+      "regionName": "驻马店市",
+      "level": "city",
+      "sourceName": "驻马店市",
+      "value": 3501.64,
+      "sourceId": "annual-2025-tdt-411700",
+      "sourceFile": "city-2025-v2a-tdt-411700-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-23"
+    },
+    {
       "regionId": "tdt-420100",
       "regionName": "武汉市",
       "level": "city",
@@ -664,6 +1148,17 @@
       "sourceFile": "city-2025-42-detail40.docx",
       "status": "preliminary",
       "publishedOn": "2026-05-03"
+    },
+    {
+      "regionId": "tdt-420800",
+      "regionName": "荆门市",
+      "level": "city",
+      "sourceName": "荆门市",
+      "value": 2602.26,
+      "sourceId": "annual-2025-tdt-420800",
+      "sourceFile": "city-2025-v2a-tdt-420800-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-27"
     },
     {
       "regionId": "tdt-420900",
@@ -1106,6 +1601,193 @@
       "publishedOn": "2026-02-08"
     },
     {
+      "regionId": "tdt-450100",
+      "regionName": "南宁市",
+      "level": "city",
+      "sourceName": "南宁市",
+      "value": 6212.46,
+      "sourceId": "annual-2025-tdt-450100",
+      "sourceFile": "city-2025-v3article-tdt-450100-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-22"
+    },
+    {
+      "regionId": "tdt-450200",
+      "regionName": "柳州市",
+      "level": "city",
+      "sourceName": "柳州市",
+      "value": 3096.91,
+      "sourceId": "annual-2025-tdt-450200",
+      "sourceFile": "city-2025-v3article-tdt-450200-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-15"
+    },
+    {
+      "regionId": "tdt-450300",
+      "regionName": "桂林市",
+      "level": "city",
+      "sourceName": "桂林市",
+      "value": 2579.53,
+      "sourceId": "annual-2025-tdt-450300",
+      "sourceFile": "city-2025-v3article-tdt-450300-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-18"
+    },
+    {
+      "regionId": "tdt-450400",
+      "regionName": "梧州市",
+      "level": "city",
+      "sourceName": "梧州市",
+      "value": 1719.79,
+      "sourceId": "annual-2025-tdt-450400",
+      "sourceFile": "city-2025-v4media-v3article-tdt-450400-0-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-06-08"
+    },
+    {
+      "regionId": "tdt-450600",
+      "regionName": "防城港市",
+      "level": "city",
+      "sourceName": "防城港市",
+      "value": 1201.26,
+      "sourceId": "annual-2025-tdt-450600",
+      "sourceFile": "city-2025-v4media-v3article-tdt-450600-0-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-06-09"
+    },
+    {
+      "regionId": "tdt-450800",
+      "regionName": "贵港市",
+      "level": "city",
+      "sourceName": "贵港市",
+      "value": 1628.44,
+      "sourceId": "annual-2025-tdt-450800",
+      "sourceFile": "city-2025-v4media-v3article-tdt-450800-0-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-06-26"
+    },
+    {
+      "regionId": "tdt-451100",
+      "regionName": "贺州市",
+      "level": "city",
+      "sourceName": "贺州市",
+      "value": 1006.74,
+      "sourceId": "annual-2025-tdt-451100",
+      "sourceFile": "city-2025-v2link-tdt-451100-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-16"
+    },
+    {
+      "regionId": "tdt-451200",
+      "regionName": "河池市",
+      "level": "city",
+      "sourceName": "河池市",
+      "value": 1453.62,
+      "sourceId": "annual-2025-tdt-451200",
+      "sourceFile": "city-2025-v4article-tdt-451200-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-17"
+    },
+    {
+      "regionId": "tdt-451300",
+      "regionName": "来宾市",
+      "level": "city",
+      "sourceName": "来宾市",
+      "value": 1049.66,
+      "sourceId": "annual-2025-tdt-451300",
+      "sourceFile": "city-2025-v3article-tdt-451300-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-12"
+    },
+    {
+      "regionId": "tdt-451400",
+      "regionName": "崇左市",
+      "level": "city",
+      "sourceName": "崇左市",
+      "value": 1358.64,
+      "sourceId": "annual-2025-tdt-451400",
+      "sourceFile": "city-2025-v2link-tdt-451400-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-07-27"
+    },
+    {
+      "regionId": "tdt-469002",
+      "regionName": "琼海市",
+      "level": "city",
+      "sourceName": "琼海市",
+      "value": 387.18,
+      "sourceId": "annual-2025-tdt-469002",
+      "sourceFile": "city-2025-v2a-tdt-469002-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-22"
+    },
+    {
+      "regionId": "tdt-469005",
+      "regionName": "文昌市",
+      "level": "city",
+      "sourceName": "文昌市",
+      "value": 375.7,
+      "sourceId": "annual-2025-tdt-469005",
+      "sourceFile": "city-2025-v4media-v2a-tdt-469005-0-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-04-22"
+    },
+    {
+      "regionId": "tdt-510400",
+      "regionName": "攀枝花市",
+      "level": "city",
+      "sourceName": "攀枝花市",
+      "value": 1409.57,
+      "sourceId": "annual-2025-tdt-510400",
+      "sourceFile": "city-2025-v4article-tdt-510400-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-11"
+    },
+    {
+      "regionId": "tdt-510700",
+      "regionName": "绵阳市",
+      "level": "city",
+      "sourceName": "绵阳市",
+      "value": 4600.66,
+      "sourceId": "annual-2025-tdt-510700",
+      "sourceFile": "city-2025-v6article-tdt-510700-13.html",
+      "status": "preliminary",
+      "publishedOn": "2026-01-26"
+    },
+    {
+      "regionId": "tdt-510800",
+      "regionName": "广元市",
+      "level": "city",
+      "sourceName": "广元市",
+      "value": 1348.78,
+      "sourceId": "annual-2025-tdt-510800",
+      "sourceFile": "city-2025-v6article-tdt-510800-16.html",
+      "status": "preliminary",
+      "publishedOn": "2026-01-22"
+    },
+    {
+      "regionId": "tdt-510900",
+      "regionName": "遂宁市",
+      "level": "city",
+      "sourceName": "遂宁市",
+      "value": 2002.14,
+      "sourceId": "annual-2025-tdt-510900",
+      "sourceFile": "city-2025-v3article-tdt-510900-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-15"
+    },
+    {
+      "regionId": "tdt-511500",
+      "regionName": "宜宾市",
+      "level": "city",
+      "sourceName": "宜宾市",
+      "value": 4134.73,
+      "sourceId": "annual-2025-tdt-511500",
+      "sourceFile": "city-2025-v3article-tdt-511500-0.pdf",
+      "status": "preliminary",
+      "publishedOn": "2026-04-13"
+    },
+    {
       "regionId": "tdt-511600",
       "regionName": "广安市",
       "level": "city",
@@ -1115,6 +1797,39 @@
       "sourceFile": "city-2025-a-tdt-511600.html",
       "status": "preliminary",
       "publishedOn": "2026-03-31"
+    },
+    {
+      "regionId": "tdt-511900",
+      "regionName": "巴中市",
+      "level": "city",
+      "sourceName": "巴中市",
+      "value": 916.64,
+      "sourceId": "annual-2025-tdt-511900",
+      "sourceFile": "city-2025-v4article-tdt-511900-0.pdf",
+      "status": "preliminary",
+      "publishedOn": "2026-04-23"
+    },
+    {
+      "regionId": "tdt-520200",
+      "regionName": "六盘水市",
+      "level": "city",
+      "sourceName": "六盘水市",
+      "value": 1777.75,
+      "sourceId": "annual-2025-tdt-520200",
+      "sourceFile": "city-2025-v2a-tdt-520200-0.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-21"
+    },
+    {
+      "regionId": "tdt-520300",
+      "regionName": "遵义市",
+      "level": "city",
+      "sourceName": "遵义市",
+      "value": 5206.12,
+      "sourceId": "annual-2025-tdt-520300",
+      "sourceFile": "city-2025-v4media-v3article-tdt-520300-0-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-05-06"
     },
     {
       "regionId": "tdt-530100",
@@ -1359,6 +2074,17 @@
       "publishedOn": "2026-03-24"
     },
     {
+      "regionId": "tdt-county-120102",
+      "regionName": "河东区",
+      "level": "county",
+      "sourceName": "河东区",
+      "value": 528.22,
+      "sourceId": "annual-2025-tdt-county-120102",
+      "sourceFile": "city-2025-v7article-tdt-county-120102-33.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-05"
+    },
+    {
       "regionId": "tdt-county-120110",
       "regionName": "东丽区",
       "level": "county",
@@ -1381,6 +2107,28 @@
       "publishedOn": "2026-02-02"
     },
     {
+      "regionId": "tdt-county-120117",
+      "regionName": "宁河区",
+      "level": "county",
+      "sourceName": "宁河区",
+      "value": 313.89,
+      "sourceId": "annual-2025-tdt-county-120117",
+      "sourceFile": "city-2025-v6article-tdt-county-120117-25.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-30"
+    },
+    {
+      "regionId": "tdt-county-120119",
+      "regionName": "蓟州区",
+      "level": "county",
+      "sourceName": "蓟州区",
+      "value": 311.94,
+      "sourceId": "annual-2025-tdt-county-120119",
+      "sourceFile": "city-2025-v6article-tdt-county-120119-26.html",
+      "status": "preliminary",
+      "publishedOn": "2026-06-26"
+    },
+    {
       "regionId": "tdt-county-310104",
       "regionName": "徐汇区",
       "level": "county",
@@ -1392,6 +2140,72 @@
       "publishedOn": "2026-06-01"
     },
     {
+      "regionId": "tdt-county-500101",
+      "regionName": "万州区",
+      "level": "county",
+      "sourceName": "万州区",
+      "value": 1337.53,
+      "sourceId": "annual-2025-tdt-county-500101",
+      "sourceFile": "city-2025-v6article-tdt-county-500101-28.html",
+      "status": "preliminary",
+      "publishedOn": "2026-01-28"
+    },
+    {
+      "regionId": "tdt-county-500104",
+      "regionName": "大渡口区",
+      "level": "county",
+      "sourceName": "大渡口区",
+      "value": 543.3,
+      "sourceId": "annual-2025-tdt-county-500104",
+      "sourceFile": "city-2025-v8media-v7article-tdt-county-500104-15-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-05-09"
+    },
+    {
+      "regionId": "tdt-county-500108",
+      "regionName": "南岸区",
+      "level": "county",
+      "sourceName": "南岸区",
+      "value": 1200.57,
+      "sourceId": "annual-2025-tdt-county-500108",
+      "sourceFile": "city-2025-v4media-v2a-tdt-county-500108-1-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-05-19"
+    },
+    {
+      "regionId": "tdt-county-500113",
+      "regionName": "巴南区",
+      "level": "county",
+      "sourceName": "巴南区",
+      "value": 1251.9,
+      "sourceId": "annual-2025-tdt-county-500113",
+      "sourceFile": "city-2025-v7article-tdt-county-500113-17.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-06"
+    },
+    {
+      "regionId": "tdt-county-500114",
+      "regionName": "黔江区",
+      "level": "county",
+      "sourceName": "黔江区",
+      "value": 431.1,
+      "sourceId": "annual-2025-tdt-county-500114",
+      "sourceFile": "city-2025-v6article-tdt-county-500114-29.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-08"
+    },
+    {
+      "regionId": "tdt-county-500119",
+      "regionName": "南川区",
+      "level": "county",
+      "sourceName": "南川区",
+      "value": 529.97,
+      "sourceId": "annual-2025-tdt-county-500119",
+      "sourceFile": "city-2025-v6article-tdt-county-500119-40.html",
+      "status": "preliminary",
+      "publishedOn": "2026-01-27"
+    },
+    {
       "regionId": "tdt-county-500153",
       "regionName": "荣昌区",
       "level": "county",
@@ -1401,6 +2215,83 @@
       "sourceFile": "city-2025-a-tdt-county-500153.html",
       "status": "preliminary",
       "publishedOn": "2026-04-21"
+    },
+    {
+      "regionId": "tdt-county-500229",
+      "regionName": "城口县",
+      "level": "county",
+      "sourceName": "城口县",
+      "value": 85.06,
+      "sourceId": "annual-2025-tdt-county-500229",
+      "sourceFile": "city-2025-v8media-v7article-tdt-county-500229-26-2.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-04-30"
+    },
+    {
+      "regionId": "tdt-county-500230",
+      "regionName": "丰都县",
+      "level": "county",
+      "sourceName": "丰都县",
+      "value": 455.2516,
+      "sourceId": "annual-2025-tdt-county-500230",
+      "sourceFile": "city-2025-v6article-tdt-county-500230-46.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-21"
+    },
+    {
+      "regionId": "tdt-county-500231",
+      "regionName": "垫江县",
+      "level": "county",
+      "sourceName": "垫江县",
+      "value": 582.1,
+      "sourceId": "annual-2025-tdt-county-500231",
+      "sourceFile": "city-2025-v2attach-tdt-county-500231-1.pdf",
+      "status": "preliminary",
+      "publishedOn": "2026-04-01"
+    },
+    {
+      "regionId": "tdt-county-500233",
+      "regionName": "忠县",
+      "level": "county",
+      "sourceName": "忠县",
+      "value": 608.37,
+      "sourceId": "annual-2025-tdt-county-500233",
+      "sourceFile": "city-2025-v7media-v6article-tdt-county-500233-48-0.jpg",
+      "status": "preliminary",
+      "publishedOn": "2026-04-20"
+    },
+    {
+      "regionId": "tdt-county-500235",
+      "regionName": "云阳县",
+      "level": "county",
+      "sourceName": "云阳县",
+      "value": 626.71,
+      "sourceId": "annual-2025-tdt-county-500235",
+      "sourceFile": "city-2025-v6article-tdt-county-500235-49.html",
+      "status": "preliminary",
+      "publishedOn": "2026-04-20"
+    },
+    {
+      "regionId": "tdt-county-500237",
+      "regionName": "巫山县",
+      "level": "county",
+      "sourceName": "巫山县",
+      "value": 271.18,
+      "sourceId": "annual-2025-tdt-county-500237",
+      "sourceFile": "city-2025-v7article-tdt-county-500237-29.html",
+      "status": "preliminary",
+      "publishedOn": "2026-01-27"
+    },
+    {
+      "regionId": "tdt-county-500238",
+      "regionName": "巫溪县",
+      "level": "county",
+      "sourceName": "巫溪县",
+      "value": 165.4,
+      "sourceId": "annual-2025-tdt-county-500238",
+      "sourceFile": "city-2025-v6article-tdt-county-500238-52.html",
+      "status": "preliminary",
+      "publishedOn": "2026-05-27"
     }
   ]
 }
