@@ -1,0 +1,26 @@
+{
+  "year": 2025,
+  "counts": {
+    "country": 1,
+    "province": 30,
+    "city": 0,
+    "county": 0
+  },
+  "total": 31,
+  "missingProvinceIds": ["620000", "710000", "810000", "820000"],
+  "unavailableSources": [
+    {
+      "regionId": "620000",
+      "regionName": "甘肃省",
+      "url": "https://tjj.gansu.gov.cn/tjj/c109459/202601/174273709.shtml",
+      "reason": "官方原页及省政府入口返回 HTTP 412，未取得可核验原文，暂不录入数值。"
+    }
+  ],
+  "nationalValue": 1401879.0,
+  "provinceSum": 1380069.64,
+  "notes": [
+    "采用所存官方年度发布版本；未宣称已排查下载日前全部后续修订。",
+    "缺失不填零，不借用2024年或其他年份；城市和区县尚未收录2025年数据。",
+    "全国值采用国家统计局原文，不用省级合计替代；当前省级覆盖不全。"
+  ]
+}
