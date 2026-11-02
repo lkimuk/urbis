@@ -86,6 +86,23 @@
             <label class="field-label" for="map-title">标题文字</label
             ><input id="map-title" type="text" maxlength="40" placeholder="随地图自动更新" />
           </section>
+          <section class="setting-section" aria-label="专题数据">
+            <label class="field-label" for="thematic">专题</label>
+            <select id="thematic">
+              <option value="none">无</option>
+              <option value="gdp">地区生产总值（GDP）</option>
+            </select>
+            <div id="gdp-controls" hidden>
+              <label class="field-label" for="gdp-year">年份</label>
+              <select id="gdp-year" aria-describedby="gdp-state" disabled></select>
+              <p id="gdp-state" class="gdp-state" role="status"></p>
+              <button id="gdp-retry" class="text-button" hidden>重新加载</button>
+              <details id="gdp-details" class="data-note">
+                <summary>GDP 资料</summary>
+                <div id="gdp-sources"></div>
+              </details>
+            </div>
+          </section>
           <section class="setting-section">
             <div class="section-heading">
               <h3>色彩与线条</h3>

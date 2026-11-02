@@ -8,6 +8,9 @@ import {
 } from './catalog.mjs';
 import { createMapView } from './map-view.mjs';
 import { createAtlasClient } from './desktop-api.mjs';
+import { buildGdpModel } from './gdp-model.mjs';
+import { createGdpStore } from './gdp-store.mjs';
+import { createGdpPanel } from './gdp-panel.mjs';
 
 const $ = (id) => document.getElementById(id);
 const api = createAtlasClient(window.atlas);
@@ -18,6 +21,19 @@ let currentMap;
 let busy = true;
 let exporting = false;
 let toastTimer;
+let gdpModel = null;
+const gdpPanel = createGdpPanel(document);
+const gdpStore = createGdpStore({
+  listDatasets: () => api.listGdpDatasets(),
+  getDataset: (request) => api.getGdp(request),
+  onChange: (state) => {
+    if (state.status === 'ready') {
+      settings = { ...settings, gdpYear: state.year };
+      saveSettings(localStorage, settings);
+    }
+    refreshGdp();
+  },
+});
 const load = createMapLoader((request) => api.getMap(request));
 const view = createMapView({
   echarts: window.echarts,
@@ -46,6 +62,7 @@ function updateDimensions() {
 }
 
 function syncControls() {
+  $('thematic').value = settings.thematic;
   document.querySelector('input[name=variant][value=' + settings.variant + ']').checked = true;
   $('labels').checked = settings.labels;
   $('labels').disabled = settings.variant === 'outline';
@@ -71,11 +88,29 @@ function syncControls() {
 }
 
 function updateActions() {
-  $('export').disabled = busy || exporting || !currentMap;
+  const thematicReady = settings.thematic !== 'gdp' || gdpStore.getState().status === 'ready';
+  $('export').disabled = busy || exporting || !currentMap || !thematicReady;
   $('export').textContent = exporting ? '正在保存…' : '导出 PNG';
   $('map').setAttribute('aria-busy', String(busy));
   $('map').dataset.ready = String(!busy && Boolean(currentMap));
   for (const id of ['zoom-in', 'zoom-out', 'reset-view']) $(id).disabled = busy || !currentMap;
+}
+
+function refreshGdp() {
+  const state = gdpStore.getState();
+  gdpModel =
+    settings.thematic === 'gdp' && state.status === 'ready' && !busy && currentMap
+      ? buildGdpModel(state.index, currentRegion, currentMap.geoJSON, settings.variant)
+      : null;
+  if (!busy && currentMap) view.update(settings, gdpModel);
+  $('map').dataset.gdpReady = String(Boolean(gdpModel));
+  gdpPanel.render({
+    enabled: settings.thematic === 'gdp',
+    state,
+    model: gdpModel,
+    region: currentRegion,
+  });
+  updateActions();
 }
 
 function renderList() {
@@ -137,13 +172,14 @@ function changeSettings(patch) {
     Object.keys(patch).some((key) => key !== 'scale') &&
     currentMap.key === currentRegion.id + '-' + settings.variant
   )
-    view.update(settings);
+    view.update(settings, gdpModel);
 }
 
 async function loadMap() {
   if (!currentRegion) return;
   const region = currentRegion;
   busy = true;
+  refreshGdp();
   updateActions();
   $('map-message').textContent = '正在打开' + region.name + '…';
   $('map-message').classList.remove('error');
@@ -154,12 +190,14 @@ async function loadMap() {
     view.show({ region, ...result, settings });
     currentMap = result;
     busy = false;
+    refreshGdp();
     $('map-message').hidden = true;
     $('map').dataset.mapKey = result.key;
     updateActions();
   } catch (error) {
     currentMap = null;
     busy = false;
+    refreshGdp();
     updateActions();
     $('map-message').classList.add('error');
     $('map-message').textContent = '地图加载失败：' + error.message + '。请重新选择地图重试。';
@@ -191,14 +229,17 @@ async function selectRegion(region) {
 }
 
 async function exportImage() {
-  if (busy || !currentMap || exporting) return;
+  if (busy || !currentMap || exporting || (settings.thematic === 'gdp' && !gdpModel)) return;
   exporting = true;
   updateActions();
   try {
     // Capture all export inputs before awaiting the save dialog. City/style changes cannot rename this image.
     const dataURL = view.capturePng(settings);
     const filename =
-      currentRegion.name + '-' + (settings.variant === 'districts' ? '行政区地图' : '轮廓地图');
+      currentRegion.name +
+      (gdpModel ? '-' + gdpModel.year + '-GDP' : '') +
+      '-' +
+      (settings.variant === 'districts' ? '行政区地图' : '轮廓地图');
     const result = await api.saveImage({ dataURL, filename });
     if (!result.canceled)
       toast(
@@ -215,6 +256,20 @@ async function exportImage() {
 $('search').addEventListener('input', renderList);
 $('province').addEventListener('change', renderList);
 $('level').addEventListener('change', renderList);
+$('thematic').addEventListener('change', () => {
+  changeSettings({ thematic: $('thematic').value });
+  refreshGdp();
+  if (settings.thematic === 'gdp' && gdpStore.getState().status !== 'ready')
+    void gdpStore.load(settings.gdpYear);
+});
+$('gdp-year').addEventListener('change', () => {
+  const year = Number($('gdp-year').value);
+  changeSettings({ gdpYear: year });
+  void gdpStore.load(year);
+});
+$('gdp-retry').addEventListener('click', () => {
+  void gdpStore.load(settings.gdpYear);
+});
 $('breadcrumb').addEventListener('click', (event) => {
   const button = event.target.closest('button[data-id]');
   if (button) void selectRegion(regions.find((region) => region.id === button.dataset.id));
@@ -294,6 +349,7 @@ async function initialize() {
   try {
     regions = await api.getRegions();
     if (!regions.length) throw new Error('地图库为空');
+    if (settings.thematic === 'gdp') void gdpStore.load(settings.gdpYear);
     for (const province of new Set(
       regions.filter((region) => region.level === 'province').map((region) => region.province),
     )) {

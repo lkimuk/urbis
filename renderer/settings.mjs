@@ -30,6 +30,8 @@ export const DEFAULTS = Object.freeze({
   palette: 'atlas',
   regionId: '',
   title: '',
+  thematic: 'none',
+  gdpYear: null,
 });
 
 export function normalizeSettings(value) {
@@ -45,6 +47,9 @@ export function normalizeSettings(value) {
       result[key] = value[key];
   }
   if (['districts', 'outline'].includes(value.variant)) result.variant = value.variant;
+  if (['none', 'gdp'].includes(value.thematic)) result.thematic = value.thematic;
+  if (Number.isInteger(value.gdpYear) && value.gdpYear >= 1900 && value.gdpYear <= 2100)
+    result.gdpYear = value.gdpYear;
   if ([1, 2, 3, 4].includes(value.scale)) result.scale = value.scale;
   if (Number.isFinite(value.width) && value.width >= 0.3 && value.width <= 3)
     result.width = value.width;

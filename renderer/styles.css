@@ -454,6 +454,30 @@ input[type='range'] {
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
+.gdp-state {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.gdp-state.error {
+  color: #b42318;
+}
+#gdp-details {
+  padding-bottom: 0;
+}
+.gdp-source {
+  margin-top: 10px;
+  overflow-wrap: anywhere;
+}
+.gdp-source strong {
+  color: #444;
+  font-weight: 600;
+}
+.gdp-source-url {
+  user-select: text;
+  font-size: 10px;
+}
 .export-action {
   flex-shrink: 0;
   padding: 10px 14px;

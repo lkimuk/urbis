@@ -1,4 +1,6 @@
 import { layoutRegionLabels } from './label-layout.mjs';
+import { gdpTooltip, gdpColors, gdpClass, GDP_MISSING_COLOR } from './gdp-model.mjs';
+import { gdpGraphics } from './gdp-graphics.mjs';
 
 let nextMapId = 0;
 
@@ -19,6 +21,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
   function layoutLabels() {
     if (!model) return;
     const { settings } = model;
+    const annotations = gdpGraphics(model.gdp, settings, chart.getWidth(), chart.getHeight());
     let labels = [];
     if (settings.variant === 'districts' && settings.labels) {
       const project = (point) => chart.convertToPixel({ geoIndex: 0 }, point);
@@ -35,26 +38,29 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
         height: chart.getHeight(),
         measureText: (text) =>
           echarts.format.getTextRect(text, '12px "Microsoft YaHei", sans-serif').width,
-        reserved: settings.showTitle
-          ? [
-              {
-                left: 24,
-                top: 20,
-                right: Math.min(
-                  chart.getWidth() - 10,
-                  40 +
-                    echarts.format.getTextRect(
-                      settings.title.trim() || model.region.name,
-                      '25px SimSun',
-                    ).width,
-                ),
-                bottom: 62,
-              },
-            ]
-          : [],
+        reserved: [
+          ...annotations.reserved,
+          ...(settings.showTitle
+            ? [
+                {
+                  left: 24,
+                  top: 20,
+                  right: Math.min(
+                    chart.getWidth() - 10,
+                    40 +
+                      echarts.format.getTextRect(
+                        settings.title.trim() || model.region.name,
+                        '25px SimSun',
+                      ).width,
+                  ),
+                  bottom: 62,
+                },
+              ]
+            : []),
+        ],
       });
     }
-    const children = [];
+    const children = [...annotations.elements];
     for (const label of labels) {
       children.push({
         type: 'text',
@@ -77,9 +83,27 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
     );
   }
 
-  function render({ region, settings }, reset = false) {
+  function render({ region, settings, gdp = null }, reset = false) {
     const previous = reset ? null : chart.getOption()?.geo?.[0];
-    model = { region, settings };
+    model = { region, settings, gdp };
+    const annotations = gdpGraphics(gdp, settings, chart.getWidth(), chart.getHeight());
+    const colors = gdpColors(settings.fill);
+    const areaStyles = gdp
+      ? gdp.areas.map((area) => {
+          const color =
+            area.status === 'available'
+              ? gdp.choropleth
+                ? colors[gdpClass(area.record.value, gdp.thresholds)]
+                : settings.fill
+              : GDP_MISSING_COLOR;
+          return {
+            name: area.name,
+            itemStyle: { areaColor: color },
+            emphasis: { itemStyle: { areaColor: color } },
+            select: { itemStyle: { areaColor: color } },
+          };
+        })
+      : [];
     chart.setOption(
       {
         animation: false,
@@ -100,7 +124,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           trigger: 'item',
           confine: true,
           renderMode: 'richText',
-          formatter: (params) => params.name,
+          formatter: (params) => (gdp ? gdpTooltip(gdp, params.name) : params.name),
           backgroundColor: '#f9f8f1',
           borderColor: '#c3cdbb',
           textStyle: { color: '#314b39', fontSize: 12 },
@@ -116,7 +140,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
           left: '10%',
           right: '10%',
           top: settings.showTitle ? 90 : '10%',
-          bottom: '10%',
+          bottom: annotations.bottom,
           label: {
             show: false,
             color: settings.text,
@@ -143,7 +167,7 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
               borderColor: settings.border,
             },
           },
-          regions: [],
+          regions: areaStyles,
         },
         series: [
           { id: 'region', type: 'map', map: mapName, geoIndex: 0, data: [], selectedMode: false },
@@ -177,13 +201,13 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
   });
   const observer = new ResizeObserver(() => {
     chart.resize();
-    layoutLabels();
+    if (model) render(model);
     onResize();
   });
   observer.observe(element);
 
   return {
-    show({ region, geoJSON, settings }) {
+    show({ region, geoJSON, settings, gdp = null }) {
       // Clear old geo models before replacing the registered geometry.
       cancelAnimationFrame(layoutFrame);
       chart.clear();
@@ -201,10 +225,10 @@ export function createMapView({ echarts, element, onSelect, onResize }) {
         const br = b.getBoundingRect();
         return br.width * br.height - ar.width * ar.height;
       });
-      render({ region, settings }, true);
+      render({ region, settings, gdp }, true);
     },
-    update(settings) {
-      if (model) render({ ...model, settings });
+    update(settings, gdp = null) {
+      if (model) render({ ...model, settings, gdp });
     },
     reset() {
       if (model) render(model, true);
