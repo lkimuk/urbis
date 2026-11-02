@@ -6,3 +6,4 @@ artifacts/
 electron-runtime.zip
 electron-shasums.txt
 build-tools/
+__pycache__/
