@@ -1,1 +1,2 @@
 data/tianditu/*.geojson -text
+data/gdp/sources/** -text

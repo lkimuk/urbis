@@ -1,0 +1,76 @@
+{
+  "retrievedOn": "2026-11-02",
+  "year": 2024,
+  "unit": "亿元",
+  "currency": "CNY",
+  "priceBasis": "current",
+  "sources": [
+    {
+      "id": "nbs-2025-national",
+      "publisher": "国家统计局",
+      "title": "中国统计年鉴2025 表3-1 国内生产总值",
+      "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/C03-01.jpg",
+      "files": ["nbs-2025-C03-01.jpg", "nbs-2025-sm03.htm"],
+      "status": "preliminary",
+      "extraction": "manual-transcription",
+      "notes": [
+        "取2024年国内生产总值列，不取国民总收入列。",
+        "简要说明注明最后一年数据不是最终数。"
+      ]
+    },
+    {
+      "id": "nbs-2025-provinces",
+      "publisher": "国家统计局",
+      "title": "中国统计年鉴2025 表3-9 地区生产总值（2024年）",
+      "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/C03-09.jpg",
+      "files": ["nbs-2025-C03-09.jpg", "nbs-2025-sm03.htm"],
+      "status": "preliminary",
+      "extraction": "manual-transcription",
+      "notes": ["表下注明初步核算数。", "各地区合计略小于全国，不能用求和替代全国值。"]
+    },
+    {
+      "id": "gd-2025-cities",
+      "publisher": "广东省统计局",
+      "title": "广东统计年鉴2025 表2-24 各市地区生产总值（2024年）",
+      "url": "https://stats.gd.gov.cn/gdtjnj/content/post_4810393.html",
+      "archiveUrl": "https://stats.gd.gov.cn/attachment/0/625/625617/4810393.zip",
+      "archiveMembers": ["directory/02/html/02-24-0.htm"],
+      "files": ["guangdong-2025-index.html", "gd-2025-02-24-0.htm"],
+      "status": "as-published",
+      "extraction": "html-table",
+      "notes": [
+        "只取21个城市行，排除珠三角、粤东、粤西、粤北汇总行。",
+        "不将未明确说明终值的年鉴数据标成最终核实数。"
+      ]
+    },
+    {
+      "id": "gd-2025-counties",
+      "publisher": "广东省统计局",
+      "title": "广东统计年鉴2025 表23-1 各县（市、区）地区生产总值",
+      "url": "https://stats.gd.gov.cn/gdtjnj/content/post_4810393.html",
+      "archiveUrl": "https://stats.gd.gov.cn/attachment/0/625/625617/4810393.zip",
+      "archiveMembers": [
+        "directory/23/html/23-01-0.htm",
+        "directory/23/html/23-01-1.htm",
+        "directory/23/html/23-01-2.htm"
+      ],
+      "files": ["gd-2025-23-01-0.htm", "gd-2025-23-01-1.htm", "gd-2025-23-01-2.htm"],
+      "status": "as-published",
+      "extraction": "html-table",
+      "notes": [
+        "取2024年GDP列，不取2023年或指数列。",
+        "海丰县不含深汕合作区，保留范围差异，不直接用于全县面着色。"
+      ]
+    }
+  ],
+  "files": {
+    "nbs-2025-C03-01.jpg": "58c40bf49ae4fac0a62fe7238522bd778e396e29c13ef5ed96a6e0a37bc15f97",
+    "nbs-2025-C03-09.jpg": "9576529a881b83beac4718594f3a26d2e1949947a65c7e375b4a5f1c6a69688e",
+    "nbs-2025-sm03.htm": "370ae92856732ba441836baa639185c7c57b011e864bb0aeb75310e8c59e8194",
+    "guangdong-2025-index.html": "05bd4321397a5b8c5eca8a0198b129b0db79f52e1853ca671f8ff3f39f468609",
+    "gd-2025-02-24-0.htm": "fa97b8b4984f960f8558fd8f8e10c4df70ec166585893c5892f4ecd954be4b08",
+    "gd-2025-23-01-0.htm": "f5f4fc34d34948f691f93e6e6c86cae537a098b9e46a27cf339f933851072932",
+    "gd-2025-23-01-1.htm": "1f61a22bb73814abb223d97ef5040a61b399e5c599a3fb6c28100b1fcdbc88a9",
+    "gd-2025-23-01-2.htm": "8265d6dbf7724955c2ce73b7a0c99eda419c74b83971ed33ff6a3c564c35a50c"
+  }
+}

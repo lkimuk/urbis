@@ -1,0 +1,1760 @@
+{
+  "year": 2024,
+  "unit": "亿元",
+  "currency": "CNY",
+  "priceBasis": "current",
+  "retrievedOn": "2026-11-02",
+  "records": [
+    {
+      "regionId": "100000",
+      "regionName": "全国",
+      "level": "country",
+      "sourceName": "全国",
+      "value": 1349083.5,
+      "sourceId": "nbs-2025-national",
+      "sourceFile": "nbs-2025-C03-01.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "110000",
+      "regionName": "北京",
+      "level": "province",
+      "sourceName": "北京",
+      "value": 49843.1,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "120000",
+      "regionName": "天津",
+      "level": "province",
+      "sourceName": "天津",
+      "value": 18024.3,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "130000",
+      "regionName": "河北",
+      "level": "province",
+      "sourceName": "河北",
+      "value": 47526.9,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "140000",
+      "regionName": "山西",
+      "level": "province",
+      "sourceName": "山西",
+      "value": 25494.7,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "150000",
+      "regionName": "内蒙古",
+      "level": "province",
+      "sourceName": "内蒙古",
+      "value": 26314.6,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "210000",
+      "regionName": "辽宁",
+      "level": "province",
+      "sourceName": "辽宁",
+      "value": 32612.7,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "220000",
+      "regionName": "吉林",
+      "level": "province",
+      "sourceName": "吉林",
+      "value": 14361.2,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "230000",
+      "regionName": "黑龙江",
+      "level": "province",
+      "sourceName": "黑龙江",
+      "value": 16476.9,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "310000",
+      "regionName": "上海",
+      "level": "province",
+      "sourceName": "上海",
+      "value": 53926.7,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "320000",
+      "regionName": "江苏",
+      "level": "province",
+      "sourceName": "江苏",
+      "value": 137008.0,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "330000",
+      "regionName": "浙江",
+      "level": "province",
+      "sourceName": "浙江",
+      "value": 90130.6,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "340000",
+      "regionName": "安徽",
+      "level": "province",
+      "sourceName": "安徽",
+      "value": 50625.2,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "350000",
+      "regionName": "福建",
+      "level": "province",
+      "sourceName": "福建",
+      "value": 57761.0,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "360000",
+      "regionName": "江西",
+      "level": "province",
+      "sourceName": "江西",
+      "value": 34202.5,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "370000",
+      "regionName": "山东",
+      "level": "province",
+      "sourceName": "山东",
+      "value": 98565.8,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "410000",
+      "regionName": "河南",
+      "level": "province",
+      "sourceName": "河南",
+      "value": 63590.0,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "420000",
+      "regionName": "湖北",
+      "level": "province",
+      "sourceName": "湖北",
+      "value": 60013.0,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "430000",
+      "regionName": "湖南",
+      "level": "province",
+      "sourceName": "湖南",
+      "value": 53231.0,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "440000",
+      "regionName": "广东",
+      "level": "province",
+      "sourceName": "广东",
+      "value": 141633.8,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "450000",
+      "regionName": "广西",
+      "level": "province",
+      "sourceName": "广西",
+      "value": 28649.4,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "460000",
+      "regionName": "海南",
+      "level": "province",
+      "sourceName": "海南",
+      "value": 7935.7,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "500000",
+      "regionName": "重庆",
+      "level": "province",
+      "sourceName": "重庆",
+      "value": 32193.2,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "510000",
+      "regionName": "四川",
+      "level": "province",
+      "sourceName": "四川",
+      "value": 64697.0,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "520000",
+      "regionName": "贵州",
+      "level": "province",
+      "sourceName": "贵州",
+      "value": 22667.1,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "530000",
+      "regionName": "云南",
+      "level": "province",
+      "sourceName": "云南",
+      "value": 31534.1,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "540000",
+      "regionName": "西藏",
+      "level": "province",
+      "sourceName": "西藏",
+      "value": 2764.9,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "610000",
+      "regionName": "陕西",
+      "level": "province",
+      "sourceName": "陕西",
+      "value": 35538.8,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "620000",
+      "regionName": "甘肃",
+      "level": "province",
+      "sourceName": "甘肃",
+      "value": 13002.9,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "630000",
+      "regionName": "青海",
+      "level": "province",
+      "sourceName": "青海",
+      "value": 3950.8,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "640000",
+      "regionName": "宁夏",
+      "level": "province",
+      "sourceName": "宁夏",
+      "value": 5502.8,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "650000",
+      "regionName": "新疆",
+      "level": "province",
+      "sourceName": "新疆",
+      "value": 20534.1,
+      "sourceId": "nbs-2025-provinces",
+      "sourceFile": "nbs-2025-C03-09.jpg",
+      "status": "preliminary"
+    },
+    {
+      "regionId": "tdt-440100",
+      "regionName": "广州市",
+      "level": "city",
+      "sourceName": "广州",
+      "value": 31032.5,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-440200",
+      "regionName": "韶关市",
+      "level": "city",
+      "sourceName": "韶关",
+      "value": 1647.56,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-440300",
+      "regionName": "深圳市",
+      "level": "city",
+      "sourceName": "深圳",
+      "value": 36801.87,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-440400",
+      "regionName": "珠海市",
+      "level": "city",
+      "sourceName": "珠海",
+      "value": 4479.06,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-440500",
+      "regionName": "汕头市",
+      "level": "city",
+      "sourceName": "汕头",
+      "value": 3167.97,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-440600",
+      "regionName": "佛山市",
+      "level": "city",
+      "sourceName": "佛山",
+      "value": 13361.9,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-440700",
+      "regionName": "江门市",
+      "level": "city",
+      "sourceName": "江门",
+      "value": 4210.18,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-440800",
+      "regionName": "湛江市",
+      "level": "city",
+      "sourceName": "湛江",
+      "value": 3839.93,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-440900",
+      "regionName": "茂名市",
+      "level": "city",
+      "sourceName": "茂名",
+      "value": 4072.04,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-441200",
+      "regionName": "肇庆市",
+      "level": "city",
+      "sourceName": "肇庆",
+      "value": 2917.85,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-441300",
+      "regionName": "惠州市",
+      "level": "city",
+      "sourceName": "惠州",
+      "value": 6136.39,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-441400",
+      "regionName": "梅州市",
+      "level": "city",
+      "sourceName": "梅州",
+      "value": 1508.18,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-441500",
+      "regionName": "汕尾市",
+      "level": "city",
+      "sourceName": "汕尾",
+      "value": 1500.89,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-441600",
+      "regionName": "河源市",
+      "level": "city",
+      "sourceName": "河源",
+      "value": 1407.72,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-441700",
+      "regionName": "阳江市",
+      "level": "city",
+      "sourceName": "阳江",
+      "value": 1629.58,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-441800",
+      "regionName": "清远市",
+      "level": "city",
+      "sourceName": "清远",
+      "value": 2253.07,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-441900",
+      "regionName": "东莞市",
+      "level": "city",
+      "sourceName": "东莞",
+      "value": 12282.15,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-442000",
+      "regionName": "中山市",
+      "level": "city",
+      "sourceName": "中山",
+      "value": 4143.25,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-445100",
+      "regionName": "潮州市",
+      "level": "city",
+      "sourceName": "潮州",
+      "value": 1402.83,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-445200",
+      "regionName": "揭阳市",
+      "level": "city",
+      "sourceName": "揭阳",
+      "value": 2529.7,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-445300",
+      "regionName": "云浮市",
+      "level": "city",
+      "sourceName": "云浮",
+      "value": 1309.19,
+      "sourceId": "gd-2025-cities",
+      "sourceFile": "gd-2025-02-24-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440103",
+      "regionName": "荔湾区",
+      "level": "county",
+      "sourceName": "荔湾区",
+      "value": 1316.36,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440104",
+      "regionName": "越秀区",
+      "level": "county",
+      "sourceName": "越秀区",
+      "value": 3511.89,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440105",
+      "regionName": "海珠区",
+      "level": "county",
+      "sourceName": "海珠区",
+      "value": 3008.35,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440106",
+      "regionName": "天河区",
+      "level": "county",
+      "sourceName": "天河区",
+      "value": 6614.69,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440111",
+      "regionName": "白云区",
+      "level": "county",
+      "sourceName": "白云区",
+      "value": 3156.37,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440112",
+      "regionName": "黄埔区",
+      "level": "county",
+      "sourceName": "黄埔区",
+      "value": 4338.9,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440113",
+      "regionName": "番禺区",
+      "level": "county",
+      "sourceName": "番禺区",
+      "value": 3070.56,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440114",
+      "regionName": "花都区",
+      "level": "county",
+      "sourceName": "花都区",
+      "value": 1860.06,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440115",
+      "regionName": "南沙区",
+      "level": "county",
+      "sourceName": "南沙区",
+      "value": 2301.3,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440117",
+      "regionName": "从化区",
+      "level": "county",
+      "sourceName": "从化区",
+      "value": 441.66,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440118",
+      "regionName": "增城区",
+      "level": "county",
+      "sourceName": "增城区",
+      "value": 1412.37,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440203",
+      "regionName": "武江区",
+      "level": "county",
+      "sourceName": "武江区",
+      "value": 318.94,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440204",
+      "regionName": "浈江区",
+      "level": "county",
+      "sourceName": "浈江区",
+      "value": 233.44,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440205",
+      "regionName": "曲江区",
+      "level": "county",
+      "sourceName": "曲江区",
+      "value": 190.25,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440222",
+      "regionName": "始兴县",
+      "level": "county",
+      "sourceName": "始兴县",
+      "value": 103.51,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440224",
+      "regionName": "仁化县",
+      "level": "county",
+      "sourceName": "仁化县",
+      "value": 121.29,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440229",
+      "regionName": "翁源县",
+      "level": "county",
+      "sourceName": "翁源县",
+      "value": 155.84,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440232",
+      "regionName": "乳源瑶族自治县",
+      "level": "county",
+      "sourceName": "乳源县",
+      "value": 128.07,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440233",
+      "regionName": "新丰县",
+      "level": "county",
+      "sourceName": "新丰县",
+      "value": 90.05,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440281",
+      "regionName": "乐昌市",
+      "level": "county",
+      "sourceName": "乐昌市",
+      "value": 156.67,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440282",
+      "regionName": "南雄市",
+      "level": "county",
+      "sourceName": "南雄市",
+      "value": 149.49,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440303",
+      "regionName": "罗湖区",
+      "level": "county",
+      "sourceName": "罗湖区",
+      "value": 2478.55,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440304",
+      "regionName": "福田区",
+      "level": "county",
+      "sourceName": "福田区",
+      "value": 5948.82,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440305",
+      "regionName": "南山区",
+      "level": "county",
+      "sourceName": "南山区",
+      "value": 9500.97,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440306",
+      "regionName": "宝安区",
+      "level": "county",
+      "sourceName": "宝安区",
+      "value": 5300.43,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440307",
+      "regionName": "龙岗区",
+      "level": "county",
+      "sourceName": "龙岗区",
+      "value": 6367.88,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440308",
+      "regionName": "盐田区",
+      "level": "county",
+      "sourceName": "盐田区",
+      "value": 643.55,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440309",
+      "regionName": "龙华区",
+      "level": "county",
+      "sourceName": "龙华区",
+      "value": 3154.45,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440310",
+      "regionName": "坪山区",
+      "level": "county",
+      "sourceName": "坪山区",
+      "value": 1443.76,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440311",
+      "regionName": "光明区",
+      "level": "county",
+      "sourceName": "光明区",
+      "value": 1721.3,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440402",
+      "regionName": "香洲区",
+      "level": "county",
+      "sourceName": "香洲区",
+      "value": 2993.29,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440403",
+      "regionName": "斗门区",
+      "level": "county",
+      "sourceName": "斗门区",
+      "value": 539.49,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440404",
+      "regionName": "金湾区",
+      "level": "county",
+      "sourceName": "金湾区",
+      "value": 946.28,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440507",
+      "regionName": "龙湖区",
+      "level": "county",
+      "sourceName": "龙湖区",
+      "value": 670.06,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440511",
+      "regionName": "金平区",
+      "level": "county",
+      "sourceName": "金平区",
+      "value": 648.85,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440512",
+      "regionName": "濠江区",
+      "level": "county",
+      "sourceName": "濠江区",
+      "value": 192.9,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440513",
+      "regionName": "潮阳区",
+      "level": "county",
+      "sourceName": "潮阳区",
+      "value": 552.61,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440514",
+      "regionName": "潮南区",
+      "level": "county",
+      "sourceName": "潮南区",
+      "value": 455.08,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440515",
+      "regionName": "澄海区",
+      "level": "county",
+      "sourceName": "澄海区",
+      "value": 605.82,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440523",
+      "regionName": "南澳县",
+      "level": "county",
+      "sourceName": "南澳县",
+      "value": 42.66,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440604",
+      "regionName": "禅城区",
+      "level": "county",
+      "sourceName": "禅城区",
+      "value": 2421.08,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440605",
+      "regionName": "南海区",
+      "level": "county",
+      "sourceName": "南海区",
+      "value": 4003.35,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440606",
+      "regionName": "顺德区",
+      "level": "county",
+      "sourceName": "顺德区",
+      "value": 4293.83,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440607",
+      "regionName": "三水区",
+      "level": "county",
+      "sourceName": "三水区",
+      "value": 1536.58,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440608",
+      "regionName": "高明区",
+      "level": "county",
+      "sourceName": "高明区",
+      "value": 1107.06,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-0.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440703",
+      "regionName": "蓬江区",
+      "level": "county",
+      "sourceName": "蓬江区",
+      "value": 955.25,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440704",
+      "regionName": "江海区",
+      "level": "county",
+      "sourceName": "江海区",
+      "value": 318.61,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440705",
+      "regionName": "新会区",
+      "level": "county",
+      "sourceName": "新会区",
+      "value": 1063.73,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440781",
+      "regionName": "台山市",
+      "level": "county",
+      "sourceName": "台山市",
+      "value": 575.37,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440783",
+      "regionName": "开平市",
+      "level": "county",
+      "sourceName": "开平市",
+      "value": 515.47,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440784",
+      "regionName": "鹤山市",
+      "level": "county",
+      "sourceName": "鹤山市",
+      "value": 530.71,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440785",
+      "regionName": "恩平市",
+      "level": "county",
+      "sourceName": "恩平市",
+      "value": 251.04,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440802",
+      "regionName": "赤坎区",
+      "level": "county",
+      "sourceName": "赤坎区",
+      "value": 380.79,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440803",
+      "regionName": "霞山区",
+      "level": "county",
+      "sourceName": "霞山区",
+      "value": 463.37,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440804",
+      "regionName": "坡头区",
+      "level": "county",
+      "sourceName": "坡头区",
+      "value": 407.42,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440811",
+      "regionName": "麻章区",
+      "level": "county",
+      "sourceName": "麻章区",
+      "value": 613.87,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440823",
+      "regionName": "遂溪县",
+      "level": "county",
+      "sourceName": "遂溪县",
+      "value": 427.19,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440825",
+      "regionName": "徐闻县",
+      "level": "county",
+      "sourceName": "徐闻县",
+      "value": 263.14,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440881",
+      "regionName": "廉江市",
+      "level": "county",
+      "sourceName": "廉江市",
+      "value": 579.15,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440882",
+      "regionName": "雷州市",
+      "level": "county",
+      "sourceName": "雷州市",
+      "value": 390.36,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440883",
+      "regionName": "吴川市",
+      "level": "county",
+      "sourceName": "吴川市",
+      "value": 314.63,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440902",
+      "regionName": "茂南区",
+      "level": "county",
+      "sourceName": "茂南区",
+      "value": 1157.14,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440904",
+      "regionName": "电白区",
+      "level": "county",
+      "sourceName": "电白区",
+      "value": 875.28,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440981",
+      "regionName": "高州市",
+      "level": "county",
+      "sourceName": "高州市",
+      "value": 809.78,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440982",
+      "regionName": "化州市",
+      "level": "county",
+      "sourceName": "化州市",
+      "value": 651.42,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-440983",
+      "regionName": "信宜市",
+      "level": "county",
+      "sourceName": "信宜市",
+      "value": 578.42,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441202",
+      "regionName": "端州区",
+      "level": "county",
+      "sourceName": "端州区",
+      "value": 490.05,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441203",
+      "regionName": "鼎湖区",
+      "level": "county",
+      "sourceName": "鼎湖区",
+      "value": 171.43,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441204",
+      "regionName": "高要区",
+      "level": "county",
+      "sourceName": "高要区",
+      "value": 558.85,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441223",
+      "regionName": "广宁县",
+      "level": "county",
+      "sourceName": "广宁县",
+      "value": 201.21,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441224",
+      "regionName": "怀集县",
+      "level": "county",
+      "sourceName": "怀集县",
+      "value": 324.18,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441225",
+      "regionName": "封开县",
+      "level": "county",
+      "sourceName": "封开县",
+      "value": 185.42,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441226",
+      "regionName": "德庆县",
+      "level": "county",
+      "sourceName": "德庆县",
+      "value": 168.29,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441284",
+      "regionName": "四会市",
+      "level": "county",
+      "sourceName": "四会市",
+      "value": 818.4,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441302",
+      "regionName": "惠城区",
+      "level": "county",
+      "sourceName": "惠城区",
+      "value": 2247.78,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441303",
+      "regionName": "惠阳区",
+      "level": "county",
+      "sourceName": "惠阳区",
+      "value": 1904.8,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441322",
+      "regionName": "博罗县",
+      "level": "county",
+      "sourceName": "博罗县",
+      "value": 952.24,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441323",
+      "regionName": "惠东县",
+      "level": "county",
+      "sourceName": "惠东县",
+      "value": 828.51,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441324",
+      "regionName": "龙门县",
+      "level": "county",
+      "sourceName": "龙门县",
+      "value": 203.05,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441402",
+      "regionName": "梅江区",
+      "level": "county",
+      "sourceName": "梅江区",
+      "value": 324.91,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441403",
+      "regionName": "梅县区",
+      "level": "county",
+      "sourceName": "梅县区",
+      "value": 276.75,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441422",
+      "regionName": "大埔县",
+      "level": "county",
+      "sourceName": "大埔县",
+      "value": 115.1,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441423",
+      "regionName": "丰顺县",
+      "level": "county",
+      "sourceName": "丰顺县",
+      "value": 143.57,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441424",
+      "regionName": "五华县",
+      "level": "county",
+      "sourceName": "五华县",
+      "value": 202.16,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441426",
+      "regionName": "平远县",
+      "level": "county",
+      "sourceName": "平远县",
+      "value": 103.66,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441427",
+      "regionName": "蕉岭县",
+      "level": "county",
+      "sourceName": "蕉岭县",
+      "value": 116.87,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441481",
+      "regionName": "兴宁市",
+      "level": "county",
+      "sourceName": "兴宁市",
+      "value": 225.16,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441502",
+      "regionName": "城区",
+      "level": "county",
+      "sourceName": "市城区",
+      "value": 424.35,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441521",
+      "regionName": "海丰县",
+      "level": "county",
+      "sourceName": "海丰县",
+      "value": 462.66,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published",
+      "scopeNote": "不含深汕合作区；未经范围核对，不直接用于全县地图着色。"
+    },
+    {
+      "regionId": "tdt-county-441523",
+      "regionName": "陆河县",
+      "level": "county",
+      "sourceName": "陆河县",
+      "value": 148.0,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441581",
+      "regionName": "陆丰市",
+      "level": "county",
+      "sourceName": "陆丰市",
+      "value": 465.88,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441602",
+      "regionName": "源城区",
+      "level": "county",
+      "sourceName": "源城区",
+      "value": 550.35,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441621",
+      "regionName": "紫金县",
+      "level": "county",
+      "sourceName": "紫金县",
+      "value": 210.63,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441622",
+      "regionName": "龙川县",
+      "level": "county",
+      "sourceName": "龙川县",
+      "value": 192.63,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441623",
+      "regionName": "连平县",
+      "level": "county",
+      "sourceName": "连平县",
+      "value": 116.15,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441624",
+      "regionName": "和平县",
+      "level": "county",
+      "sourceName": "和平县",
+      "value": 142.77,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441625",
+      "regionName": "东源县",
+      "level": "county",
+      "sourceName": "东源县",
+      "value": 195.2,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441702",
+      "regionName": "江城区",
+      "level": "county",
+      "sourceName": "江城区",
+      "value": 566.28,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441704",
+      "regionName": "阳东区",
+      "level": "county",
+      "sourceName": "阳东区",
+      "value": 387.02,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441721",
+      "regionName": "阳西县",
+      "level": "county",
+      "sourceName": "阳西县",
+      "value": 283.78,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441781",
+      "regionName": "阳春市",
+      "level": "county",
+      "sourceName": "阳春市",
+      "value": 392.51,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-1.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441802",
+      "regionName": "清城区",
+      "level": "county",
+      "sourceName": "清城区",
+      "value": 821.76,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441803",
+      "regionName": "清新区",
+      "level": "county",
+      "sourceName": "清新区",
+      "value": 344.33,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441821",
+      "regionName": "佛冈县",
+      "level": "county",
+      "sourceName": "佛冈县",
+      "value": 188.77,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441823",
+      "regionName": "阳山县",
+      "level": "county",
+      "sourceName": "阳山县",
+      "value": 145.23,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441825",
+      "regionName": "连山壮族瑶族自治县",
+      "level": "county",
+      "sourceName": "连山县",
+      "value": 56.52,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441826",
+      "regionName": "连南瑶族自治县",
+      "level": "county",
+      "sourceName": "连南县",
+      "value": 72.07,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441881",
+      "regionName": "英德市",
+      "level": "county",
+      "sourceName": "英德市",
+      "value": 438.25,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-441882",
+      "regionName": "连州市",
+      "level": "county",
+      "sourceName": "连州市",
+      "value": 186.15,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445102",
+      "regionName": "湘桥区",
+      "level": "county",
+      "sourceName": "湘桥区",
+      "value": 330.16,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445103",
+      "regionName": "潮安区",
+      "level": "county",
+      "sourceName": "潮安区",
+      "value": 694.73,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445122",
+      "regionName": "饶平县",
+      "level": "county",
+      "sourceName": "饶平县",
+      "value": 377.94,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445202",
+      "regionName": "榕城区",
+      "level": "county",
+      "sourceName": "榕城区",
+      "value": 558.89,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445203",
+      "regionName": "揭东区",
+      "level": "county",
+      "sourceName": "揭东区",
+      "value": 450.43,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445222",
+      "regionName": "揭西县",
+      "level": "county",
+      "sourceName": "揭西县",
+      "value": 265.33,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445224",
+      "regionName": "惠来县",
+      "level": "county",
+      "sourceName": "惠来县",
+      "value": 584.86,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445281",
+      "regionName": "普宁市",
+      "level": "county",
+      "sourceName": "普宁市",
+      "value": 670.2,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445302",
+      "regionName": "云城区",
+      "level": "county",
+      "sourceName": "云城区",
+      "value": 301.51,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445303",
+      "regionName": "云安区",
+      "level": "county",
+      "sourceName": "云安区",
+      "value": 148.28,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445321",
+      "regionName": "新兴县",
+      "level": "county",
+      "sourceName": "新兴县",
+      "value": 347.17,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445322",
+      "regionName": "郁南县",
+      "level": "county",
+      "sourceName": "郁南县",
+      "value": 159.9,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-445381",
+      "regionName": "罗定市",
+      "level": "county",
+      "sourceName": "罗定市",
+      "value": 352.32,
+      "sourceId": "gd-2025-counties",
+      "sourceFile": "gd-2025-23-01-2.htm",
+      "status": "as-published"
+    }
+  ]
+}

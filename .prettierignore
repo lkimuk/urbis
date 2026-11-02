@@ -8,3 +8,4 @@ build-tools/
 package-lock.json
 electron-runtime.zip
 electron-shasums.txt
+data/gdp/sources/

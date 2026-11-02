@@ -1,0 +1,20 @@
+{
+  "year": 2024,
+  "counts": {
+    "country": 1,
+    "province": 31,
+    "city": 21,
+    "county": 122
+  },
+  "total": 175,
+  "missingProvinceIds": ["710000", "810000", "820000"],
+  "missingGuangdongCountyIds": ["tdt-county-441900", "tdt-county-442000"],
+  "scopeExceptions": ["tdt-county-441521"],
+  "nationalValue": 1349083.5,
+  "provinceSum": 1340312.8,
+  "notes": [
+    "全国值采用原表，不用省级合计替代。",
+    "未覆盖地区不填零，不借用其他年份。",
+    "名称和父级匹配不等于统计范围与地图边界经过完整核验。"
+  ]
+}

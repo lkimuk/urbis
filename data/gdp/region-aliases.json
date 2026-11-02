@@ -1,0 +1,22 @@
+[
+  {
+    "city": "韶关市",
+    "sourceName": "乳源县",
+    "mapName": "乳源瑶族自治县"
+  },
+  {
+    "city": "清远市",
+    "sourceName": "连山县",
+    "mapName": "连山壮族瑶族自治县"
+  },
+  {
+    "city": "清远市",
+    "sourceName": "连南县",
+    "mapName": "连南瑶族自治县"
+  },
+  {
+    "city": "汕尾市",
+    "sourceName": "市城区",
+    "mapName": "城区"
+  }
+]
