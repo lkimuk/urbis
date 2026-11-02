@@ -1,12 +1,14 @@
-"""Build the reviewed 2024 GDP snapshot from checked-in official sources."""
+"""Build reviewed GDP snapshots from checked-in official sources."""
 import argparse
 import csv
 import hashlib
 import json
 import re
 from decimal import Decimal
+from datetime import date
 from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 class TableRows(HTMLParser):
@@ -41,12 +43,141 @@ def table_rows(path):
     return parser.rows
 
 
-def build(data_dir, catalog):
-    manifest = json.loads((data_dir / 'manifest.json').read_text(encoding='utf-8'))
+class ArticleText(HTMLParser):
+    """Read visible text and the document title without executing page scripts."""
+
+    def __init__(self):
+        super().__init__()
+        self.parts = []
+        self.title = []
+        self.in_title = False
+        self.hidden = 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ('script', 'style'):
+            self.hidden += 1
+        if tag == 'title':
+            self.in_title = True
+
+    def handle_endtag(self, tag):
+        if tag in ('script', 'style'):
+            self.hidden = max(0, self.hidden - 1)
+        if tag == 'title':
+            self.in_title = False
+
+    def handle_data(self, text):
+        if not self.hidden:
+            self.parts.append(text)
+        if self.in_title:
+            self.title.append(text)
+
+
+def compact(text):
+    return re.sub(r'\s+', '', text)
+
+
+def build_annual(data_dir, catalog, manifest):
+    """Validate reviewed evidence against original HTML, then map exact catalog IDs.
+
+    This is an offline review importer, not a general-purpose article scraper.
+    Source hash validation belongs to the caller, shared with yearbook imports.
+    """
+    year = manifest['year']
+    if (manifest['unit'], manifest['currency'], manifest['priceBasis']) != ('亿元', 'CNY', 'current'):
+        raise ValueError('Unsupported annual GDP unit or price basis')
+    regions = {row['id']: row for row in catalog}
+    if len(regions) != len(catalog):
+        raise ValueError('Duplicate catalog IDs')
+    records = []
+    seen = set()
+    source_ids = set()
+    for source in manifest['sources']:
+        rid = source['regionId']
+        region = regions[rid]
+        if rid in seen or source['id'] in source_ids:
+            raise ValueError('Duplicate annual observation: ' + rid)
+        if region['name'] != source['regionName'] or region['level'] not in ('country', 'province'):
+            raise ValueError('Annual region mapping mismatch: ' + rid)
+        if source['year'] != year or source['status'] not in ('preliminary', 'final'):
+            raise ValueError('Annual year or status mismatch: ' + rid)
+        filename = source['file']
+        if filename not in manifest['files']:
+            raise ValueError('Unverified source file: ' + filename)
+        html = (data_dir / 'sources' / filename).read_bytes().decode(source['encoding'])
+        parser = ArticleText()
+        parser.feed(html)
+        text = compact(' '.join(parser.parts))
+        evidence = source['evidence']
+        # Title identity prevents accepting a different province's page merely
+        # because its footer links to all provincial statistics bureaus.
+        # Qinghai's table title says only '全省'; its official host identifies
+        # the province. Other releases identify their publisher in the title.
+        qinghai_table = (rid == '630000' and evidence['regionTerm'] == '青海'
+                         and urlparse(source['url']).hostname == 'tjj.qinghai.gov.cn')
+        if evidence['regionTerm'] not in compact(''.join(parser.title)) and not qinghai_table:
+            raise ValueError('Annual publisher identity mismatch: ' + rid)
+        for key in ('valueQuote', 'yearQuote'):
+            if not evidence[key] or compact(evidence[key]) not in text:
+                raise ValueError('Annual evidence missing from source: ' + rid + '/' + key)
+        if str(year) + '年' not in compact(evidence['yearQuote']):
+            raise ValueError('Annual evidence year mismatch: ' + rid)
+        quote = evidence['valueQuote']
+        if '亿元' not in quote:
+            raise ValueError('Annual evidence unit mismatch: ' + rid)
+        if source['extraction'] == 'html-table':
+            match = re.search(r'生产总值\s*(\d+(?:\.\d+)?)\s+\d', quote)
+        elif source['extraction'] == 'reviewed-sentence':
+            match = re.search(r'生产总值(?:\s*\[\d+\])?(?:（GDP）)?\s*(?:为\s*)?([\d.\s]+?)\s*亿元', quote)
+        else:
+            raise ValueError('Unsupported annual extraction: ' + rid)
+        number = Decimal(source['value'])
+        if (not match or not number.is_finite() or number <= 0
+                or Decimal(compact(match.group(1))) != number):
+            raise ValueError('Annual GDP does not match evidence: ' + rid)
+        published = date.fromisoformat(source['publishedOn'])
+        if not date(year + 1, 1, 1) <= published <= date.fromisoformat(manifest['retrievedOn']):
+            raise ValueError('Invalid annual publication date: ' + rid)
+        # Dates may occur in metadata or a page's embedded publication record.
+        date_pattern = rf'{published.year}(?:-|/|年)\s*0?{published.month}(?:-|/|月)\s*0?{published.day}(?!\d)'
+        if not re.search(date_pattern, html):
+            raise ValueError('Publication date missing from source: ' + rid)
+        seen.add(rid)
+        source_ids.add(source['id'])
+        records.append({
+            'regionId': rid, 'regionName': region['name'], 'level': region['level'],
+            'sourceName': source['regionName'], 'value': float(number),
+            'sourceId': source['id'], 'sourceFile': filename,
+            'status': source['status'], 'publishedOn': source['publishedOn'],
+        })
+    snapshot = {key: manifest[key] for key in ('year', 'unit', 'currency', 'priceBasis', 'retrievedOn')}
+    snapshot['records'] = sorted(records, key=lambda row: row['regionId'])
+    counts = {level: sum(r['level'] == level for r in records) for level in ('country', 'province', 'city', 'county')}
+    report = {
+        'year': year, 'counts': counts, 'total': len(records),
+        'missingProvinceIds': sorted(r['id'] for r in catalog if r['level'] == 'province' and r['id'] not in seen),
+        'unavailableSources': manifest['unavailableSources'],
+        'nationalValue': next((r['value'] for r in records if r['level'] == 'country'), None),
+        'provinceSum': float(sum(Decimal(str(r['value'])) for r in records if r['level'] == 'province')),
+        'notes': [
+            '采用所存官方年度发布版本；未宣称已排查下载日前全部后续修订。',
+            '缺失不填零，不借用2024年或其他年份；城市和区县尚未收录2025年数据。',
+            '全国值采用国家统计局原文，不用省级合计替代；当前省级覆盖不全。',
+        ],
+    }
+    return snapshot, report
+
+
+def build(data_dir, catalog, year=2024):
+    manifest_file = 'manifest.json' if year == 2024 else f'manifest-{year}.json'
+    manifest = json.loads((data_dir / manifest_file).read_text(encoding='utf-8'))
+    if manifest['year'] != year:
+        raise ValueError('Manifest year mismatch')
     for filename, expected in manifest['files'].items():
         actual = hashlib.sha256((data_dir / 'sources' / filename).read_bytes()).hexdigest()
         if actual != expected:
             raise ValueError('Source bytes changed: ' + filename)
+    if year != 2024:
+        return build_annual(data_dir, catalog, manifest)
     regions = {region['id']: region for region in catalog}
     if len(regions) != len(catalog):
         raise ValueError('Duplicate catalog IDs')
@@ -151,13 +282,14 @@ def build(data_dir, catalog):
 def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--year', type=int, choices=(2024, 2025), default=2025)
     parser.add_argument('--catalog', type=Path, default=root / 'resources/catalog.json')
     parser.add_argument('--output', type=Path, default=root / 'data/gdp')
     args = parser.parse_args()
     catalog = json.loads(args.catalog.read_text(encoding='utf-8'))
-    snapshot, report = build(root / 'data/gdp', catalog)
+    snapshot, report = build(root / 'data/gdp', catalog, args.year)
     args.output.mkdir(parents=True, exist_ok=True)
-    for filename, value in [('gdp-2024.json', snapshot), ('coverage-2024.json', report)]:
+    for filename, value in [(f'gdp-{args.year}.json', snapshot), (f'coverage-{args.year}.json', report)]:
         (args.output / filename).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({'year': snapshot['year'], 'counts': report['counts'], 'total': report['total']}))
 
