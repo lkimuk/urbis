@@ -82,6 +82,15 @@ def compact(text):
 MUNICIPALITIES = {'110000', '120000', '310000', '500000'}
 
 
+def has_publication_date(text, published):
+    # Index text can join a date directly to the next annual article title.
+    # Accept that explicit year boundary, never a prefix of a longer day.
+    pattern = (rf'(?<!\d){published.year}(?:-|—|/|年)\s*0?{published.month}'
+               rf'(?:-|—|/|月)\s*0?{published.day}'
+               rf'(?:(?!\d)|(?=20\d{{2}}年)|(?=(?:[01]\d|2[0-3]):[0-5]\d))')
+    return re.search(pattern, text) is not None
+
+
 def annual_text(data_dir, manifest, filename, encoding='utf-8'):
     if filename not in manifest['files']:
         raise ValueError('Unverified source file: ' + filename)
@@ -102,7 +111,9 @@ def annual_amount(source, html='', text=''):
         # Existing province table excerpts preserve a space between columns.
         match = re.search(r'生产总值\s*(\d+(?:\.\d+)?)\s+\d', evidence['valueQuote'])
     elif extraction == 'reviewed-sentence':
-        match = re.search(r'生产总值(?:\[\d+\])?(?:（GDP）)?(?:\[\d+\])?(?:为)?(\d+(?:\.\d+)?)' + unit, quote)
+        footnote = r'(?:\[\d+\]|〔\d+〕)?'
+        match = re.search(r'生产总值' + footnote + r'(?:（GDP）)?' + footnote +
+                          r'(?:为|完成)?(\d+(?:\.\d+)?)' + unit, quote)
     elif extraction in ('html-row', 'reviewed-transcription'):
         if not evidence.get('locator') or not evidence.get('rawValue'):
             raise ValueError('Missing table/document locator or raw value')
@@ -205,7 +216,6 @@ def build_annual(data_dir, catalog, manifest):
         if not date(year + 1, 1, 1) <= published <= date.fromisoformat(manifest['retrievedOn']):
             raise ValueError('Invalid annual publication date: ' + rid)
         # Dates may occur in metadata or a page's embedded publication record.
-        date_pattern = rf'{published.year}(?:-|/|年)\s*0?{published.month}(?:-|/|月)\s*0?{published.day}(?!\d)'
         if transcription and not source.get('publicationFile'):
             raise ValueError('Transcription publication source missing: ' + rid)
         if source.get('publicationFile'):
@@ -214,9 +224,9 @@ def build_annual(data_dir, catalog, manifest):
                 raise ValueError('Publication evidence missing: ' + rid)
             if compact(source.get('publicationTitle', source['title'])) not in compact(source['publicationQuote']):
                 raise ValueError('Publication title mismatch: ' + rid)
-            if source['publishedOn'] not in source['publicationQuote']:
+            if not has_publication_date(source['publicationQuote'], published):
                 raise ValueError('Publication date mismatch: ' + rid)
-        if not re.search(date_pattern, html):
+        if not has_publication_date(html, published):
             raise ValueError('Publication date missing from source: ' + rid)
         seen.add(rid)
         source_ids.add(source['id'])
