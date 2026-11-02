@@ -69,7 +69,7 @@ class AnnualGdpTest(unittest.TestCase):
         snapshot, report = gdp.build(self.data_dir, self.catalog, 2025)
         for filename, value in [('gdp-2025.json', snapshot), ('coverage-2025.json', report)]:
             self.assertEqual(value, json.loads((self.data_dir / filename).read_text(encoding='utf-8')))
-        self.assertEqual(report['counts'], {'country': 1, 'province': 30, 'city': 0, 'county': 0})
+        self.assertEqual(report['counts'], {'country': 1, 'province': 30, 'city': 87, 'county': 9})
         self.assertEqual(report['missingProvinceIds'], ['620000', '710000', '810000', '820000'])
         records = {row['regionId']: row for row in snapshot['records']}
         self.assertEqual(records['100000']['value'], 1401879)
@@ -79,6 +79,50 @@ class AnnualGdpTest(unittest.TestCase):
         self.assertEqual(records['310000']['value'], 56708.71)
         self.assertEqual(records['630000']['value'], 4121.84)
         self.assertTrue(all(row['status'] == 'preliminary' for row in snapshot['records']))
+        covered = {r['provinceId']: r for r in report['cityCoverage']}
+        self.assertEqual((covered['440000']['covered'], covered['440000']['expected']), (21, 21))
+        self.assertEqual((covered['150000']['covered'], covered['150000']['expected']), (12, 12))
+        self.assertEqual((covered['430000']['covered'], covered['430000']['expected']), (14, 14))
+        municipal = {r['provinceId']: r for r in report['municipalityCoverage']}
+        self.assertEqual({key: row['covered'] for key, row in municipal.items()},
+                         {'110000': 4, '120000': 3, '310000': 1, '500000': 1})
+
+    def test_city_amount_columns_units_and_display_precision(self):
+        snapshot, _ = gdp.build(self.data_dir, self.catalog, 2025)
+        rows = {row['regionId']: row for row in snapshot['records']}
+        for rid, expected in [('tdt-440100', 32039.46), ('tdt-440300', 38731.80),
+                              ('tdt-150100', 4278.3), ('tdt-430800', 667.83),
+                              ('tdt-county-110119', 260.8938), ('tdt-county-120110', 783.40),
+                              ('tdt-county-120113', 763.1), ('tdt-county-120101', 772.76),
+                              ('tdt-county-310104', 4153.08)]:
+            self.assertEqual(rows[rid]['value'], expected)
+        self.assertNotIn('tdt-county-440104', rows)
+
+    def test_city_parent_and_ordinary_county_scope_are_checked(self):
+        source = next(s for s in self.manifest['sources'] if s['regionId'] == 'tdt-440100')
+        manifest = {**self.manifest, 'sources': [copy.deepcopy(source)]}
+        manifest['sources'][0]['parentId'] = '450000'
+        with self.assertRaisesRegex(ValueError, 'parent mapping mismatch'):
+            gdp.build_annual(self.data_dir, self.catalog, manifest)
+        county = next(r for r in self.catalog if r['id'] == 'tdt-county-440104')
+        manifest['sources'][0].update(regionId=county['id'], regionName=county['name'], parentId=county['parentId'])
+        with self.assertRaisesRegex(ValueError, 'region mapping mismatch'):
+            gdp.build_annual(self.data_dir, self.catalog, manifest)
+
+    def test_growth_column_cannot_replace_gdp_amount(self):
+        source = next(s for s in self.manifest['sources'] if s['regionId'] == 'tdt-440100')
+        source = copy.deepcopy(source)
+        source['evidence']['valueColumn'] = 5
+        with self.assertRaisesRegex(ValueError, 'table value mismatch'):
+            gdp.build_annual(self.data_dir, self.catalog, {**self.manifest, 'sources': [source]})
+
+    def test_reviewed_transcription_requires_hashed_text_and_publication(self):
+        source = next(s for s in self.manifest['sources'] if s['regionId'] == 'tdt-county-310104')
+        for key, value, error in [('transcriptionFile', 'unknown.txt', 'Unverified transcription'),
+                                  ('publicationFile', None, 'publication source missing')]:
+            candidate = {**source, key: value}
+            with self.assertRaisesRegex(ValueError, error):
+                gdp.build_annual(self.data_dir, self.catalog, {**self.manifest, 'sources': [candidate]})
 
     def test_cli_writes_valid_json(self):
         with tempfile.TemporaryDirectory() as tmp:

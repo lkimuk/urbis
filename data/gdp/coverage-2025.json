@@ -3,10 +3,10 @@
   "counts": {
     "country": 1,
     "province": 30,
-    "city": 0,
-    "county": 0
+    "city": 87,
+    "county": 9
   },
-  "total": 31,
+  "total": 127,
   "missingProvinceIds": ["620000", "710000", "810000", "820000"],
   "unavailableSources": [
     {
@@ -18,9 +18,1712 @@
   ],
   "nationalValue": 1401879.0,
   "provinceSum": 1380069.64,
+  "cityCoverage": [
+    {
+      "provinceId": "130000",
+      "provinceName": "河北",
+      "expected": 11,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-130100",
+          "regionName": "石家庄市"
+        },
+        {
+          "regionId": "tdt-130200",
+          "regionName": "唐山市"
+        },
+        {
+          "regionId": "tdt-130300",
+          "regionName": "秦皇岛市"
+        },
+        {
+          "regionId": "tdt-130400",
+          "regionName": "邯郸市"
+        },
+        {
+          "regionId": "tdt-130500",
+          "regionName": "邢台市"
+        },
+        {
+          "regionId": "tdt-130600",
+          "regionName": "保定市"
+        },
+        {
+          "regionId": "tdt-130700",
+          "regionName": "张家口市"
+        },
+        {
+          "regionId": "tdt-130800",
+          "regionName": "承德市"
+        },
+        {
+          "regionId": "tdt-130900",
+          "regionName": "沧州市"
+        },
+        {
+          "regionId": "tdt-131000",
+          "regionName": "廊坊市"
+        },
+        {
+          "regionId": "tdt-131100",
+          "regionName": "衡水市"
+        }
+      ]
+    },
+    {
+      "provinceId": "140000",
+      "provinceName": "山西",
+      "expected": 11,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-140100",
+          "regionName": "太原市"
+        },
+        {
+          "regionId": "tdt-140200",
+          "regionName": "大同市"
+        },
+        {
+          "regionId": "tdt-140300",
+          "regionName": "阳泉市"
+        },
+        {
+          "regionId": "tdt-140400",
+          "regionName": "长治市"
+        },
+        {
+          "regionId": "tdt-140500",
+          "regionName": "晋城市"
+        },
+        {
+          "regionId": "tdt-140600",
+          "regionName": "朔州市"
+        },
+        {
+          "regionId": "tdt-140700",
+          "regionName": "晋中市"
+        },
+        {
+          "regionId": "tdt-140800",
+          "regionName": "运城市"
+        },
+        {
+          "regionId": "tdt-140900",
+          "regionName": "忻州市"
+        },
+        {
+          "regionId": "tdt-141000",
+          "regionName": "临汾市"
+        },
+        {
+          "regionId": "tdt-141100",
+          "regionName": "吕梁市"
+        }
+      ]
+    },
+    {
+      "provinceId": "150000",
+      "provinceName": "内蒙古",
+      "expected": 12,
+      "covered": 12,
+      "missing": []
+    },
+    {
+      "provinceId": "210000",
+      "provinceName": "辽宁",
+      "expected": 14,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-210100",
+          "regionName": "沈阳市"
+        },
+        {
+          "regionId": "tdt-210200",
+          "regionName": "大连市"
+        },
+        {
+          "regionId": "tdt-210300",
+          "regionName": "鞍山市"
+        },
+        {
+          "regionId": "tdt-210400",
+          "regionName": "抚顺市"
+        },
+        {
+          "regionId": "tdt-210500",
+          "regionName": "本溪市"
+        },
+        {
+          "regionId": "tdt-210600",
+          "regionName": "丹东市"
+        },
+        {
+          "regionId": "tdt-210700",
+          "regionName": "锦州市"
+        },
+        {
+          "regionId": "tdt-210800",
+          "regionName": "营口市"
+        },
+        {
+          "regionId": "tdt-210900",
+          "regionName": "阜新市"
+        },
+        {
+          "regionId": "tdt-211000",
+          "regionName": "辽阳市"
+        },
+        {
+          "regionId": "tdt-211100",
+          "regionName": "盘锦市"
+        },
+        {
+          "regionId": "tdt-211200",
+          "regionName": "铁岭市"
+        },
+        {
+          "regionId": "tdt-211300",
+          "regionName": "朝阳市"
+        },
+        {
+          "regionId": "tdt-211400",
+          "regionName": "葫芦岛市"
+        }
+      ]
+    },
+    {
+      "provinceId": "220000",
+      "provinceName": "吉林",
+      "expected": 9,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-220100",
+          "regionName": "长春市"
+        },
+        {
+          "regionId": "tdt-220200",
+          "regionName": "吉林市"
+        },
+        {
+          "regionId": "tdt-220300",
+          "regionName": "四平市"
+        },
+        {
+          "regionId": "tdt-220400",
+          "regionName": "辽源市"
+        },
+        {
+          "regionId": "tdt-220500",
+          "regionName": "通化市"
+        },
+        {
+          "regionId": "tdt-220600",
+          "regionName": "白山市"
+        },
+        {
+          "regionId": "tdt-220700",
+          "regionName": "松原市"
+        },
+        {
+          "regionId": "tdt-220800",
+          "regionName": "白城市"
+        },
+        {
+          "regionId": "tdt-222400",
+          "regionName": "延边朝鲜族自治州"
+        }
+      ]
+    },
+    {
+      "provinceId": "230000",
+      "provinceName": "黑龙江",
+      "expected": 13,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-230100",
+          "regionName": "哈尔滨市"
+        },
+        {
+          "regionId": "tdt-230200",
+          "regionName": "齐齐哈尔市"
+        },
+        {
+          "regionId": "tdt-230300",
+          "regionName": "鸡西市"
+        },
+        {
+          "regionId": "tdt-230400",
+          "regionName": "鹤岗市"
+        },
+        {
+          "regionId": "tdt-230500",
+          "regionName": "双鸭山市"
+        },
+        {
+          "regionId": "tdt-230600",
+          "regionName": "大庆市"
+        },
+        {
+          "regionId": "tdt-230700",
+          "regionName": "伊春市"
+        },
+        {
+          "regionId": "tdt-230800",
+          "regionName": "佳木斯市"
+        },
+        {
+          "regionId": "tdt-230900",
+          "regionName": "七台河市"
+        },
+        {
+          "regionId": "tdt-231000",
+          "regionName": "牡丹江市"
+        },
+        {
+          "regionId": "tdt-231100",
+          "regionName": "黑河市"
+        },
+        {
+          "regionId": "tdt-231200",
+          "regionName": "绥化市"
+        },
+        {
+          "regionId": "tdt-232700",
+          "regionName": "大兴安岭地区"
+        }
+      ]
+    },
+    {
+      "provinceId": "320000",
+      "provinceName": "江苏",
+      "expected": 13,
+      "covered": 1,
+      "missing": [
+        {
+          "regionId": "tdt-320100",
+          "regionName": "南京市"
+        },
+        {
+          "regionId": "tdt-320200",
+          "regionName": "无锡市"
+        },
+        {
+          "regionId": "tdt-320300",
+          "regionName": "徐州市"
+        },
+        {
+          "regionId": "tdt-320400",
+          "regionName": "常州市"
+        },
+        {
+          "regionId": "tdt-320500",
+          "regionName": "苏州市"
+        },
+        {
+          "regionId": "tdt-320600",
+          "regionName": "南通市"
+        },
+        {
+          "regionId": "tdt-320700",
+          "regionName": "连云港市"
+        },
+        {
+          "regionId": "tdt-320800",
+          "regionName": "淮安市"
+        },
+        {
+          "regionId": "tdt-320900",
+          "regionName": "盐城市"
+        },
+        {
+          "regionId": "tdt-321000",
+          "regionName": "扬州市"
+        },
+        {
+          "regionId": "tdt-321200",
+          "regionName": "泰州市"
+        },
+        {
+          "regionId": "tdt-321300",
+          "regionName": "宿迁市"
+        }
+      ]
+    },
+    {
+      "provinceId": "330000",
+      "provinceName": "浙江",
+      "expected": 11,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-330100",
+          "regionName": "杭州市"
+        },
+        {
+          "regionId": "tdt-330200",
+          "regionName": "宁波市"
+        },
+        {
+          "regionId": "tdt-330300",
+          "regionName": "温州市"
+        },
+        {
+          "regionId": "tdt-330400",
+          "regionName": "嘉兴市"
+        },
+        {
+          "regionId": "tdt-330500",
+          "regionName": "湖州市"
+        },
+        {
+          "regionId": "tdt-330600",
+          "regionName": "绍兴市"
+        },
+        {
+          "regionId": "tdt-330700",
+          "regionName": "金华市"
+        },
+        {
+          "regionId": "tdt-330800",
+          "regionName": "衢州市"
+        },
+        {
+          "regionId": "tdt-330900",
+          "regionName": "舟山市"
+        },
+        {
+          "regionId": "tdt-331000",
+          "regionName": "台州市"
+        },
+        {
+          "regionId": "tdt-331100",
+          "regionName": "丽水市"
+        }
+      ]
+    },
+    {
+      "provinceId": "340000",
+      "provinceName": "安徽",
+      "expected": 16,
+      "covered": 10,
+      "missing": [
+        {
+          "regionId": "tdt-340100",
+          "regionName": "合肥市"
+        },
+        {
+          "regionId": "tdt-340300",
+          "regionName": "蚌埠市"
+        },
+        {
+          "regionId": "tdt-340600",
+          "regionName": "淮北市"
+        },
+        {
+          "regionId": "tdt-341000",
+          "regionName": "黄山市"
+        },
+        {
+          "regionId": "tdt-341600",
+          "regionName": "亳州市"
+        },
+        {
+          "regionId": "tdt-341700",
+          "regionName": "池州市"
+        }
+      ]
+    },
+    {
+      "provinceId": "350000",
+      "provinceName": "福建",
+      "expected": 9,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-350100",
+          "regionName": "福州市"
+        },
+        {
+          "regionId": "tdt-350200",
+          "regionName": "厦门市"
+        },
+        {
+          "regionId": "tdt-350300",
+          "regionName": "莆田市"
+        },
+        {
+          "regionId": "tdt-350400",
+          "regionName": "三明市"
+        },
+        {
+          "regionId": "tdt-350500",
+          "regionName": "泉州市"
+        },
+        {
+          "regionId": "tdt-350600",
+          "regionName": "漳州市"
+        },
+        {
+          "regionId": "tdt-350700",
+          "regionName": "南平市"
+        },
+        {
+          "regionId": "tdt-350800",
+          "regionName": "龙岩市"
+        },
+        {
+          "regionId": "tdt-350900",
+          "regionName": "宁德市"
+        }
+      ]
+    },
+    {
+      "provinceId": "360000",
+      "provinceName": "江西",
+      "expected": 11,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-360100",
+          "regionName": "南昌市"
+        },
+        {
+          "regionId": "tdt-360200",
+          "regionName": "景德镇市"
+        },
+        {
+          "regionId": "tdt-360300",
+          "regionName": "萍乡市"
+        },
+        {
+          "regionId": "tdt-360400",
+          "regionName": "九江市"
+        },
+        {
+          "regionId": "tdt-360500",
+          "regionName": "新余市"
+        },
+        {
+          "regionId": "tdt-360600",
+          "regionName": "鹰潭市"
+        },
+        {
+          "regionId": "tdt-360700",
+          "regionName": "赣州市"
+        },
+        {
+          "regionId": "tdt-360800",
+          "regionName": "吉安市"
+        },
+        {
+          "regionId": "tdt-360900",
+          "regionName": "宜春市"
+        },
+        {
+          "regionId": "tdt-361000",
+          "regionName": "抚州市"
+        },
+        {
+          "regionId": "tdt-361100",
+          "regionName": "上饶市"
+        }
+      ]
+    },
+    {
+      "provinceId": "370000",
+      "provinceName": "山东",
+      "expected": 16,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-370100",
+          "regionName": "济南市"
+        },
+        {
+          "regionId": "tdt-370200",
+          "regionName": "青岛市"
+        },
+        {
+          "regionId": "tdt-370300",
+          "regionName": "淄博市"
+        },
+        {
+          "regionId": "tdt-370400",
+          "regionName": "枣庄市"
+        },
+        {
+          "regionId": "tdt-370500",
+          "regionName": "东营市"
+        },
+        {
+          "regionId": "tdt-370600",
+          "regionName": "烟台市"
+        },
+        {
+          "regionId": "tdt-370700",
+          "regionName": "潍坊市"
+        },
+        {
+          "regionId": "tdt-370800",
+          "regionName": "济宁市"
+        },
+        {
+          "regionId": "tdt-370900",
+          "regionName": "泰安市"
+        },
+        {
+          "regionId": "tdt-371000",
+          "regionName": "威海市"
+        },
+        {
+          "regionId": "tdt-371100",
+          "regionName": "日照市"
+        },
+        {
+          "regionId": "tdt-371300",
+          "regionName": "临沂市"
+        },
+        {
+          "regionId": "tdt-371400",
+          "regionName": "德州市"
+        },
+        {
+          "regionId": "tdt-371500",
+          "regionName": "聊城市"
+        },
+        {
+          "regionId": "tdt-371600",
+          "regionName": "滨州市"
+        },
+        {
+          "regionId": "tdt-371700",
+          "regionName": "菏泽市"
+        }
+      ]
+    },
+    {
+      "provinceId": "410000",
+      "provinceName": "河南",
+      "expected": 18,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-410100",
+          "regionName": "郑州市"
+        },
+        {
+          "regionId": "tdt-410200",
+          "regionName": "开封市"
+        },
+        {
+          "regionId": "tdt-410300",
+          "regionName": "洛阳市"
+        },
+        {
+          "regionId": "tdt-410400",
+          "regionName": "平顶山市"
+        },
+        {
+          "regionId": "tdt-410500",
+          "regionName": "安阳市"
+        },
+        {
+          "regionId": "tdt-410600",
+          "regionName": "鹤壁市"
+        },
+        {
+          "regionId": "tdt-410700",
+          "regionName": "新乡市"
+        },
+        {
+          "regionId": "tdt-410800",
+          "regionName": "焦作市"
+        },
+        {
+          "regionId": "tdt-410900",
+          "regionName": "濮阳市"
+        },
+        {
+          "regionId": "tdt-411000",
+          "regionName": "许昌市"
+        },
+        {
+          "regionId": "tdt-411100",
+          "regionName": "漯河市"
+        },
+        {
+          "regionId": "tdt-411200",
+          "regionName": "三门峡市"
+        },
+        {
+          "regionId": "tdt-411300",
+          "regionName": "南阳市"
+        },
+        {
+          "regionId": "tdt-411400",
+          "regionName": "商丘市"
+        },
+        {
+          "regionId": "tdt-411500",
+          "regionName": "信阳市"
+        },
+        {
+          "regionId": "tdt-411600",
+          "regionName": "周口市"
+        },
+        {
+          "regionId": "tdt-411700",
+          "regionName": "驻马店市"
+        },
+        {
+          "regionId": "tdt-419001",
+          "regionName": "济源市"
+        }
+      ]
+    },
+    {
+      "provinceId": "420000",
+      "provinceName": "湖北",
+      "expected": 17,
+      "covered": 11,
+      "missing": [
+        {
+          "regionId": "tdt-420800",
+          "regionName": "荆门市"
+        },
+        {
+          "regionId": "tdt-421100",
+          "regionName": "黄冈市"
+        },
+        {
+          "regionId": "tdt-421200",
+          "regionName": "咸宁市"
+        },
+        {
+          "regionId": "tdt-422800",
+          "regionName": "恩施土家族苗族自治州"
+        },
+        {
+          "regionId": "tdt-429006",
+          "regionName": "天门市"
+        },
+        {
+          "regionId": "tdt-429021",
+          "regionName": "神农架林区"
+        }
+      ]
+    },
+    {
+      "provinceId": "430000",
+      "provinceName": "湖南",
+      "expected": 14,
+      "covered": 14,
+      "missing": []
+    },
+    {
+      "provinceId": "440000",
+      "provinceName": "广东",
+      "expected": 21,
+      "covered": 21,
+      "missing": []
+    },
+    {
+      "provinceId": "450000",
+      "provinceName": "广西",
+      "expected": 14,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-450100",
+          "regionName": "南宁市"
+        },
+        {
+          "regionId": "tdt-450200",
+          "regionName": "柳州市"
+        },
+        {
+          "regionId": "tdt-450300",
+          "regionName": "桂林市"
+        },
+        {
+          "regionId": "tdt-450400",
+          "regionName": "梧州市"
+        },
+        {
+          "regionId": "tdt-450500",
+          "regionName": "北海市"
+        },
+        {
+          "regionId": "tdt-450600",
+          "regionName": "防城港市"
+        },
+        {
+          "regionId": "tdt-450700",
+          "regionName": "钦州市"
+        },
+        {
+          "regionId": "tdt-450800",
+          "regionName": "贵港市"
+        },
+        {
+          "regionId": "tdt-450900",
+          "regionName": "玉林市"
+        },
+        {
+          "regionId": "tdt-451000",
+          "regionName": "百色市"
+        },
+        {
+          "regionId": "tdt-451100",
+          "regionName": "贺州市"
+        },
+        {
+          "regionId": "tdt-451200",
+          "regionName": "河池市"
+        },
+        {
+          "regionId": "tdt-451300",
+          "regionName": "来宾市"
+        },
+        {
+          "regionId": "tdt-451400",
+          "regionName": "崇左市"
+        }
+      ]
+    },
+    {
+      "provinceId": "460000",
+      "provinceName": "海南",
+      "expected": 19,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-460100",
+          "regionName": "海口市"
+        },
+        {
+          "regionId": "tdt-460200",
+          "regionName": "三亚市"
+        },
+        {
+          "regionId": "tdt-460300",
+          "regionName": "三沙市"
+        },
+        {
+          "regionId": "tdt-460400",
+          "regionName": "儋州市"
+        },
+        {
+          "regionId": "tdt-469001",
+          "regionName": "五指山市"
+        },
+        {
+          "regionId": "tdt-469002",
+          "regionName": "琼海市"
+        },
+        {
+          "regionId": "tdt-469005",
+          "regionName": "文昌市"
+        },
+        {
+          "regionId": "tdt-469006",
+          "regionName": "万宁市"
+        },
+        {
+          "regionId": "tdt-469007",
+          "regionName": "东方市"
+        },
+        {
+          "regionId": "tdt-469021",
+          "regionName": "定安县"
+        },
+        {
+          "regionId": "tdt-469022",
+          "regionName": "屯昌县"
+        },
+        {
+          "regionId": "tdt-469023",
+          "regionName": "澄迈县"
+        },
+        {
+          "regionId": "tdt-469024",
+          "regionName": "临高县"
+        },
+        {
+          "regionId": "tdt-469025",
+          "regionName": "白沙黎族自治县"
+        },
+        {
+          "regionId": "tdt-469026",
+          "regionName": "昌江黎族自治县"
+        },
+        {
+          "regionId": "tdt-469027",
+          "regionName": "乐东黎族自治县"
+        },
+        {
+          "regionId": "tdt-469028",
+          "regionName": "陵水黎族自治县"
+        },
+        {
+          "regionId": "tdt-469029",
+          "regionName": "保亭黎族苗族自治县"
+        },
+        {
+          "regionId": "tdt-469030",
+          "regionName": "琼中黎族苗族自治县"
+        }
+      ]
+    },
+    {
+      "provinceId": "510000",
+      "provinceName": "四川",
+      "expected": 21,
+      "covered": 1,
+      "missing": [
+        {
+          "regionId": "tdt-510100",
+          "regionName": "成都市"
+        },
+        {
+          "regionId": "tdt-510300",
+          "regionName": "自贡市"
+        },
+        {
+          "regionId": "tdt-510400",
+          "regionName": "攀枝花市"
+        },
+        {
+          "regionId": "tdt-510500",
+          "regionName": "泸州市"
+        },
+        {
+          "regionId": "tdt-510600",
+          "regionName": "德阳市"
+        },
+        {
+          "regionId": "tdt-510700",
+          "regionName": "绵阳市"
+        },
+        {
+          "regionId": "tdt-510800",
+          "regionName": "广元市"
+        },
+        {
+          "regionId": "tdt-510900",
+          "regionName": "遂宁市"
+        },
+        {
+          "regionId": "tdt-511000",
+          "regionName": "内江市"
+        },
+        {
+          "regionId": "tdt-511100",
+          "regionName": "乐山市"
+        },
+        {
+          "regionId": "tdt-511300",
+          "regionName": "南充市"
+        },
+        {
+          "regionId": "tdt-511400",
+          "regionName": "眉山市"
+        },
+        {
+          "regionId": "tdt-511500",
+          "regionName": "宜宾市"
+        },
+        {
+          "regionId": "tdt-511700",
+          "regionName": "达州市"
+        },
+        {
+          "regionId": "tdt-511800",
+          "regionName": "雅安市"
+        },
+        {
+          "regionId": "tdt-511900",
+          "regionName": "巴中市"
+        },
+        {
+          "regionId": "tdt-512000",
+          "regionName": "资阳市"
+        },
+        {
+          "regionId": "tdt-513200",
+          "regionName": "阿坝藏族羌族自治州"
+        },
+        {
+          "regionId": "tdt-513300",
+          "regionName": "甘孜藏族自治州"
+        },
+        {
+          "regionId": "tdt-513400",
+          "regionName": "凉山彝族自治州"
+        }
+      ]
+    },
+    {
+      "provinceId": "520000",
+      "provinceName": "贵州",
+      "expected": 9,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-520100",
+          "regionName": "贵阳市"
+        },
+        {
+          "regionId": "tdt-520200",
+          "regionName": "六盘水市"
+        },
+        {
+          "regionId": "tdt-520300",
+          "regionName": "遵义市"
+        },
+        {
+          "regionId": "tdt-520400",
+          "regionName": "安顺市"
+        },
+        {
+          "regionId": "tdt-520500",
+          "regionName": "毕节市"
+        },
+        {
+          "regionId": "tdt-520600",
+          "regionName": "铜仁市"
+        },
+        {
+          "regionId": "tdt-522300",
+          "regionName": "黔西南布依族苗族自治州"
+        },
+        {
+          "regionId": "tdt-522600",
+          "regionName": "黔东南苗族侗族自治州"
+        },
+        {
+          "regionId": "tdt-522700",
+          "regionName": "黔南布依族苗族自治州"
+        }
+      ]
+    },
+    {
+      "provinceId": "530000",
+      "provinceName": "云南",
+      "expected": 16,
+      "covered": 3,
+      "missing": [
+        {
+          "regionId": "tdt-530300",
+          "regionName": "曲靖市"
+        },
+        {
+          "regionId": "tdt-530400",
+          "regionName": "玉溪市"
+        },
+        {
+          "regionId": "tdt-530500",
+          "regionName": "保山市"
+        },
+        {
+          "regionId": "tdt-530600",
+          "regionName": "昭通市"
+        },
+        {
+          "regionId": "tdt-530700",
+          "regionName": "丽江市"
+        },
+        {
+          "regionId": "tdt-530800",
+          "regionName": "普洱市"
+        },
+        {
+          "regionId": "tdt-532500",
+          "regionName": "红河哈尼族彝族自治州"
+        },
+        {
+          "regionId": "tdt-532600",
+          "regionName": "文山壮族苗族自治州"
+        },
+        {
+          "regionId": "tdt-532800",
+          "regionName": "西双版纳傣族自治州"
+        },
+        {
+          "regionId": "tdt-532900",
+          "regionName": "大理白族自治州"
+        },
+        {
+          "regionId": "tdt-533100",
+          "regionName": "德宏傣族景颇族自治州"
+        },
+        {
+          "regionId": "tdt-533300",
+          "regionName": "怒江傈僳族自治州"
+        },
+        {
+          "regionId": "tdt-533400",
+          "regionName": "迪庆藏族自治州"
+        }
+      ]
+    },
+    {
+      "provinceId": "540000",
+      "provinceName": "西藏",
+      "expected": 7,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-540100",
+          "regionName": "拉萨市"
+        },
+        {
+          "regionId": "tdt-540200",
+          "regionName": "日喀则市"
+        },
+        {
+          "regionId": "tdt-540300",
+          "regionName": "昌都市"
+        },
+        {
+          "regionId": "tdt-540400",
+          "regionName": "林芝市"
+        },
+        {
+          "regionId": "tdt-540500",
+          "regionName": "山南市"
+        },
+        {
+          "regionId": "tdt-540600",
+          "regionName": "那曲市"
+        },
+        {
+          "regionId": "tdt-542500",
+          "regionName": "阿里地区"
+        }
+      ]
+    },
+    {
+      "provinceId": "610000",
+      "provinceName": "陕西",
+      "expected": 10,
+      "covered": 8,
+      "missing": [
+        {
+          "regionId": "tdt-610700",
+          "regionName": "汉中市"
+        },
+        {
+          "regionId": "tdt-610800",
+          "regionName": "榆林市"
+        }
+      ]
+    },
+    {
+      "provinceId": "620000",
+      "provinceName": "甘肃",
+      "expected": 17,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-620100",
+          "regionName": "兰州市"
+        },
+        {
+          "regionId": "tdt-620200",
+          "regionName": "嘉峪关市"
+        },
+        {
+          "regionId": "tdt-620300",
+          "regionName": "金昌市"
+        },
+        {
+          "regionId": "tdt-620400",
+          "regionName": "白银市"
+        },
+        {
+          "regionId": "tdt-620500",
+          "regionName": "天水市"
+        },
+        {
+          "regionId": "tdt-620600",
+          "regionName": "武威市"
+        },
+        {
+          "regionId": "tdt-620700",
+          "regionName": "张掖市"
+        },
+        {
+          "regionId": "tdt-620800",
+          "regionName": "平凉市"
+        },
+        {
+          "regionId": "tdt-620900",
+          "regionName": "酒泉市"
+        },
+        {
+          "regionId": "tdt-621000",
+          "regionName": "庆阳市"
+        },
+        {
+          "regionId": "tdt-621100",
+          "regionName": "定西市"
+        },
+        {
+          "regionId": "tdt-621200",
+          "regionName": "陇南市"
+        },
+        {
+          "regionId": "tdt-622900",
+          "regionName": "临夏回族自治州"
+        },
+        {
+          "regionId": "tdt-623000",
+          "regionName": "甘南藏族自治州"
+        },
+        {
+          "regionId": "tdt-629700",
+          "regionName": "中农发山丹马场"
+        },
+        {
+          "regionId": "tdt-629800",
+          "regionName": "莲花山风景林自然保护区"
+        },
+        {
+          "regionId": "tdt-629900",
+          "regionName": "太子山天然林保护区"
+        }
+      ]
+    },
+    {
+      "provinceId": "630000",
+      "provinceName": "青海",
+      "expected": 8,
+      "covered": 6,
+      "missing": [
+        {
+          "regionId": "tdt-632200",
+          "regionName": "海北藏族自治州"
+        },
+        {
+          "regionId": "tdt-632800",
+          "regionName": "海西蒙古族藏族自治州"
+        }
+      ]
+    },
+    {
+      "provinceId": "640000",
+      "provinceName": "宁夏",
+      "expected": 5,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-640100",
+          "regionName": "银川市"
+        },
+        {
+          "regionId": "tdt-640200",
+          "regionName": "石嘴山市"
+        },
+        {
+          "regionId": "tdt-640300",
+          "regionName": "吴忠市"
+        },
+        {
+          "regionId": "tdt-640400",
+          "regionName": "固原市"
+        },
+        {
+          "regionId": "tdt-640500",
+          "regionName": "中卫市"
+        }
+      ]
+    },
+    {
+      "provinceId": "650000",
+      "provinceName": "新疆",
+      "expected": 26,
+      "covered": 0,
+      "missing": [
+        {
+          "regionId": "tdt-650100",
+          "regionName": "乌鲁木齐市"
+        },
+        {
+          "regionId": "tdt-650200",
+          "regionName": "克拉玛依市"
+        },
+        {
+          "regionId": "tdt-650400",
+          "regionName": "吐鲁番市"
+        },
+        {
+          "regionId": "tdt-650500",
+          "regionName": "哈密市"
+        },
+        {
+          "regionId": "tdt-652300",
+          "regionName": "昌吉回族自治州"
+        },
+        {
+          "regionId": "tdt-652700",
+          "regionName": "博尔塔拉蒙古自治州"
+        },
+        {
+          "regionId": "tdt-652800",
+          "regionName": "巴音郭楞蒙古自治州"
+        },
+        {
+          "regionId": "tdt-652900",
+          "regionName": "阿克苏地区"
+        },
+        {
+          "regionId": "tdt-653000",
+          "regionName": "克孜勒苏柯尔克孜自治州"
+        },
+        {
+          "regionId": "tdt-653100",
+          "regionName": "喀什地区"
+        },
+        {
+          "regionId": "tdt-653200",
+          "regionName": "和田地区"
+        },
+        {
+          "regionId": "tdt-654000",
+          "regionName": "伊犁哈萨克自治州"
+        },
+        {
+          "regionId": "tdt-654200",
+          "regionName": "塔城地区"
+        },
+        {
+          "regionId": "tdt-654300",
+          "regionName": "阿勒泰地区"
+        },
+        {
+          "regionId": "tdt-659001",
+          "regionName": "石河子市"
+        },
+        {
+          "regionId": "tdt-659002",
+          "regionName": "阿拉尔市"
+        },
+        {
+          "regionId": "tdt-659003",
+          "regionName": "图木舒克市"
+        },
+        {
+          "regionId": "tdt-659004",
+          "regionName": "五家渠市"
+        },
+        {
+          "regionId": "tdt-659005",
+          "regionName": "北屯市"
+        },
+        {
+          "regionId": "tdt-659006",
+          "regionName": "铁门关市"
+        },
+        {
+          "regionId": "tdt-659007",
+          "regionName": "双河市"
+        },
+        {
+          "regionId": "tdt-659008",
+          "regionName": "可克达拉市"
+        },
+        {
+          "regionId": "tdt-659009",
+          "regionName": "昆玉市"
+        },
+        {
+          "regionId": "tdt-659010",
+          "regionName": "胡杨河市"
+        },
+        {
+          "regionId": "tdt-659011",
+          "regionName": "新星市"
+        },
+        {
+          "regionId": "tdt-659012",
+          "regionName": "白杨市"
+        }
+      ]
+    },
+    {
+      "provinceId": "710000",
+      "provinceName": "台湾",
+      "expected": 0,
+      "covered": 0,
+      "missing": []
+    },
+    {
+      "provinceId": "810000",
+      "provinceName": "香港",
+      "expected": 0,
+      "covered": 0,
+      "missing": []
+    },
+    {
+      "provinceId": "820000",
+      "provinceName": "澳门",
+      "expected": 0,
+      "covered": 0,
+      "missing": []
+    }
+  ],
+  "municipalityCoverage": [
+    {
+      "provinceId": "110000",
+      "provinceName": "北京",
+      "expected": 16,
+      "covered": 4,
+      "missing": [
+        {
+          "regionId": "tdt-county-110105",
+          "regionName": "朝阳区"
+        },
+        {
+          "regionId": "tdt-county-110106",
+          "regionName": "丰台区"
+        },
+        {
+          "regionId": "tdt-county-110107",
+          "regionName": "石景山区"
+        },
+        {
+          "regionId": "tdt-county-110109",
+          "regionName": "门头沟区"
+        },
+        {
+          "regionId": "tdt-county-110111",
+          "regionName": "房山区"
+        },
+        {
+          "regionId": "tdt-county-110112",
+          "regionName": "通州区"
+        },
+        {
+          "regionId": "tdt-county-110113",
+          "regionName": "顺义区"
+        },
+        {
+          "regionId": "tdt-county-110114",
+          "regionName": "昌平区"
+        },
+        {
+          "regionId": "tdt-county-110115",
+          "regionName": "大兴区"
+        },
+        {
+          "regionId": "tdt-county-110116",
+          "regionName": "怀柔区"
+        },
+        {
+          "regionId": "tdt-county-110117",
+          "regionName": "平谷区"
+        },
+        {
+          "regionId": "tdt-county-110118",
+          "regionName": "密云区"
+        }
+      ]
+    },
+    {
+      "provinceId": "120000",
+      "provinceName": "天津",
+      "expected": 16,
+      "covered": 3,
+      "missing": [
+        {
+          "regionId": "tdt-county-120102",
+          "regionName": "河东区"
+        },
+        {
+          "regionId": "tdt-county-120103",
+          "regionName": "河西区"
+        },
+        {
+          "regionId": "tdt-county-120104",
+          "regionName": "南开区"
+        },
+        {
+          "regionId": "tdt-county-120105",
+          "regionName": "河北区"
+        },
+        {
+          "regionId": "tdt-county-120106",
+          "regionName": "红桥区"
+        },
+        {
+          "regionId": "tdt-county-120111",
+          "regionName": "西青区"
+        },
+        {
+          "regionId": "tdt-county-120112",
+          "regionName": "津南区"
+        },
+        {
+          "regionId": "tdt-county-120114",
+          "regionName": "武清区"
+        },
+        {
+          "regionId": "tdt-county-120115",
+          "regionName": "宝坻区"
+        },
+        {
+          "regionId": "tdt-county-120116",
+          "regionName": "滨海新区"
+        },
+        {
+          "regionId": "tdt-county-120117",
+          "regionName": "宁河区"
+        },
+        {
+          "regionId": "tdt-county-120118",
+          "regionName": "静海区"
+        },
+        {
+          "regionId": "tdt-county-120119",
+          "regionName": "蓟州区"
+        }
+      ]
+    },
+    {
+      "provinceId": "310000",
+      "provinceName": "上海",
+      "expected": 16,
+      "covered": 1,
+      "missing": [
+        {
+          "regionId": "tdt-county-310101",
+          "regionName": "黄浦区"
+        },
+        {
+          "regionId": "tdt-county-310105",
+          "regionName": "长宁区"
+        },
+        {
+          "regionId": "tdt-county-310106",
+          "regionName": "静安区"
+        },
+        {
+          "regionId": "tdt-county-310107",
+          "regionName": "普陀区"
+        },
+        {
+          "regionId": "tdt-county-310109",
+          "regionName": "虹口区"
+        },
+        {
+          "regionId": "tdt-county-310110",
+          "regionName": "杨浦区"
+        },
+        {
+          "regionId": "tdt-county-310112",
+          "regionName": "闵行区"
+        },
+        {
+          "regionId": "tdt-county-310113",
+          "regionName": "宝山区"
+        },
+        {
+          "regionId": "tdt-county-310114",
+          "regionName": "嘉定区"
+        },
+        {
+          "regionId": "tdt-county-310115",
+          "regionName": "浦东新区"
+        },
+        {
+          "regionId": "tdt-county-310116",
+          "regionName": "金山区"
+        },
+        {
+          "regionId": "tdt-county-310117",
+          "regionName": "松江区"
+        },
+        {
+          "regionId": "tdt-county-310118",
+          "regionName": "青浦区"
+        },
+        {
+          "regionId": "tdt-county-310120",
+          "regionName": "奉贤区"
+        },
+        {
+          "regionId": "tdt-county-310151",
+          "regionName": "崇明区"
+        }
+      ]
+    },
+    {
+      "provinceId": "500000",
+      "provinceName": "重庆",
+      "expected": 37,
+      "covered": 1,
+      "missing": [
+        {
+          "regionId": "tdt-county-500101",
+          "regionName": "万州区"
+        },
+        {
+          "regionId": "tdt-county-500102",
+          "regionName": "涪陵区"
+        },
+        {
+          "regionId": "tdt-county-500103",
+          "regionName": "渝中区"
+        },
+        {
+          "regionId": "tdt-county-500104",
+          "regionName": "大渡口区"
+        },
+        {
+          "regionId": "tdt-county-500106",
+          "regionName": "沙坪坝区"
+        },
+        {
+          "regionId": "tdt-county-500107",
+          "regionName": "九龙坡区"
+        },
+        {
+          "regionId": "tdt-county-500108",
+          "regionName": "南岸区"
+        },
+        {
+          "regionId": "tdt-county-500109",
+          "regionName": "北碚区"
+        },
+        {
+          "regionId": "tdt-county-500110",
+          "regionName": "綦江区"
+        },
+        {
+          "regionId": "tdt-county-500111",
+          "regionName": "大足区"
+        },
+        {
+          "regionId": "tdt-county-500113",
+          "regionName": "巴南区"
+        },
+        {
+          "regionId": "tdt-county-500114",
+          "regionName": "黔江区"
+        },
+        {
+          "regionId": "tdt-county-500115",
+          "regionName": "长寿区"
+        },
+        {
+          "regionId": "tdt-county-500116",
+          "regionName": "江津区"
+        },
+        {
+          "regionId": "tdt-county-500117",
+          "regionName": "合川区"
+        },
+        {
+          "regionId": "tdt-county-500118",
+          "regionName": "永川区"
+        },
+        {
+          "regionId": "tdt-county-500119",
+          "regionName": "南川区"
+        },
+        {
+          "regionId": "tdt-county-500120",
+          "regionName": "璧山区"
+        },
+        {
+          "regionId": "tdt-county-500151",
+          "regionName": "铜梁区"
+        },
+        {
+          "regionId": "tdt-county-500152",
+          "regionName": "潼南区"
+        },
+        {
+          "regionId": "tdt-county-500154",
+          "regionName": "开州区"
+        },
+        {
+          "regionId": "tdt-county-500155",
+          "regionName": "梁平区"
+        },
+        {
+          "regionId": "tdt-county-500156",
+          "regionName": "武隆区"
+        },
+        {
+          "regionId": "tdt-county-500157",
+          "regionName": "两江新区"
+        },
+        {
+          "regionId": "tdt-county-500229",
+          "regionName": "城口县"
+        },
+        {
+          "regionId": "tdt-county-500230",
+          "regionName": "丰都县"
+        },
+        {
+          "regionId": "tdt-county-500231",
+          "regionName": "垫江县"
+        },
+        {
+          "regionId": "tdt-county-500233",
+          "regionName": "忠县"
+        },
+        {
+          "regionId": "tdt-county-500235",
+          "regionName": "云阳县"
+        },
+        {
+          "regionId": "tdt-county-500236",
+          "regionName": "奉节县"
+        },
+        {
+          "regionId": "tdt-county-500237",
+          "regionName": "巫山县"
+        },
+        {
+          "regionId": "tdt-county-500238",
+          "regionName": "巫溪县"
+        },
+        {
+          "regionId": "tdt-county-500240",
+          "regionName": "石柱土家族自治县"
+        },
+        {
+          "regionId": "tdt-county-500241",
+          "regionName": "秀山土家族苗族自治县"
+        },
+        {
+          "regionId": "tdt-county-500242",
+          "regionName": "酉阳土家族苗族自治县"
+        },
+        {
+          "regionId": "tdt-county-500243",
+          "regionName": "彭水苗族土家族自治县"
+        }
+      ]
+    }
+  ],
+  "scopeExceptions": [],
+  "scopeNotes": [
+    "重庆2025年两江新区等统计范围变更，未将新区总量映射到旧江北、渝北地图。",
+    "覆盖分母取当前地图目录，区划或统计范围变更仍需单独核对；覆盖不等于边界一致。"
+  ],
   "notes": [
     "采用所存官方年度发布版本；未宣称已排查下载日前全部后续修订。",
-    "缺失不填零，不借用2024年或其他年份；城市和区县尚未收录2025年数据。",
+    "缺失不填零，不借用其他年份；普通省份只收市级，直辖市收下辖区县。",
     "全国值采用国家统计局原文，不用省级合计替代；当前省级覆盖不全。"
   ]
 }

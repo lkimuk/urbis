@@ -4,7 +4,7 @@ import csv
 import hashlib
 import json
 import re
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 from datetime import date
 from html.parser import HTMLParser
 from pathlib import Path
@@ -54,6 +54,9 @@ class ArticleText(HTMLParser):
         self.hidden = 0
 
     def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == 'meta' and attrs.get('name', '').lower() == 'articletitle':
+            self.title.append(attrs.get('content', ''))
         if tag in ('script', 'style'):
             self.hidden += 1
         if tag == 'title':
@@ -76,8 +79,67 @@ def compact(text):
     return re.sub(r'\s+', '', text)
 
 
+MUNICIPALITIES = {'110000', '120000', '310000', '500000'}
+
+
+def annual_text(data_dir, manifest, filename, encoding='utf-8'):
+    if filename not in manifest['files']:
+        raise ValueError('Unverified source file: ' + filename)
+    raw = (data_dir / 'sources' / filename).read_bytes().decode(encoding)
+    parser = ArticleText()
+    parser.feed(raw)
+    return raw, compact(' '.join(parser.parts)), compact(''.join(parser.title))
+
+
+def annual_amount(source, html='', text=''):
+    evidence = source['evidence']
+    quote = compact(evidence['valueQuote'])
+    extraction = source['extraction']
+    unit = evidence.get('sourceUnit', '亿元')
+    if unit not in ('亿元', '万元') or unit not in compact(quote + evidence.get('headerQuote', '')):
+        raise ValueError('Annual evidence unit mismatch: ' + source['regionId'])
+    if extraction == 'html-table':
+        # Existing province table excerpts preserve a space between columns.
+        match = re.search(r'生产总值\s*(\d+(?:\.\d+)?)\s+\d', evidence['valueQuote'])
+    elif extraction == 'reviewed-sentence':
+        match = re.search(r'生产总值(?:\[\d+\])?(?:（GDP）)?(?:\[\d+\])?(?:为)?(\d+(?:\.\d+)?)' + unit, quote)
+    elif extraction in ('html-row', 'reviewed-transcription'):
+        if not evidence.get('locator') or not evidence.get('rawValue'):
+            raise ValueError('Missing table/document locator or raw value')
+        raw = Decimal(evidence['rawValue'])
+        if compact(evidence['rawValue']) not in quote:
+            raise ValueError('Annual raw value missing from evidence')
+        if extraction == 'html-row':
+            parser = TableRows()
+            parser.feed(html)
+            column = evidence['valueColumn']
+            rows = [row for row in parser.rows if row and compact(row[0]) == evidence['rowName']]
+            if len(rows) != 1 or column < 1 or column >= len(rows[0]):
+                raise ValueError('Annual table row/column mismatch')
+            if Decimal(compact(rows[0][column])) != raw:
+                raise ValueError('Annual table value mismatch')
+            if not evidence.get('headerQuote') or compact(evidence['headerQuote']) not in text:
+                raise ValueError('Annual table header missing')
+        match = None
+    else:
+        raise ValueError('Unsupported annual extraction: ' + source['regionId'])
+    if extraction in ('html-table', 'reviewed-sentence'):
+        if not match:
+            raise ValueError('Annual GDP does not match evidence: ' + source['regionId'])
+        raw = Decimal(compact(match.group(1)))
+    if not raw.is_finite() or raw <= 0:
+        raise ValueError('Invalid annual GDP')
+    if 'displayDecimals' in evidence:
+        decimals = evidence['displayDecimals']
+        if not isinstance(decimals, int) or not 0 <= decimals <= 6:
+            raise ValueError('Invalid displayed precision')
+        # Round the original spreadsheet value to its published display format.
+        raw = raw.quantize(Decimal(10) ** -decimals, rounding=ROUND_HALF_UP)
+    return raw / (10000 if unit == '万元' else 1)
+
+
 def build_annual(data_dir, catalog, manifest):
-    """Validate reviewed evidence against original HTML, then map exact catalog IDs.
+    """Validate reviewed annual releases and map exact catalog IDs.
 
     This is an offline review importer, not a general-purpose article scraper.
     Source hash validation belongs to the caller, shared with yearbook imports.
@@ -96,17 +158,32 @@ def build_annual(data_dir, catalog, manifest):
         region = regions[rid]
         if rid in seen or source['id'] in source_ids:
             raise ValueError('Duplicate annual observation: ' + rid)
-        if region['name'] != source['regionName'] or region['level'] not in ('country', 'province'):
+        allowed = (region['level'] in ('country', 'province', 'city') or
+                   region['level'] == 'county' and region.get('parentId') in MUNICIPALITIES)
+        if region['name'] != source['regionName'] or not allowed:
             raise ValueError('Annual region mapping mismatch: ' + rid)
+        if region['level'] in ('city', 'county') and source.get('parentId') != region.get('parentId'):
+            raise ValueError('Annual parent mapping mismatch: ' + rid)
         if source['year'] != year or source['status'] not in ('preliminary', 'final'):
             raise ValueError('Annual year or status mismatch: ' + rid)
         filename = source['file']
         if filename not in manifest['files']:
             raise ValueError('Unverified source file: ' + filename)
-        html = (data_dir / 'sources' / filename).read_bytes().decode(source['encoding'])
-        parser = ArticleText()
-        parser.feed(html)
-        text = compact(' '.join(parser.parts))
+        transcription = source['extraction'] == 'reviewed-transcription'
+        if transcription:
+            # Binary originals and the reviewed transcription are both hashed.
+            # This checks transcription consistency, not automated PDF/OCR truth.
+            if source['transcriptionFile'] not in manifest['files']:
+                raise ValueError('Unverified transcription file')
+            text = compact((data_dir / 'sources' / source['transcriptionFile']).read_text(encoding='utf-8'))
+            title = compact(source['title'])
+            if title not in text:
+                raise ValueError('Transcription title missing')
+            if not source['evidence'].get('locator'):
+                raise ValueError('Transcription locator missing')
+            html = ''
+        else:
+            html, text, title = annual_text(data_dir, manifest, filename, source['encoding'])
         evidence = source['evidence']
         # Title identity prevents accepting a different province's page merely
         # because its footer links to all provincial statistics bureaus.
@@ -114,41 +191,44 @@ def build_annual(data_dir, catalog, manifest):
         # the province. Other releases identify their publisher in the title.
         qinghai_table = (rid == '630000' and evidence['regionTerm'] == '青海'
                          and urlparse(source['url']).hostname == 'tjj.qinghai.gov.cn')
-        if evidence['regionTerm'] not in compact(''.join(parser.title)) and not qinghai_table:
+        if evidence['regionTerm'] not in title and not qinghai_table:
             raise ValueError('Annual publisher identity mismatch: ' + rid)
         for key in ('valueQuote', 'yearQuote'):
             if not evidence[key] or compact(evidence[key]) not in text:
                 raise ValueError('Annual evidence missing from source: ' + rid + '/' + key)
         if str(year) + '年' not in compact(evidence['yearQuote']):
             raise ValueError('Annual evidence year mismatch: ' + rid)
-        quote = evidence['valueQuote']
-        if '亿元' not in quote:
-            raise ValueError('Annual evidence unit mismatch: ' + rid)
-        if source['extraction'] == 'html-table':
-            match = re.search(r'生产总值\s*(\d+(?:\.\d+)?)\s+\d', quote)
-        elif source['extraction'] == 'reviewed-sentence':
-            match = re.search(r'生产总值(?:\s*\[\d+\])?(?:（GDP）)?\s*(?:为\s*)?([\d.\s]+?)\s*亿元', quote)
-        else:
-            raise ValueError('Unsupported annual extraction: ' + rid)
         number = Decimal(source['value'])
-        if (not match or not number.is_finite() or number <= 0
-                or Decimal(compact(match.group(1))) != number):
+        if not number.is_finite() or number <= 0 or annual_amount(source, html, text) != number:
             raise ValueError('Annual GDP does not match evidence: ' + rid)
         published = date.fromisoformat(source['publishedOn'])
         if not date(year + 1, 1, 1) <= published <= date.fromisoformat(manifest['retrievedOn']):
             raise ValueError('Invalid annual publication date: ' + rid)
         # Dates may occur in metadata or a page's embedded publication record.
         date_pattern = rf'{published.year}(?:-|/|年)\s*0?{published.month}(?:-|/|月)\s*0?{published.day}(?!\d)'
+        if transcription and not source.get('publicationFile'):
+            raise ValueError('Transcription publication source missing: ' + rid)
+        if source.get('publicationFile'):
+            html, publication_text, _ = annual_text(data_dir, manifest, source['publicationFile'])
+            if compact(source['publicationQuote']) not in publication_text:
+                raise ValueError('Publication evidence missing: ' + rid)
+            if compact(source.get('publicationTitle', source['title'])) not in compact(source['publicationQuote']):
+                raise ValueError('Publication title mismatch: ' + rid)
+            if source['publishedOn'] not in source['publicationQuote']:
+                raise ValueError('Publication date mismatch: ' + rid)
         if not re.search(date_pattern, html):
             raise ValueError('Publication date missing from source: ' + rid)
         seen.add(rid)
         source_ids.add(source['id'])
-        records.append({
+        record = {
             'regionId': rid, 'regionName': region['name'], 'level': region['level'],
             'sourceName': source['regionName'], 'value': float(number),
             'sourceId': source['id'], 'sourceFile': filename,
             'status': source['status'], 'publishedOn': source['publishedOn'],
-        })
+        }
+        if source.get('scopeNote'):
+            record['scopeNote'] = source['scopeNote']
+        records.append(record)
     snapshot = {key: manifest[key] for key in ('year', 'unit', 'currency', 'priceBasis', 'retrievedOn')}
     snapshot['records'] = sorted(records, key=lambda row: row['regionId'])
     counts = {level: sum(r['level'] == level for r in records) for level in ('country', 'province', 'city', 'county')}
@@ -158,12 +238,28 @@ def build_annual(data_dir, catalog, manifest):
         'unavailableSources': manifest['unavailableSources'],
         'nationalValue': next((r['value'] for r in records if r['level'] == 'country'), None),
         'provinceSum': float(sum(Decimal(str(r['value'])) for r in records if r['level'] == 'province')),
+        'cityCoverage': [],
+        'municipalityCoverage': [],
+        'scopeExceptions': [r['regionId'] for r in records if 'scopeNote' in r],
+        'scopeNotes': [
+            '重庆2025年两江新区等统计范围变更，未将新区总量映射到旧江北、渝北地图。',
+            '覆盖分母取当前地图目录，区划或统计范围变更仍需单独核对；覆盖不等于边界一致。',
+        ],
         'notes': [
             '采用所存官方年度发布版本；未宣称已排查下载日前全部后续修订。',
-            '缺失不填零，不借用2024年或其他年份；城市和区县尚未收录2025年数据。',
+            '缺失不填零，不借用其他年份；普通省份只收市级，直辖市收下辖区县。',
             '全国值采用国家统计局原文，不用省级合计替代；当前省级覆盖不全。',
         ],
     }
+    for province in sorted((r for r in catalog if r['level'] == 'province'), key=lambda r: r['id']):
+        municipal = province['id'] in MUNICIPALITIES
+        level = 'county' if municipal else 'city'
+        children = sorted((r for r in catalog if r['level'] == level and r.get('parentId') == province['id']), key=lambda r: r['id'])
+        report['municipalityCoverage' if municipal else 'cityCoverage'].append({
+            'provinceId': province['id'], 'provinceName': province['name'],
+            'expected': len(children), 'covered': sum(r['id'] in seen for r in children),
+            'missing': [{'regionId': r['id'], 'regionName': r['name']} for r in children if r['id'] not in seen],
+        })
     return snapshot, report
 
 
