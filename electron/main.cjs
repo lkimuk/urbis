@@ -5,6 +5,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { createMapRepository } = require('./map-repository.cjs');
+const { createGdpRepository } = require('./gdp-repository.cjs');
 const { createImageExporter } = require('./image-export.cjs');
 const { registerAtlasIpc } = require('./ipc.cjs');
 
@@ -95,6 +96,7 @@ async function start() {
   }
   await app.whenReady();
   const repository = await createMapRepository(path.join(__dirname, '../resources'));
+  const gdp = createGdpRepository(path.join(__dirname, '../resources'), repository.listRegions());
   const savePng = createImageExporter({
     nativeImage,
     choosePath: async (filename) => {
@@ -110,7 +112,7 @@ async function start() {
       return result.canceled ? null : result.filePath;
     },
   });
-  registerAtlasIpc({ ipcMain, getWindow: () => mainWindow, pageURL, repository, savePng });
+  registerAtlasIpc({ ipcMain, getWindow: () => mainWindow, pageURL, repository, gdp, savePng });
   Menu.setApplicationMenu(null);
   createWindow();
   app.on('activate', () => {

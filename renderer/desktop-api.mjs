@@ -10,6 +10,8 @@ export function createAtlasClient(bridge) {
   return {
     getRegions: () => invoke('getRegions'),
     getMap: (request) => invoke('getMap', request),
+    listGdpDatasets: () => invoke('listGdpDatasets'),
+    getGdp: (request) => invoke('getGdp', request),
     saveImage: (payload) => invoke('saveImage', payload),
   };
 }

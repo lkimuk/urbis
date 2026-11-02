@@ -1,9 +1,11 @@
 const { AtlasError } = require('./errors.cjs');
 
-function registerAtlasIpc({ ipcMain, getWindow, pageURL, repository, savePng }) {
+function registerAtlasIpc({ ipcMain, getWindow, pageURL, repository, gdp, savePng }) {
   const handlers = {
     'atlas:regions': () => repository.listRegions(),
     'atlas:map': (request) => repository.getMap(request),
+    'atlas:gdp-datasets': () => gdp.list(),
+    'atlas:gdp': (request) => gdp.get(request),
     'atlas:save-image': (payload) => savePng(payload),
   };
   for (const [channel, handle] of Object.entries(handlers)) {

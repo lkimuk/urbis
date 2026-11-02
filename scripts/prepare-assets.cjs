@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { buildCatalog } = require('./tianditu-catalog.cjs');
+const { prepareGdpResources } = require('./prepare-gdp-resources.cjs');
 const output = path.resolve(__dirname, '../resources');
 const aliases = require('../data/legacy-aliases.json');
 // Remove retired source notices/reports left by earlier resource builds.
@@ -21,6 +22,11 @@ const regions = buildCatalog(path.resolve(__dirname, '../data/tianditu'), output
 if (new Set(regions.map((region) => region.id)).size !== regions.length)
   throw new Error('行政区标识重复');
 fs.writeFileSync(path.join(output, 'catalog.json'), JSON.stringify(regions));
+const gdp = prepareGdpResources(
+  path.resolve(__dirname, '../data/gdp'),
+  path.join(output, 'gdp'),
+  regions,
+);
 const retained = new Set(regions.flatMap((region) => Object.values(region.variants)));
 const mapDirectory = path.join(output, 'maps');
 // Delete only obsolete generated JSON files in the fixed maps directory.
@@ -45,5 +51,6 @@ console.log(
   JSON.stringify({
     regions: regions.length,
     files: retained.size,
+    gdp,
   }),
 );
