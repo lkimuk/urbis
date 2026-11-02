@@ -24,7 +24,7 @@
 
 河北原给定链接实际指向河南，已换成河北统计局2025年统计公报；补充了重庆公报。云南旧版链接失效，采用新版统计公报；内蒙古采用官网改版后的同篇发布。具体链接、发布日期、原文摘录和核算状态均保存在manifest-2025.json。
 
-应用暂未接入GDP展示。这些是供后续功能使用的离线资料，尚未随应用打包。
+客户端通过“专题 → 地区生产总值（GDP）”展示离线资料。目前仅启用2025年127条记录；2024年资料保留供研究和复核，不与2025年混用。打包仅包含年度观测值、来源信息与范围限制，不包含来源原件。缺失地区使用中性色；存在明确范围疑问的地区停止着色。
 
 ## 文件与复核
 
@@ -34,6 +34,7 @@
 - manifest.json：2024快照的年鉴来源、获取日期、广东官方ZIP成员路径及原件SHA-256。
 - nbs-2024-transcription.csv：人工核对国家统计局图片表后的全国、省级转录值。广东2024年数据直接读取原HTML表。
 - region-aliases.json：4个明确所属城市的来源简称与地图名称对应，不进行模糊匹配。
+- map-scope.json：启用的年度及地图范围限制。当前两江新区尚未核实年度统计范围与地图边界的对应关系，不参与着色；地区ID必须存在于当前地图目录。
 
 2025年金额逐条对照原文。重建先核对原件哈希，再检查地区唯一映射、来源身份、年度、单位、金额、发布日期和重复记录。HTML正文金额从GDP句子提取；省级上海、青海读取已复核表格摘录，广东城市和东丽区按指定行列读取并核对表头。贵州金额被HTML标签分隔出的空格按原数字连接。仅在页脚出现某省名字不作为地区身份依据；青海表题只写“全省”，由其官方域名确认发布机构。
 
@@ -55,9 +56,11 @@ PDF、DOCX、Excel和图片采用明确标记的人工复核转录（reviewed-tr
 
 需要Python 3，仅使用标准库。依次运行：
 
-    npm run prepare:assets
     python scripts/prepare-gdp.py --year 2025
     python scripts/prepare-gdp.py --year 2024
+    npm run prepare:assets
     python -B -m unittest discover -s tests -p "gdp_test.py"
 
 不传--year时重建2025年。原件已在仓库中，重建不访问网络。2024年官方年鉴入口：[国家统计局](https://www.stats.gov.cn/sj/ndsj/2025/indexch.htm)、[广东省统计局](https://stats.gd.gov.cn/gdtjnj/content/post_4810393.html)。广东原HTML来自官方ZIP，提取时通过CRC检查；manifest中省略ZIP最外层中文目录。
+
+Python重建需要已有的resources/catalog.json；首次检出先运行npm run prepare:assets，生成目录及现有快照的应用资源。客户端接口与分层见[GDP客户端接入](../../docs/gdp-client.md)。

@@ -121,7 +121,7 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
     window.webContents.sendInputEvent({ type: 'mouseUp', button: 'left', clickCount: 1, ...point });
     await ready(target);
   }
-  async function exportPng(transparent = false) {
+  async function exportPng(transparent = false, suffix = '') {
     await js(
       '(()=>{const el=document.getElementById("transparent");el.checked=' +
         transparent +
@@ -132,7 +132,7 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
       '!document.getElementById("export").disabled && document.getElementById("toast").textContent.startsWith("已保存")',
     );
     const name = await js('document.querySelector("#breadcrumb [aria-current]").textContent');
-    const image = nativeImage.createFromPath(path.join(output, name + '-行政区地图.png'));
+    const image = nativeImage.createFromPath(path.join(output, name + suffix + '-行政区地图.png'));
     assert.equal(image.toBitmap()[3], transparent ? 0 : 255);
     assert.ok(image.getSize().width > 0);
     return image.getSize();
@@ -326,6 +326,122 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
     true,
   );
   window.setSize(1480, 960);
+  await input('map-title', '');
+  await click('#transparent');
+  await click('[data-palette=atlas]');
+  await select('100000');
+  await input('thematic', 'gdp', 'change');
+  const gdpReady = () => waitFor('document.getElementById("map").dataset.gdpReady==="true"');
+  await gdpReady();
+  assert.deepEqual(
+    (await js('atlas.listGdpDatasets()')).map((row) => row.year),
+    [2025],
+  );
+  assert.equal(await js('(await atlas.getGdp({year:2025})).records.length'), 127);
+  assert.equal(
+    await js('(async()=>{try{await atlas.getGdp({year:2024});}catch(e){return e.code;}})()'),
+    'GDP_YEAR_NOT_FOUND',
+  );
+  const option = () =>
+    js(
+      'JSON.parse(JSON.stringify(echarts.getInstanceByDom(document.getElementById("map")).getOption()))',
+    );
+  const texts = (o) =>
+    o.graphic[0].elements.filter((e) => e.type === 'text').map((e) => e.style.text);
+  assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('30/34'));
+  await screenshot('gdp-national.png');
+  const national = await option();
+  assert.equal(
+    national.geo[0].regions.find((r) => r.name === '甘肃省').itemStyle.areaColor,
+    '#e5e3df',
+  );
+  assert.ok(texts(national).includes('2025 年 GDP · 亿元 · 现价'));
+  const nationalScale = texts(national).find((text) => text.startsWith('< '));
+  assert.equal(nationalScale, '< 10,000');
+  await select('440000');
+  await gdpReady();
+  assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('21/21'));
+  await screenshot('gdp-guangdong.png');
+  const guangdong = await option();
+  assert.ok(new Set(guangdong.geo[0].regions.map((r) => r.itemStyle.areaColor)).size > 1);
+  assert.match(await js('document.getElementById("gdp-sources").textContent'), /38,731.8/);
+  for (const palette of ['clay', 'ink']) {
+    await click('[data-palette=' + palette + ']');
+    await screenshot('gdp-guangdong-' + palette + '.png');
+    assert.notEqual(
+      (await option()).geo[0].regions[0].itemStyle.areaColor,
+      guangdong.geo[0].regions[0].itemStyle.areaColor,
+    );
+  }
+  await click('[data-palette=atlas]');
+  await exportPng(true, '-2025-GDP');
+  const gdpImage = nativeImage.createFromPath(path.join(output, '广东-2025-GDP-行政区地图.png'));
+  const bitmap = gdpImage.toBitmap(),
+    dimensions = gdpImage.getSize();
+  let footerPixels = 0;
+  for (
+    let i = Math.floor(dimensions.height * 0.85) * dimensions.width * 4;
+    i < bitmap.length;
+    i += 4
+  )
+    if (bitmap[i + 3] > 0) footerPixels++;
+  assert.ok(footerPixels > 200, 'GDP annotations must survive transparent PNG export');
+  await select('430000');
+  await gdpReady();
+  assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('14/14'));
+  await select('tdt-430100');
+  await gdpReady();
+  assert.ok(texts(await option()).includes('总量  15,737.82 亿元'));
+  assert.ok(texts(await option()).includes('下辖地区暂无可用数据'));
+  await select('110000');
+  await gdpReady();
+  assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('4/16'));
+  await screenshot('gdp-beijing.png');
+  await click('#zoom-in');
+  const zoom = (await option()).geo[0].zoom;
+  await input('border-color', '#ffffff');
+  assert.equal((await option()).geo[0].zoom, zoom);
+  await click('[data-palette=atlas]');
+  await click('#reset-view');
+  window.setSize(1080, 720);
+  await screenshot('gdp-compact.png');
+  assert.equal(await js('document.documentElement.scrollWidth <= innerWidth'), true);
+  const compact = await option();
+  assert.equal(texts(compact).filter((text) => /城区$/.test(text)).length >= 2, true);
+  window.setSize(1480, 960);
+  await select('tdt-county-310104');
+  await gdpReady();
+  assert.ok(texts(await option()).includes('总量  4,153.08 亿元'));
+  await select('500000');
+  await gdpReady();
+  assert.match(
+    await js('document.getElementById("gdp-sources").textContent'),
+    /两江新区涉及2025年区划调整/,
+  );
+  await select('tdt-county-500157');
+  await gdpReady();
+  assert.ok(texts(await option()).includes('统计范围待核实'));
+  await select('440000', 'outline');
+  await gdpReady();
+  assert.ok(texts(await option()).some((text) => text.startsWith('总量  ')));
+  await new Promise((resolve) => {
+    window.webContents.once('did-finish-load', resolve);
+    window.webContents.reload();
+  });
+  await ready('440000');
+  await gdpReady();
+  assert.equal(await js('document.getElementById("thematic").value'), 'gdp');
+  assert.equal(await js('document.getElementById("gdp-year").value'), '2025');
+  await input('thematic', 'none', 'change');
+  assert.ok(
+    (await option()).geo[0].regions.every(
+      (region) => !region.itemStyle?.areaColor || region.itemStyle.areaColor === '#b8cdbe',
+    ),
+  );
+  assert.ok(!texts(await option()).some((text) => text.includes('GDP')));
+  console.log(
+    'PASS: offline GDP, exact coverage, missing data, scope exclusions, palettes, PNG and reload',
+  );
   await js('document.getElementById("search").focus()');
   await screenshot('search-focus.png');
   assert.deepEqual(errors, []);
@@ -354,6 +470,7 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
           'single-source navigation',
           'legacy preference migration',
           'reload',
+          'offline GDP coverage, range exclusions, palettes, PNG and annual preference reload',
         ],
       },
       null,
