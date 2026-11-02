@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <!-- 必须，不要动 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <!-- 移动端必须、PC端非响应式可以去掉 -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <!-- ---- 二级列表【meta】 -- 标签开始 ---- -->
+    <meta name="SiteName" content="湖北省统计局门户网站">
+<meta name="SiteDomain" content="tjj.hubei.gov.cn">
+<meta name="SiteIDCode" content="4200000001">
+<meta name="ColumnName" content="市州统计公报">
+<meta name="ColumnDescription" content="市州统计公报,主要用于湖北省统计局市州统计公报等信息的发布" />
+<meta name="ColumnKeywords" content="湖北省统计局,湖北统计,统计局,统计,tjj.hubei.gov.cn,市州统计公报" />
+<meta name="ColumnType" content="统计数据" />
+    <!-- ---- 二级列表【meta】 -- 标签结束 ---- -->
+    <title>
+        市州统计公报--湖北省统计局
+    </title>
+    <!-- 公共js、css-start -->
+    <link rel="shortcut icon" href="/material/images/ico.png">
+	<link rel="stylesheet" type="text/css" href="/material/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="/material/css/swiper.css" />
+	<link rel="stylesheet" type="text/css" href="/material/2026/css/common.css?v1" />
+	<link rel="stylesheet" type="text/css" href="/material/2026/css/ui.css?v1" />
+	<!-- 兼容低版本IE -->
+	<!--[if lt IE 9]>
+    <script type="text/javascript" src="../../../../images/html5shiv.js"></script>
+    <script type="text/javascript" src="../../../../images/respond.js"></script>
+    <![endif]-->
+	<script type="text/javascript" src="/material/js/jquery_1_12_4.js"></script>
+	<script type="text/javascript" src="/material/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/material/js/layui/layui.js"></script>
+	<script type="text/javascript" src="/material/2026/js/2026-common.js"></script>
+    <!-- 公共js、css-end -->
+    <link rel="stylesheet" type="text/css" href="/material/2026/css/list.css" />
+        <script type="text/javascript" src="../../../../images/page.js"></script>
+
+</head>
+
+<body>
+    <!-- 嵌套头部start -->
+    <div class="header-top">
+		<div class="top-bar">
+			<div class="layout-width">
+				<div class="top-bar-inner">
+					<span class="top-date">今天是：<em id="currentDate">
+							<script type="text/javaScript">
+       var sysdate = new Date();
+    var year = sysdate.getFullYear();
+    var month = sysdate.getMonth();
+    var date = sysdate.getDate();
+    var day = sysdate.getDay();
+    var week = ['日', '一', '二', '三', '四', '五', '六'];
+    document.write(year + "年" + (month + 1) + "月" + date + "日 星期" + week[day]);
+ </script>
+						</em></span>
+					<div class="top-links">
+						<a href="https://www.gov.cn/" target="_blank">中国政府网</a>
+						<span class="divider">|</span>
+						<a href="javascript:;" class="wza-link" id="wuzhangai"><i
+								class="iconfont icon-jyh-wza"></i>无障碍阅读</a>
+						<span class="divider">|</span>
+						<a href="javascript:;" id="login">登录</a>
+						<span class="divider">|</span>
+						<a href="javascript:;" id="zhuce">注册</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="logo-area">
+			<div class="layout-width">
+				<div class="logo-row">
+					<a href="/" class="site-logo">
+						<img src="/material/2026/images/layout/logo.png" alt="湖北省统计局" />
+					</a>
+					<button type="button" class="nav-toggle" aria-label="打开菜单">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+				</div>
+				<div class="search-wrap">
+					<div class="search-box">
+						<i class="iconfont icon-jyh-search search-icon"></i>
+						<input type="text" id="textfield" placeholder="请输入您想要搜索的内容" class="search-input" />
+						<button type="button" onclick="chkSearch()" class="search-btn">搜索</button>
+					</div>
+					<div class="hot-search">
+						热门搜索：
+						<a href="javascript:;" onclick="hotSearch('湖北数据')">湖北数据</a>
+						<a href="javascript:;" onclick="hotSearch('统计图表')">统计图表</a>
+						<a href="javascript:;" onclick="hotSearch('经济运行')">经济运行</a>
+						<a href="javascript:;" onclick="hotSearch('新闻发布会')">新闻发布会</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		// 热门搜索点击
+		function hotSearch(keyword) {
+			$('#textfield').val(keyword);
+			chkSearch();
+		}
+
+		// 搜索跳转
+		function chkSearch() {
+			var keyword = $('#textfield').val().trim();
+			if (keyword == '') {
+				alert('请输入关键字');
+				return false;
+			}
+			var keywords = encodeURI(keyword);
+			// 跳转到省政府网站检索页面
+			var $url = 'http://www.hubei.gov.cn/site/hb/#/all?type=所有&siteId=12&name=湖北省统计局&sitename=湖北省统计局&sitetype=省直部门&searchWord=' + keywords;
+			window.open($url, '_blank');
+		}
+
+		// 回车搜索
+		$('#textfield').on('keypress', function (event) {
+			if (event.keyCode === 13) {
+				chkSearch();
+			}
+		});
+	</script>
+	<nav class="main-nav">
+		<div class="layout-width">
+			<ul class="nav-list">
+				<li><a href="/">首页</a></li>
+				<li><a href="http://tjj.hubei.gov.cn/zfxxgk_GK2020/fdzdgknr_GK2020/zfgzjg_GK2020/">机构简介</a></li>
+				<li><a href="http://tjj.hubei.gov.cn/tjsj/">统计数据</a></li>
+				<li><a href="http://tjj.hubei.gov.cn/zfxxgk_GK2020/">信息公开</a></li>
+				<li><a href="http://tjj.hubei.gov.cn/hdjl/">互动交流</a></li>
+				<li><a href="http://tjj.hubei.gov.cn/bsfw/">办事服务</a></li>
+				<li><a href="http://tjj.hubei.gov.cn/ztzl/">专题专栏</a></li>
+				<li><a href="http://tjj.hubei.gov.cn/bsfw/lwzb/">网上直报</a></li>
+
+			</ul>
+
+		</div>
+	</nav>
+	<div class="nav-mask"></div>
+	<div class="nav-drawer">
+		<div class="drawer-head">
+			<a href="/" class="drawer-logo">
+				<img src="/material/2026/images/layout/logo.png" alt="湖北省统计局" />
+			</a>
+			<button type="button" class="drawer-close" aria-label="关闭菜单"></button>
+		</div>
+		<ul class="drawer-list">
+			<li class="active"><a href="/">首页<i class="drawer-arrow"></i></a></li>
+			<li><a href="http://tjj.hubei.gov.cn/zfxxgk_GK2020/fdzdgknr_GK2020/zfgzjg_GK2020/">机构简介<i
+						class="drawer-arrow"></i></a></li>
+			<li><a href="http://tjj.hubei.gov.cn/tjsj/">统计数据<i class="drawer-arrow"></i></a>
+			</li>
+			<li><a href="http://tjj.hubei.gov.cn/zfxxgk_GK2020/">信息公开<i
+						class="drawer-arrow"></i></a></li>
+			<li><a href="http://tjj.hubei.gov.cn/hdjl/">互动交流<i class="drawer-arrow"></i></a>
+			</li>
+			<li><a href="http://tjj.hubei.gov.cn/bsfw/">办事服务<i class="drawer-arrow"></i></a>
+			</li>
+			<li><a href="http://tjj.hubei.gov.cn/ztzl/">专题专栏<i class="drawer-arrow"></i></a>
+			</li>
+			<li><a href="http://tjj.hubei.gov.cn/bsfw/lwzb/">网上直报<i class="drawer-arrow"></i></a>
+			</li>
+		</ul>
+	</div>
+    <!-- 嵌套头部end -->
+    <main class="layout-main list-main">
+        <div class="layout-width">
+            <div class="list-page">
+                <div class="list-body">
+                    <aside class="list-side">
+                        <div class="list-side__head">
+                            年度统计公报
+                        </div>
+                        <ul class="list-side__menu">
+
+             
+                             
+                            <li  id="27542" class="hvr-sweep-to-right">
+                                <a href="../qstjgb/" title="全省统计公报">全省统计公报</a>
+                            </li>
+                        
+                            <li  id="27544" class="hvr-sweep-to-right">
+                                <a href="./" title="市州统计公报">市州统计公报</a>
+                            </li>
+                        
+
+ 
+                            <li  id="56728" class="hvr-sweep-to-right">
+                                <a href="../../pcgb/wnpc/" title="往年普查">往年普查</a>
+                            </li>
+                        
+
+
+                        </ul>
+                    </aside>
+                    <div class="list-content">
+                        <div class="common-tabs list-tabs">
+                            <div class="common-tabs__header bg">
+                                <ul class="common-tabs__warp">
+                                    <li class="active">
+                                        市州统计公报
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="common-tabs__content">
+                                <div class="common-tabs__panel active">
+                                    <ul class="common-list list-data">
+
+
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202604/P020260424730627909202.docx"  title="2025年武汉市国民经济和社会发展统计公报"   target="_blank">
+    2025年武汉市国民经济和社会发展统计公报
+</a><span>2026-05-08</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508378014873011.pdf"  title="2025年黄石市国民经济和社会发展统计公报"   target="_blank">
+    2025年黄石市国民经济和社会发展统计公报
+</a><span>2026-05-07</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508379027628693.pdf"  title="2025年十堰市国民经济和社会发展统计公报"   target="_blank">
+    2025年十堰市国民经济和社会发展统计公报
+</a><span>2026-05-06</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508379657012826.docx"  title="2025年宜昌市国民经济和社会发展统计公报"   target="_blank">
+    2025年宜昌市国民经济和社会发展统计公报
+</a><span>2026-05-05</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202606/P020260629418775557072.docx"  title="2025年襄阳市国民经济和社会发展统计公报"   target="_blank">
+    2025年襄阳市国民经济和社会发展统计公报
+</a><span>2026-05-04</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508381406029348.docx"  title="2025年鄂州市国民经济和社会发展统计公报"   target="_blank">
+    2025年鄂州市国民经济和社会发展统计公报
+</a><span>2026-05-03</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508382115886698.doc"  title="2025年荆门市国民经济和社会发展统计公报"   target="_blank">
+    2025年荆门市国民经济和社会发展统计公报
+</a><span>2026-05-02</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260526325960533223.pdf"  title="2025年孝感市国民经济和社会发展统计公报"   target="_blank">
+    2025年孝感市国民经济和社会发展统计公报
+</a><span>2026-05-01</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508383487119307.pdf"  title="2025年荆州市国民经济和社会发展统计公报"   target="_blank">
+    2025年荆州市国民经济和社会发展统计公报
+</a><span>2026-04-30</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260509356980074230.doc"  title="2025年黄冈市国民经济和社会发展统计公报"   target="_blank">
+    2025年黄冈市国民经济和社会发展统计公报
+</a><span>2026-04-29</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508384806457578.doc"  title="2025年咸宁市国民经济和社会发展统计公报"   target="_blank">
+    2025年咸宁市国民经济和社会发展统计公报
+</a><span>2026-04-28</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508385586455254.docx"  title="2025年随州市国民经济和社会发展统计公报"   target="_blank">
+    2025年随州市国民经济和社会发展统计公报
+</a><span>2026-04-27</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508386448743054.doc"  title="2025年恩施州国民经济和社会发展统计公报"   target="_blank">
+    2025年恩施州国民经济和社会发展统计公报
+</a><span>2026-04-26</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508387240145521.pdf"  title="2025年仙桃市国民经济和社会发展统计公报"   target="_blank">
+    2025年仙桃市国民经济和社会发展统计公报
+</a><span>2026-04-25</span>
+                                        </li>
+                        
+                             <li><a href="http://tjj.hubei.gov.cn/tjsj/tjgb/ndtjgb/sztjgb/202605/P020260508387809233409.docx"  title="2025年潜江市国民经济和社会发展统计公报"   target="_blank">
+    2025年潜江市国民经济和社会发展统计公报
+</a><span>2026-04-24</span>
+                                        </li>
+                        
+                                    </ul>
+                      <div class="common-pagination" >
+                        <SCRIPT LANGUAGE="JavaScript">
+                            createPageHTML(10, 0,"index", "shtml",  "black2",146);
+                        </SCRIPT> </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- 嵌套底部start	 -->
+    <div class="friend-links">
+		<div class="layout-width friend-links-inner">
+			<span class="friend-label">友情链接：</span>
+			<div class="friend-btns">
+				<a href="https://www.gov.cn/" target="_blank">中国政府网</a>
+				<a href="https://www.stats.gov.cn/" target="_blank">国家统计局</a>
+				<a href="https://www.hubei.gov.cn/" target="_blank">湖北省人民政府</a>
+			</div>
+		</div>
+	</div>
+	<div class="site-footer">
+		<div class="layout-width">
+			<div class="footer-inner">
+				<div class="footer-col footer-info">
+					<p>
+						<span>邮编：430071</span>
+						<span class="footer-sep">|</span>
+						<a href="http://tjj.hubei.gov.cn/fzlm/wzdt/">网站地图</a>
+						<span class="footer-sep">|</span>
+						<a href="http://tjj.hubei.gov.cn/fzlm/xmtjz/">新媒体矩阵</a>
+					</p>
+					<p>版权所有：湖北省统计局　地址：武汉市武昌区水果湖东一路19-2号　电话：027-87813435</p>
+					<p>
+						<span>鄂ICP备05011090号-1</span>
+						<img src="/material/2026/images/layout/gh.png" alt="" class="footer-police-icon" />
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42010602001880">鄂公网安备 42010602001880号</a>
+						<span class="footer-sep">网站标识码：4200000001</span>
+					</p>
+				</div>
+				<div class="footer-col footer-badge">
+					<a href="http://bszs.conac.cn/sitename?method=show&id=03F3C88A4CD53DDCE053022819AC1577"><img src="/material/2026/images/layout/dzjg.png" alt="党政机关" /></a>
+					<a href="javascript:;">
+
+<script id="_jiucuo_" sitecode='4200000001' src='https://zfwzgl.www.gov.cn/exposure/jiucuo.js'></script>
+
+</a>
+				</div>
+				<div class="footer-col footer-social">
+					<a class="social-item" id="zwwx-qrcode">
+						<img src="/material/2026/images/layout/weChat-icon.png" alt="政务微信" />
+						<span>政务微信</span>
+					</a>
+					<a class="social-item" data-toggle="modal" data-target="#weibo-modal">
+						<img src="/material/2026/images/layout/weibo-icon.png" alt="微博" />
+						<span>微博</span>
+					</a>
+					<a class="social-item" id="phone-qrcode">
+						<img src="/material/2026/images/layout/phone-icon.png" alt="手机版" />
+						<span>手机版</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="weibo-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span
+							aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">您访问的链接即将离开“湖北省统计局”门户网站 是否继续？</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">放弃</button>
+					<button type="button" class="btn btn-danger"
+						onclick="window.open('https://weibo.com/hbstj'); $('#weiboModal').modal('toggle')">继续访问</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="aside-weibo-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span
+							aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">您访问的链接即将离开“湖北省统计局”门户网站 是否继续？</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">放弃</button>
+					<button type="button" class="btn btn-danger"
+						onclick="window.open('https://weibo.com/hbstj'); $('#weiboModal').modal('toggle')">继续访问</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="/material/js/ssoAjax.js"></script>
+	<link href="/material/indeci/static/css/iconfont.css" rel="stylesheet" type="text/css" />
+	<link href="/material/assets/css/bf/barrierfree.css" rel="stylesheet" type="text/css" />
+	<script src="/material/assets/js/iframe.js" id="barrierFree" data="sn=D80A39ECF549DA3BAA8DC9A427918A580CB734F93284C7F6C2D6672907F7F9CB&amp;rcode=16BCCA6600194E894C4470C786136F8B2463A343772FA4EE2FD19008ED28BBC1003EC03B6082B1D616EB3045AA4B89DED1621AC006BC1ECE526A815EAB0E557F03111BAE74B8B429EC816A1F2E7F5CF8A3A5DCB13616E7B5A803D279D34A5FCF0E4F6536FB6F8F616A2F8F6BBF8B9D05EF8AE0A423EC7F232FFC5A52790C88D7&helpsrc=/fzlm/wza/202106/t20210623_3609539.shtml"></script>
+
+	<script>
+		// 平台访问统计
+		(function () {
+			var serverUrl = "/wasp-api";
+			var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+			g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = serverUrl + '/js/ta.js';
+			g.id = "visit-js-id";
+			g.onload = function () {
+				window.Tracker.setCrossSubDomain();
+				window.Tracker.setSiteId('22');
+			}
+			s.parentNode.insertBefore(g, s);
+		})();
+
+	</script>
+    <!-- 嵌套底部end	 -->
+
+    <script>
+    //dom effect
+    $(document).ready(function() {
+
+        //隐藏空白图片
+        $('.pic').each(function() {
+            if ($(this).html()=="") {
+                $(this).remove();
+            }
+            if (!$(this).html== "") {
+                $(this).siblings("h4").css("margin-top","10px")
+            }
+        });
+//当前高亮
+        $("#27544").addClass("active").siblings().removeClass("active");
+    });
+</script>
+
+<div id="WebSiteId" style="display:none;">19</div>
+<div id="ParentColumnId" style="display:none;">2286</div>
+<div id="ColumnId" style="display:none;">27544</div>
+<div id="ColumnName" style="display:none;">市州统计公报</div>
+
+
+</body>
+
+</html>
