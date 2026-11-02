@@ -337,7 +337,10 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
     (await js('atlas.listGdpDatasets()')).map((row) => row.year),
     [2025],
   );
-  assert.equal(await js('(await atlas.getGdp({year:2025})).records.length'), 127);
+  const shippedGdp = JSON.parse(
+    await fs.readFile(path.join(__dirname, '../resources/gdp/2025.json'), 'utf8'),
+  );
+  assert.deepEqual(await js('(await atlas.getGdp({year:2025})).records'), shippedGdp.records);
   assert.equal(
     await js('(async()=>{try{await atlas.getGdp({year:2024});}catch(e){return e.code;}})()'),
     'GDP_YEAR_NOT_FOUND',
@@ -358,6 +361,14 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
   assert.ok(texts(national).includes('2025 年 GDP · 亿元 · 现价'));
   const nationalScale = texts(national).find((text) => text.startsWith('< '));
   assert.equal(nationalScale, '< 10,000');
+  await select('220000');
+  await gdpReady();
+  assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('9/9'));
+  await screenshot('gdp-jilin.png');
+  await select('500000');
+  await gdpReady();
+  assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('14/37'));
+  await screenshot('gdp-chongqing.png');
   await select('440000');
   await gdpReady();
   assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('21/21'));

@@ -6,6 +6,8 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from datetime import date
+from decimal import Decimal
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -69,7 +71,7 @@ class AnnualGdpTest(unittest.TestCase):
         snapshot, report = gdp.build(self.data_dir, self.catalog, 2025)
         for filename, value in [('gdp-2025.json', snapshot), ('coverage-2025.json', report)]:
             self.assertEqual(value, json.loads((self.data_dir / filename).read_text(encoding='utf-8')))
-        self.assertEqual(report['counts'], {'country': 1, 'province': 30, 'city': 87, 'county': 9})
+        self.assertEqual(report['counts'], {'country': 1, 'province': 30, 'city': 152, 'county': 25})
         self.assertEqual(report['missingProvinceIds'], ['620000', '710000', '810000', '820000'])
         records = {row['regionId']: row for row in snapshot['records']}
         self.assertEqual(records['100000']['value'], 1401879)
@@ -83,9 +85,39 @@ class AnnualGdpTest(unittest.TestCase):
         self.assertEqual((covered['440000']['covered'], covered['440000']['expected']), (21, 21))
         self.assertEqual((covered['150000']['covered'], covered['150000']['expected']), (12, 12))
         self.assertEqual((covered['430000']['covered'], covered['430000']['expected']), (14, 14))
+        self.assertEqual((covered['220000']['covered'], covered['220000']['expected']), (9, 9))
         municipal = {r['provinceId']: r for r in report['municipalityCoverage']}
         self.assertEqual({key: row['covered'] for key, row in municipal.items()},
-                         {'110000': 4, '120000': 3, '310000': 1, '500000': 1})
+                         {'110000': 4, '120000': 6, '310000': 1, '500000': 14})
+
+    def test_publication_dates_support_official_formats_without_day_prefixes(self):
+        published = date(2026, 5, 8)
+        for text in ['2026-05-08', '2026—5—8', '2026年5月8日',
+                     '2026-05-082025年公报', '2026-05-0816:55']:
+            self.assertTrue(gdp.has_publication_date(text, published), text)
+        for text in ['2026-05-18', '2026-05-082', '12026-05-08', '2025年5月8日']:
+            self.assertFalse(gdp.has_publication_date(text, published), text)
+
+    def test_reviewed_annual_sentences_preserve_footnotes_and_amount_units(self):
+        for quote in ['全年生产总值〔2〕（GDP）1049.66亿元',
+                      '全年地区生产总值[2]完成1049.66亿元']:
+            source = {'regionId': 'example', 'extraction': 'reviewed-sentence',
+                      'evidence': {'valueQuote': quote}}
+            self.assertEqual(gdp.annual_amount(source), Decimal('1049.66'))
+        source['evidence']['valueQuote'] = '全年地区生产总值增长4.8%'
+        with self.assertRaisesRegex(ValueError, 'unit mismatch'):
+            gdp.annual_amount(source)
+
+    def test_expanded_official_sources_and_scope(self):
+        snapshot, _ = gdp.build(self.data_dir, self.catalog, 2025)
+        records = {r['regionId']: r for r in snapshot['records']}
+        for rid, amount in [('tdt-220100', 8005.59), ('tdt-222400', 1064.08),
+                            ('tdt-451300', 1049.66), ('tdt-511500', 4134.73),
+                            ('tdt-county-120102', 528.22), ('tdt-county-120117', 313.89),
+                            ('tdt-county-500230', 455.2516), ('tdt-county-500233', 608.37),
+                            ('tdt-county-500229', 85.06)]:
+            self.assertEqual(records[rid]['value'], amount)
+        self.assertNotIn('tdt-county-500157', records)
 
     def test_city_amount_columns_units_and_display_precision(self):
         snapshot, _ = gdp.build(self.data_dir, self.catalog, 2025)
