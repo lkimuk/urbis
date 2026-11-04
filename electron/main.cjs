@@ -42,7 +42,7 @@ function createWindow() {
     minWidth: 1080,
     minHeight: 720,
     title: '江城子',
-    backgroundColor: '#f3f3f3',
+    backgroundColor: '#f1f3f5',
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),

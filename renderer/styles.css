@@ -3,8 +3,9 @@
   font-family: 'Segoe UI', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
   font-size: 13px;
   color: #202020;
-  background: #f3f3f3;
-  --line: #d5d5d5;
+  background: var(--surface);
+  --surface: #f1f3f5;
+  --line: #d5d9de;
   --muted: #606060;
   --accent: #0067c0;
 }
@@ -58,7 +59,7 @@ p {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  background: #f3f3f3;
+  background: var(--surface);
 }
 .library {
   border-right: 1px solid var(--line);
@@ -188,7 +189,7 @@ input:disabled {
   flex-direction: column;
   min-width: 0;
   min-height: 0;
-  background: #c9c9c9;
+  background: #d9dde2;
 }
 .studio-toolbar {
   height: 40px;
@@ -199,7 +200,7 @@ input:disabled {
   gap: 8px;
   padding: 0 12px;
   border-bottom: 1px solid var(--line);
-  background: #f3f3f3;
+  background: var(--surface);
 }
 #breadcrumb {
   display: flex;
