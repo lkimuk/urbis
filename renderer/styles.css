@@ -464,6 +464,66 @@ input[type='range'] {
 .gdp-state.error {
   color: #b42318;
 }
+#metric-chart-open {
+  margin-bottom: 8px;
+}
+#metric-chart-dialog {
+  width: min(760px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: inherit;
+  overflow: hidden;
+}
+#metric-chart-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+#metric-chart-dialog::backdrop {
+  background: rgb(20 35 44 / 35%);
+}
+.metric-chart-header,
+.metric-chart-key {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 20px;
+}
+.metric-chart-header {
+  justify-content: space-between;
+}
+.metric-chart-header h2 {
+  margin: 0;
+  font-size: 17px;
+}
+.metric-chart-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.metric-chart-actions select {
+  width: auto;
+}
+.metric-chart-key:empty {
+  display: none;
+}
+.metric-chart-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.metric-chart-key i {
+  width: 12px;
+  height: 9px;
+}
+.metric-chart-scroll {
+  overflow: hidden auto;
+  min-height: 0;
+}
 #gdp-details {
   padding-bottom: 0;
 }

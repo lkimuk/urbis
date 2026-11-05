@@ -10,6 +10,46 @@ const validDate = (value) =>
   new Date(value).toISOString().slice(0, 10) === value;
 const validYear = (year) => Number.isInteger(year) && year >= 1900 && year <= 2100;
 
+function validateChart(chart, covered, invalid) {
+  const color = (value) => typeof value === 'string' && /^#[\da-f]{6}$/i.test(value);
+  if (
+    !chart ||
+    !Array.isArray(chart.regionIds) ||
+    !chart.regionIds.length ||
+    new Set(chart.regionIds).size !== chart.regionIds.length ||
+    !chart.regionIds.every((id) => covered.has(id)) ||
+    !color(chart.color) ||
+    !Number.isInteger(chart.fractionDigits) ||
+    chart.fractionDigits < 0 ||
+    chart.fractionDigits > 6 ||
+    (chart.gapWidth !== undefined &&
+      (!Number.isFinite(chart.gapWidth) || chart.gapWidth < 0 || chart.gapWidth > 500)) ||
+    !['max', 'interval'].every(
+      (key) => chart[key] === undefined || (Number.isFinite(chart[key]) && chart[key] > 0),
+    )
+  )
+    invalid();
+  if (chart.groups !== undefined) {
+    if (!Array.isArray(chart.groups)) invalid();
+    const grouped = new Set();
+    for (const group of chart.groups) {
+      if (
+        !group ||
+        typeof group.label !== 'string' ||
+        !group.label.trim() ||
+        !color(group.color) ||
+        !Array.isArray(group.regionIds) ||
+        !group.regionIds.length
+      )
+        invalid();
+      for (const id of group.regionIds) {
+        if (!chart.regionIds.includes(id) || grouped.has(id)) invalid();
+        grouped.add(id);
+      }
+    }
+  }
+}
+
 // One contract for generated resources and the main-process API. No research files cross IPC.
 function validateGdpDataset(dataset, catalog) {
   const invalid = () => {
@@ -62,6 +102,7 @@ function validateGdpDataset(dataset, catalog) {
           invalid();
         covered.add(row.regionId);
       }
+      if (metric.chart !== undefined) validateChart(metric.chart, covered, invalid);
     }
   }
   const seen = new Set();

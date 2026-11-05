@@ -99,6 +99,7 @@
               <select id="gdp-metric" aria-describedby="gdp-state" disabled></select>
               <p id="gdp-state" class="gdp-state" role="status"></p>
               <button id="gdp-retry" class="text-button" hidden>重新加载</button>
+              <button id="metric-chart-open" class="text-button" hidden>查看省级图表</button>
               <details id="gdp-details" class="data-note">
                 <summary>指标资料</summary>
                 <div id="gdp-sources"></div>
@@ -173,6 +174,22 @@
         </div>
       </aside>
     </main>
+    <dialog id="metric-chart-dialog" aria-labelledby="metric-chart-title">
+      <header class="metric-chart-header">
+        <h2 id="metric-chart-title"></h2>
+        <div class="metric-chart-actions">
+          <label for="metric-chart-order">排序</label>
+          <select id="metric-chart-order">
+            <option value="source">原表顺序</option>
+            <option value="desc">从高到低</option>
+            <option value="asc">从低到高</option>
+          </select>
+          <button id="metric-chart-close" class="text-button" autofocus>关闭</button>
+        </div>
+      </header>
+      <div id="metric-chart-key" class="metric-chart-key"></div>
+      <div class="metric-chart-scroll"><div id="metric-chart"></div></div>
+    </dialog>
     <div id="toast" class="toast" role="status" hidden></div>
   </body>
 </html>

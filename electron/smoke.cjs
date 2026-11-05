@@ -63,6 +63,40 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
     );
   }
   await waitFor('document.getElementById("map").dataset.ready==="true"');
+  await input('thematic', 'gdp', 'change');
+  await waitFor('document.getElementById("map").dataset.gdpReady==="true"');
+  const workbookChart = () =>
+    js(
+      'JSON.parse(JSON.stringify(echarts.getInstanceByDom(document.getElementById("metric-chart")).getOption()))',
+    );
+  await input('gdp-metric', 'gdp-per-capita', 'change');
+  await click('#metric-chart-open');
+  const perCapita = await workbookChart();
+  assert.equal(perCapita.yAxis[0].data.length, 31);
+  assert.deepEqual(perCapita.yAxis[0].data.slice(0, 3), ['北京', '上海', '江苏']);
+  assert.equal(perCapita.xAxis[0].max, 250000);
+  assert.equal(perCapita.series[0].data[0].itemStyle.color, '#00A4DC');
+  assert.equal(perCapita.series[0].data[7].itemStyle.color, '#00516C');
+  assert.match(await js('document.getElementById("metric-chart-key").textContent'), /2024.*2025/);
+  await click('#metric-chart-close');
+  await waitFor('!echarts.getInstanceByDom(document.getElementById("metric-chart"))');
+  await input('gdp-metric', 'population', 'change');
+  await click('#metric-chart-open');
+  const population = await workbookChart();
+  assert.deepEqual(population.yAxis[0].data, perCapita.yAxis[0].data);
+  assert.equal(population.series[0].data[0].value, 2180);
+  await input('metric-chart-order', 'desc', 'change');
+  const descending = await workbookChart();
+  assert.equal(descending.yAxis[0].data[0], '广东');
+  assert.equal(descending.series[0].data[0].value, 12859);
+  await input('metric-chart-order', 'asc', 'change');
+  assert.equal((await workbookChart()).yAxis[0].data[0], '西藏');
+  await input('metric-chart-order', 'source', 'change');
+  assert.deepEqual((await workbookChart()).yAxis[0].data, population.yAxis[0].data);
+  await click('#metric-chart-close');
+  await input('gdp-metric', 'gdp', 'change');
+  await input('thematic', 'none', 'change');
+  console.log('PASS: workbook chart order, colors, values and dialog lifecycle');
   const catalog = await js('atlas.getRegions()');
   assert.equal(catalog.length, 3293);
   assert.equal(await js('document.getElementById("dataset")'), null);

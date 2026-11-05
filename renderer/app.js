@@ -11,6 +11,7 @@ import { createAtlasClient } from './desktop-api.mjs';
 import { buildGdpModel } from './gdp-model.mjs';
 import { createGdpStore } from './gdp-store.mjs';
 import { createGdpPanel } from './gdp-panel.mjs';
+import { createMetricChart } from './metric-chart.mjs';
 
 const $ = (id) => document.getElementById(id);
 const api = createAtlasClient(window.atlas);
@@ -23,6 +24,7 @@ let exporting = false;
 let toastTimer;
 let gdpModel = null;
 const gdpPanel = createGdpPanel(document);
+const metricChart = createMetricChart(document, window.echarts);
 const gdpStore = createGdpStore({
   listDatasets: () => api.listGdpDatasets(),
   getDataset: (request) => api.getGdp(request),
@@ -98,6 +100,9 @@ function updateActions() {
 
 function refreshGdp() {
   const state = gdpStore.getState();
+  const metric = state.index?.metrics.get(settings.gdpMetric);
+  const chartButton = $('metric-chart-open');
+  chartButton.hidden = settings.thematic !== 'gdp' || !metric?.chart;
   gdpModel =
     settings.thematic === 'gdp' && state.status === 'ready' && !busy && currentMap
       ? buildGdpModel(
@@ -282,6 +287,11 @@ $('gdp-metric').addEventListener('change', () => {
 });
 $('gdp-retry').addEventListener('click', () => {
   void gdpStore.load(settings.gdpYear);
+});
+$('metric-chart-open').addEventListener('click', () => {
+  const { year, index } = gdpStore.getState();
+  const metric = index?.metrics.get(settings.gdpMetric);
+  if (metric?.chart) metricChart.open(year, metric, regions);
 });
 $('breadcrumb').addEventListener('click', (event) => {
   const button = event.target.closest('button[data-id]');
