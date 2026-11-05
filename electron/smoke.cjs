@@ -351,10 +351,10 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
     );
   const texts = (o) =>
     o.graphic[0].elements.filter((e) => e.type === 'text').map((e) => e.style.text);
-  assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('30/34'));
+  assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('31/34'));
   await screenshot('gdp-national.png');
   const national = await option();
-  assert.equal(
+  assert.notEqual(
     national.geo[0].regions.find((r) => r.name === '甘肃省').itemStyle.areaColor,
     '#e5e3df',
   );

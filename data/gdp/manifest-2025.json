@@ -3,7 +3,7 @@
   "unit": "亿元",
   "currency": "CNY",
   "priceBasis": "current",
-  "retrievedOn": "2026-11-02",
+  "retrievedOn": "2026-11-05",
   "sources": [
     {
       "id": "annual-2025-100000",
@@ -591,6 +591,27 @@
         "valueQuote": "根据地区生产总值统一核算结果， 2025年，全省实现地区生产总值36551.10亿元，按不变价格计算，同比增长5.1%。分三次产业看，第一产业增加值2746.50亿元，同比增长3.8%；第二产业增加值",
         "yearQuote": "计数据 字号： 打印 分享: 2025年全省经济运行稳中向好圆满收官 您当前所在位置 ： 首页 > ",
         "regionTerm": "陕西"
+      },
+      "extraction": "reviewed-sentence"
+    },
+    {
+      "id": "annual-2025-620000",
+      "regionId": "620000",
+      "regionName": "甘肃",
+      "year": 2025,
+      "value": "13697.5",
+      "publisher": "甘肃省统计局、国家统计局甘肃调查总队",
+      "title": "2025年甘肃省国民经济和社会发展统计公报",
+      "url": "https://www.gsei.com.cn/html/1288/2026-03-30/content-659637.html",
+      "publishedOn": "2026-03-30",
+      "status": "preliminary",
+      "statusBasis": "公报明确为初步核算。发布日期取转载页，公报落款为2026-03-13。",
+      "file": "annual-2025-620000.html",
+      "encoding": "utf-8",
+      "evidence": {
+        "valueQuote": "初步核算，全年全省地区生产总值13697.5亿元，比上年增长5.8%。",
+        "yearQuote": "2025年甘肃省国民经济和社会发展统计公报",
+        "regionTerm": "甘肃"
       },
       "extraction": "reviewed-sentence"
     },
@@ -5244,14 +5265,8 @@
     "city-2025-v7article-tdt-county-500229-26.html": "a90dbae29568979b5689332f5b1eee506f136a3b4afbb08b7756957652eda1b2",
     "city-2025-v3article-tdt-511500-0.pdf": "90e10deb2da2795513e7f920eded674bc22e89540e572dbce4d028ab040767ec",
     "city-2025-v8-yibin-bulletins.html": "eb21c6e1cb5bf2c40ec8e7c13592686e0839040021e1c3d053ae0ccb333a228b",
-    "annual-2025-tdt-511500.review.txt": "b1d209e3aa2634727b8660876ff493f6bbdc9ea672d052c7792ec8b79a608604"
+    "annual-2025-tdt-511500.review.txt": "b1d209e3aa2634727b8660876ff493f6bbdc9ea672d052c7792ec8b79a608604",
+    "annual-2025-620000.html": "5e7389d26444a152b6a0c1fa34bf5c0bb6206db4cb84366175b81c115711e81d"
   },
-  "unavailableSources": [
-    {
-      "regionId": "620000",
-      "regionName": "甘肃省",
-      "url": "https://tjj.gansu.gov.cn/tjj/c109459/202601/174273709.shtml",
-      "reason": "官方原页及省政府入口返回 HTTP 412，未取得可核验原文，暂不录入数值。"
-    }
-  ]
+  "unavailableSources": []
 }

@@ -71,14 +71,15 @@ class AnnualGdpTest(unittest.TestCase):
         snapshot, report = gdp.build(self.data_dir, self.catalog, 2025)
         for filename, value in [('gdp-2025.json', snapshot), ('coverage-2025.json', report)]:
             self.assertEqual(value, json.loads((self.data_dir / filename).read_text(encoding='utf-8')))
-        self.assertEqual(report['counts'], {'country': 1, 'province': 30, 'city': 152, 'county': 25})
-        self.assertEqual(report['missingProvinceIds'], ['620000', '710000', '810000', '820000'])
+        self.assertEqual(report['counts'], {'country': 1, 'province': 31, 'city': 152, 'county': 25})
+        self.assertEqual(report['missingProvinceIds'], ['710000', '810000', '820000'])
         records = {row['regionId']: row for row in snapshot['records']}
         self.assertEqual(records['100000']['value'], 1401879)
         self.assertEqual(records['130000']['value'], 49305.2)
         self.assertEqual(records['500000']['value'], 33757.93)
         self.assertEqual(records['520000']['value'], 23562.17)
         self.assertEqual(records['310000']['value'], 56708.71)
+        self.assertEqual(records['620000']['value'], 13697.5)
         self.assertEqual(records['630000']['value'], 4121.84)
         self.assertTrue(all(row['status'] == 'preliminary' for row in snapshot['records']))
         covered = {r['provinceId']: r for r in report['cityCoverage']}

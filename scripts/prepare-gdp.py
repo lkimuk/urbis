@@ -258,7 +258,7 @@ def build_annual(data_dir, catalog, manifest):
         'notes': [
             '采用所存官方年度发布版本；未宣称已排查下载日前全部后续修订。',
             '缺失不填零，不借用其他年份；普通省份只收市级，直辖市收下辖区县。',
-            '全国值采用国家统计局原文，不用省级合计替代；当前省级覆盖不全。',
+            '全国值采用国家统计局原文，不用省级合计替代。',
         ],
     }
     for province in sorted((r for r in catalog if r['level'] == 'province'), key=lambda r: r['id']):

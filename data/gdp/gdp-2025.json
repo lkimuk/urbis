@@ -3,7 +3,7 @@
   "unit": "亿元",
   "currency": "CNY",
   "priceBasis": "current",
-  "retrievedOn": "2026-11-02",
+  "retrievedOn": "2026-11-05",
   "records": [
     {
       "regionId": "100000",
@@ -312,6 +312,17 @@
       "sourceFile": "annual-2025-610000.html",
       "status": "preliminary",
       "publishedOn": "2026-01-22"
+    },
+    {
+      "regionId": "620000",
+      "regionName": "甘肃",
+      "level": "province",
+      "sourceName": "甘肃",
+      "value": 13697.5,
+      "sourceId": "annual-2025-620000",
+      "sourceFile": "annual-2025-620000.html",
+      "status": "preliminary",
+      "publishedOn": "2026-03-30"
     },
     {
       "regionId": "630000",
