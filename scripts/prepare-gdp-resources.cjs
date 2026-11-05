@@ -15,6 +15,7 @@ function prepareGdpResources(dataDirectory, outputDirectory, catalog) {
     year,
     exclusions,
     metricsFile,
+    districtCharts,
     manifestFile = 'manifest-' + year + '.json',
   } of config.datasets) {
     if (!Number.isInteger(year) || year < 1900 || year > 2100 || years.has(year))
@@ -100,6 +101,7 @@ function prepareGdpResources(dataDirectory, outputDirectory, catalog) {
         records,
         exclusions,
         ...(metrics ? { metrics } : {}),
+        ...(districtCharts !== undefined ? { districtCharts } : {}),
       },
       catalog,
     );

@@ -29,6 +29,7 @@ export function createMetricChart(document, echarts) {
     open(year, metric, regions) {
       if (dialog.open || chart) return;
       const config = metric.chart;
+      const showShare = Boolean(metric.districtParent);
       const names = new Map(regions.map(({ id, name }) => [id, name]));
       const groups = config.groups ?? [];
       const colors = new Map(
@@ -43,8 +44,15 @@ export function createMetricChart(document, echarts) {
         useGrouping: false,
         maximumFractionDigits: config.fractionDigits,
       });
+      const total = showShare ? bars.reduce((sum, bar) => sum + bar.value, 0) : 0;
       document.getElementById('metric-chart-title').textContent =
-        year + ' 年各省份' + metric.label + '（' + metric.unit + '）';
+        (showShare ? metric.districtParent + ' ' : '') +
+        year +
+        (showShare ? ' 年各区 ' : ' 年各省份') +
+        metric.label +
+        '（' +
+        metric.unit +
+        '）';
       key.replaceChildren(
         ...groups.map(({ label, color }) => {
           const item = document.createElement('span');
@@ -54,6 +62,7 @@ export function createMetricChart(document, echarts) {
           return item;
         }),
       );
+      if (showShare) key.textContent = '占比以图中各区 GDP 合计为分母';
       order.value = 'source';
       // The source plots fit 31 categories in roughly 530 CSS pixels.
       plot.style.height = 36 + bars.length * 17 + 'px';
@@ -64,7 +73,17 @@ export function createMetricChart(document, echarts) {
         animation: false,
         aria: { enabled: true },
         textStyle: { fontFamily: 'Microsoft YaHei, sans-serif' },
-        grid: { top: 27, bottom: 9, left: 68, right: 84 },
+        grid: { top: 27, bottom: 9, left: showShare ? 82 : 68, right: 84 },
+        ...(showShare
+          ? {
+              tooltip: {
+                trigger: 'item',
+                renderMode: 'richText',
+                formatter: ({ name, value }) =>
+                  name + '\nGDP  ' + number.format(value) + ' ' + metric.unit,
+              },
+            }
+          : {}),
         xAxis: {
           type: 'value',
           position: 'top',
@@ -88,8 +107,32 @@ export function createMetricChart(document, echarts) {
             label: {
               show: true,
               position: 'right',
-              formatter: ({ value }) => number.format(value),
+              formatter: ({ value }) =>
+                showShare
+                  ? '{share|' + ((100 * value) / total).toFixed(2) + '%}'
+                  : number.format(value),
+              ...(showShare
+                ? {
+                    color: config.color,
+                    borderColor: config.color,
+                    borderWidth: 1,
+                    // Rich text applies vertical padding to the glyphs in centered labels.
+                    padding: [3.5, 3, -0.5, 3],
+                    rich: { share: { align: 'center' } },
+                    width: 44,
+                  }
+                : {}),
             },
+            ...(showShare
+              ? {
+                  labelLayout: ({ rect }) => ({
+                    x: chart.getWidth() - 44,
+                    y: rect.y + rect.height / 2,
+                    align: 'center',
+                    verticalAlign: 'middle',
+                  }),
+                }
+              : {}),
           },
         ],
       });

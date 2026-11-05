@@ -98,11 +98,28 @@ function updateActions() {
   for (const id of ['zoom-in', 'zoom-out', 'reset-view']) $(id).disabled = busy || !currentMap;
 }
 
+function selectedChart(index) {
+  if (!index) return null;
+  if (settings.gdpMetric !== 'gdp' && index.metrics.has(settings.gdpMetric))
+    return index.metrics.get(settings.gdpMetric);
+  const chart = index.dataset.districtCharts?.[currentRegion?.id];
+  return (
+    chart && {
+      chart,
+      records: index.records,
+      label: 'GDP',
+      unit: index.dataset.unit,
+      districtParent: currentRegion.name,
+    }
+  );
+}
+
 function refreshGdp() {
   const state = gdpStore.getState();
-  const metric = state.index?.metrics.get(settings.gdpMetric);
+  const metric = selectedChart(state.index);
   const chartButton = $('metric-chart-open');
   chartButton.hidden = settings.thematic !== 'gdp' || !metric?.chart;
+  chartButton.textContent = metric?.districtParent ? '查看区级图表' : '查看省级图表';
   gdpModel =
     settings.thematic === 'gdp' && state.status === 'ready' && !busy && currentMap
       ? buildGdpModel(
@@ -290,7 +307,7 @@ $('gdp-retry').addEventListener('click', () => {
 });
 $('metric-chart-open').addEventListener('click', () => {
   const { year, index } = gdpStore.getState();
-  const metric = index?.metrics.get(settings.gdpMetric);
+  const metric = selectedChart(index);
   if (metric?.chart) metricChart.open(year, metric, regions);
 });
 $('breadcrumb').addEventListener('click', (event) => {

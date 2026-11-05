@@ -13,7 +13,34 @@
     {
       "year": 2024,
       "manifestFile": "manifest.json",
-      "exclusions": []
+      "exclusions": [],
+      "districtCharts": {
+        "310000": {
+          "regionIds": [
+            "tdt-county-310115",
+            "tdt-county-310112",
+            "tdt-county-310104",
+            "tdt-county-310106",
+            "tdt-county-310101",
+            "tdt-county-310114",
+            "tdt-county-310105",
+            "tdt-county-310110",
+            "tdt-county-310117",
+            "tdt-county-310113",
+            "tdt-county-310118",
+            "tdt-county-310120",
+            "tdt-county-310107",
+            "tdt-county-310109",
+            "tdt-county-310116",
+            "tdt-county-310151"
+          ],
+          "color": "#00516C",
+          "fractionDigits": 2,
+          "gapWidth": 70,
+          "max": 18000,
+          "interval": 3000
+        }
+      }
     }
   ]
 }

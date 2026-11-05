@@ -181,11 +181,30 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
     await js('document.getElementById("gdp-sources").textContent'),
     /17,752\.28.*用户提供/,
   );
+  await click('#metric-chart-open');
+  const districts = await workbookChart();
+  assert.equal(districts.yAxis[0].data.length, 16);
+  assert.equal(districts.yAxis[0].data[0], '浦东新区');
+  assert.equal(districts.series[0].data[0].value, 17752.28);
+  assert.equal(
+    await js(
+      'echarts.getInstanceByDom(document.getElementById("metric-chart")).getOption().series[0].label.formatter({value:17752.28})',
+    ),
+    '{share|33.06%}',
+  );
+  assert.equal(
+    await js(
+      '(()=>{const chart=echarts.getInstanceByDom(document.getElementById("metric-chart"));const bars=chart.getModel().getSeriesByIndex(0).getData();return Array.from({length:bars.count()},(_,i)=>bars.getItemGraphicEl(i)).every(bar=>{const label=bar.getTextContent();label.getBoundingRect();const [frame,glyph]=label.childrenRef();const rect=frame.getBoundingRect().clone();const transform=label.getComputedTransform();if(transform)rect.applyTransform(transform);const barRect=bar.getBoundingRect();const frameCenter=frame.shape.y+frame.shape.height/2;return Math.abs(rect.y+rect.height/2-barRect.y-barRect.height/2)<1 && Math.abs(glyph.style.y-frameCenter-2)<1;});})()',
+    ),
+    true,
+    'Share frames must align with their bars and glyphs must sit 2 px below center',
+  );
+  await click('#metric-chart-close');
   await input('gdp-year', '2025', 'change');
   await waitFor('document.getElementById("map").dataset.gdpReady==="true"');
   await input('thematic', 'none', 'change');
   await select('100000');
-  console.log('PASS: Shanghai 2024 district GDP coverage');
+  console.log('PASS: Shanghai 2024 district GDP chart and shares');
   const validation = await js(
     '(async()=>{let count=0,lines=0;for(const r of await atlas.getRegions())for(const variant of ["districts","outline"]){const data=await atlas.getMap({regionId:r.id,variant});const parsed=echarts.parseGeoJSON(data);if(parsed.length!==data.features.length)throw Error(r.id);for(const part of parsed){const b=part.getBoundingRect();if(![b.x,b.y,b.width,b.height].every(Number.isFinite)||b.width<=0||b.height<=0)throw Error(r.id);}lines+=(data.boundaryLines||[]).length;count++;}return {count,lines};})()',
   );

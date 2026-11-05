@@ -149,6 +149,27 @@ function validateGdpDataset(dataset, catalog) {
       invalid();
     exclusions.add(row.regionId);
   }
+  if (dataset.districtCharts !== undefined) {
+    if (
+      !dataset.districtCharts ||
+      typeof dataset.districtCharts !== 'object' ||
+      Array.isArray(dataset.districtCharts)
+    )
+      invalid();
+    for (const [parentId, chart] of Object.entries(dataset.districtCharts)) {
+      validateChart(chart, seen, invalid);
+      if (
+        !chart.regionIds.every(
+          (id) =>
+            regions.get(id).parentId === parentId &&
+            regions.get(id).level === 'county' &&
+            !exclusions.has(id) &&
+            !dataset.records.find((row) => row.regionId === id).scopeNote,
+        )
+      )
+        invalid();
+    }
+  }
   return dataset;
 }
 
