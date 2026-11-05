@@ -105,6 +105,34 @@ test('GDP matching follows exact child IDs and never assigns city totals to dist
   );
 });
 
+test('supplemental metrics use their own values and fall back only when absent from the year', () => {
+  const data = dataset(2031);
+  const metric = {
+    id: 'population',
+    label: '常住人口',
+    unit: '万人',
+    basis: '工作簿原值',
+    source: '年度工作簿 · 数据!B2',
+    thresholds: [500, 2000, 5000, 10000],
+    records: [{ regionId: 'province', value: 2443.01 }],
+  };
+  data.metrics = [metric];
+  const index = createGdpIndex(validateGdpDataset(data, catalog));
+  const province = buildGdpModel(index, catalog[0], geometry('甲省'), 'outline', metric.id);
+  assert.equal(province.year, 2031);
+  assert.deepEqual(province.thresholds, metric.thresholds);
+  assert.match(gdpTooltip(province, '甲省'), /2,443\.01 万人/);
+  const subdivisions = buildGdpModel(index, catalog[0], geometry('同名市'), 'districts', metric.id);
+  assert.equal(subdivisions.areas[0].status, 'missing');
+  const earlier = createGdpIndex(dataset(2030));
+  assert.equal(
+    buildGdpModel(earlier, catalog[0], geometry('甲省'), 'outline', metric.id).metricId,
+    'gdp',
+  );
+  metric.records.push(metric.records[0]);
+  assert.throws(() => validateGdpDataset(data, catalog), /Invalid GDP dataset/);
+});
+
 test('scope exceptions override values, classification boundaries are explicit, and palettes are valid', () => {
   const data = dataset();
   data.records.push(observation('district', 100), {

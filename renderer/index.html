@@ -90,15 +90,17 @@
             <label class="field-label" for="thematic">专题</label>
             <select id="thematic">
               <option value="none">无</option>
-              <option value="gdp">地区生产总值（GDP）</option>
+              <option value="gdp">人口与经济</option>
             </select>
             <div id="gdp-controls" hidden>
               <label class="field-label" for="gdp-year">年份</label>
               <select id="gdp-year" aria-describedby="gdp-state" disabled></select>
+              <label class="field-label" for="gdp-metric">指标</label>
+              <select id="gdp-metric" aria-describedby="gdp-state" disabled></select>
               <p id="gdp-state" class="gdp-state" role="status"></p>
               <button id="gdp-retry" class="text-button" hidden>重新加载</button>
               <details id="gdp-details" class="data-note">
-                <summary>GDP 资料</summary>
+                <summary>指标资料</summary>
                 <div id="gdp-sources"></div>
               </details>
             </div>

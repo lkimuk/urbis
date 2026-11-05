@@ -100,13 +100,20 @@ function refreshGdp() {
   const state = gdpStore.getState();
   gdpModel =
     settings.thematic === 'gdp' && state.status === 'ready' && !busy && currentMap
-      ? buildGdpModel(state.index, currentRegion, currentMap.geoJSON, settings.variant)
+      ? buildGdpModel(
+          state.index,
+          currentRegion,
+          currentMap.geoJSON,
+          settings.variant,
+          settings.gdpMetric,
+        )
       : null;
   if (!busy && currentMap) view.update(settings, gdpModel);
   $('map').dataset.gdpReady = String(Boolean(gdpModel));
   gdpPanel.render({
     enabled: settings.thematic === 'gdp',
     state,
+    preferredMetric: settings.gdpMetric,
     model: gdpModel,
     region: currentRegion,
   });
@@ -237,7 +244,9 @@ async function exportImage() {
     const dataURL = view.capturePng(settings);
     const filename =
       currentRegion.name +
-      (gdpModel ? '-' + gdpModel.year + '-GDP' : '') +
+      (gdpModel
+        ? '-' + gdpModel.year + '-' + (gdpModel.metricId === 'gdp' ? 'GDP' : gdpModel.label)
+        : '') +
       '-' +
       (settings.variant === 'districts' ? '行政区地图' : '轮廓地图');
     const result = await api.saveImage({ dataURL, filename });
@@ -266,6 +275,10 @@ $('gdp-year').addEventListener('change', () => {
   const year = Number($('gdp-year').value);
   changeSettings({ gdpYear: year });
   void gdpStore.load(year);
+});
+$('gdp-metric').addEventListener('change', () => {
+  changeSettings({ gdpMetric: $('gdp-metric').value });
+  refreshGdp();
 });
 $('gdp-retry').addEventListener('click', () => {
   void gdpStore.load(settings.gdpYear);

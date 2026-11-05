@@ -352,6 +352,13 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
   const texts = (o) =>
     o.graphic[0].elements.filter((e) => e.type === 'text').map((e) => e.style.text);
   assert.ok((await js('document.getElementById("gdp-state").textContent')).includes('31/34'));
+  await input('gdp-metric', 'population', 'change');
+  assert.match(await js('document.getElementById("gdp-state").textContent'), /34\/34.*万人/);
+  assert.ok(texts(await option()).includes('2025 年 常住人口 · 万人 · 工作簿原值'));
+  await input('gdp-metric', 'gdp-per-capita', 'change');
+  assert.match(await js('document.getElementById("gdp-state").textContent'), /31\/34.*元\/人/);
+  assert.match(await js('document.getElementById("gdp-sources").textContent'), /56,068\.3586/);
+  await input('gdp-metric', 'gdp', 'change');
   await screenshot('gdp-national.png');
   const national = await option();
   assert.notEqual(

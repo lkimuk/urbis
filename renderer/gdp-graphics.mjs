@@ -42,7 +42,12 @@ export function gdpGraphics(model, settings, width, height) {
   const rows = Math.ceil(5 / columns);
   const footerHeight = model.choropleth && model.covered > 0 ? 96 + (rows - 1) * 22 : 65;
   const y = height - footerHeight;
-  text('gdp-heading', model.year + ' 年 GDP · ' + model.unit + ' · 现价', left, y);
+  text(
+    'gdp-heading',
+    model.year + ' 年 ' + model.label + ' · ' + model.unit + ' · ' + model.basis,
+    left,
+    y,
+  );
   if (model.choropleth && model.covered > 0) {
     const labels = gdpRangeLabels(model.thresholds),
       colors = gdpColors(settings.fill);
@@ -69,13 +74,17 @@ export function gdpGraphics(model, settings, width, height) {
           .map((area) => GDP_STATUS[area.record.status]),
       ),
     ];
-    text('gdp-basis', '来源：各地统计部门 · ' + statuses.join(' / '), left, height - 22, 10);
+    const source = model.metricId === 'gdp' ? '各地统计部门' : '用户工作簿';
+    text('gdp-basis', '来源：' + source + ' · ' + statuses.join(' / '), left, height - 22, 10);
   } else {
     const current = model.current;
     text(
       'gdp-total',
       current.status === 'available'
-        ? '总量  ' + formatGdp(current.record.value) + ' ' + model.unit
+        ? (model.metricId === 'gdp' ? '总量  ' : '') +
+            formatGdp(current.record.value) +
+            ' ' +
+            model.unit
         : current.status === 'excluded'
           ? '统计范围待核实'
           : '暂无数据',

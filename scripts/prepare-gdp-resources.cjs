@@ -11,7 +11,7 @@ function prepareGdpResources(dataDirectory, outputDirectory, catalog) {
     throw new Error('No GDP datasets configured');
   const generated = [];
   const years = new Set();
-  for (const { year, exclusions } of config.datasets) {
+  for (const { year, exclusions, metricsFile } of config.datasets) {
     if (!Number.isInteger(year) || year < 1900 || year > 2100 || years.has(year))
       throw new Error('Invalid or duplicate GDP year');
     years.add(year);
@@ -68,6 +68,14 @@ function prepareGdpResources(dataDirectory, outputDirectory, catalog) {
           : {}),
       };
     });
+    let metrics;
+    if (metricsFile !== undefined) {
+      if (metricsFile !== 'metrics-' + year + '.json') throw new Error('Invalid metrics filename');
+      const supplemental = read(metricsFile);
+      if (supplemental.year !== year) throw new Error('Supplemental metrics year mismatch');
+      metrics = supplemental.metrics;
+      if (!Array.isArray(metrics)) throw new Error('Invalid supplemental metrics');
+    }
     const dataset = validateGdpDataset(
       {
         schemaVersion: 1,
@@ -78,6 +86,7 @@ function prepareGdpResources(dataDirectory, outputDirectory, catalog) {
         retrievedOn: snapshot.retrievedOn,
         records,
         exclusions,
+        ...(metrics ? { metrics } : {}),
       },
       catalog,
     );

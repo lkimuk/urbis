@@ -1,0 +1,285 @@
+{
+  "year": 2025,
+  "metrics": [
+    {
+      "id": "population",
+      "label": "常住人口",
+      "unit": "万人",
+      "basis": "工作簿原值",
+      "source": "province_population_gdp_per_capita_2025.xlsx · 数据!B2:B35",
+      "thresholds": [500, 2000, 5000, 10000],
+      "records": [
+        {
+          "regionId": "110000",
+          "value": 2180
+        },
+        {
+          "regionId": "310000",
+          "value": 2485.41
+        },
+        {
+          "regionId": "320000",
+          "value": 8518
+        },
+        {
+          "regionId": "350000",
+          "value": 4190
+        },
+        {
+          "regionId": "330000",
+          "value": 6701
+        },
+        {
+          "regionId": "120000",
+          "value": 1363
+        },
+        {
+          "regionId": "440000",
+          "value": 12859
+        },
+        {
+          "regionId": "150000",
+          "value": 2388
+        },
+        {
+          "regionId": "420000",
+          "value": 5811
+        },
+        {
+          "regionId": "500000",
+          "value": 3187.26
+        },
+        {
+          "regionId": "370000",
+          "value": 10043
+        },
+        {
+          "regionId": "610000",
+          "value": 3953
+        },
+        {
+          "regionId": "340000",
+          "value": 6082
+        },
+        {
+          "regionId": "430000",
+          "value": 6492
+        },
+        {
+          "regionId": "540000",
+          "value": 370
+        },
+        {
+          "regionId": "650000",
+          "value": 2622.8
+        },
+        {
+          "regionId": "510000",
+          "value": 8318
+        },
+        {
+          "regionId": "360000",
+          "value": 4474
+        },
+        {
+          "regionId": "210000",
+          "value": 4131
+        },
+        {
+          "regionId": "640000",
+          "value": 732
+        },
+        {
+          "regionId": "460000",
+          "value": 1055
+        },
+        {
+          "regionId": "140000",
+          "value": 3424.01
+        },
+        {
+          "regionId": "530000",
+          "value": 4644
+        },
+        {
+          "regionId": "630000",
+          "value": 592
+        },
+        {
+          "regionId": "410000",
+          "value": 9785
+        },
+        {
+          "regionId": "130000",
+          "value": 7378
+        },
+        {
+          "regionId": "220000",
+          "value": 2317.31
+        },
+        {
+          "regionId": "520000",
+          "value": 3857
+        },
+        {
+          "regionId": "450000",
+          "value": 4989
+        },
+        {
+          "regionId": "620000",
+          "value": 2443
+        },
+        {
+          "regionId": "230000",
+          "value": 3029
+        },
+        {
+          "regionId": "710000",
+          "value": 2340.022
+        },
+        {
+          "regionId": "810000",
+          "value": 753.42
+        },
+        {
+          "regionId": "820000",
+          "value": 68.83
+        }
+      ]
+    },
+    {
+      "id": "gdp-per-capita",
+      "label": "人均GDP",
+      "unit": "元/人",
+      "basis": "工作簿手算值",
+      "source": "province_population_gdp_per_capita_2025.xlsx · 数据!D2:D35",
+      "thresholds": [60000, 80000, 100000, 150000],
+      "records": [
+        {
+          "regionId": "110000",
+          "value": 238868.80733944956
+        },
+        {
+          "regionId": "310000",
+          "value": 228166.41922258298
+        },
+        {
+          "regionId": "320000",
+          "value": 167118.45503639354
+        },
+        {
+          "regionId": "350000",
+          "value": 143674.10501193316
+        },
+        {
+          "regionId": "330000",
+          "value": 141090.88195791672
+        },
+        {
+          "regionId": "120000",
+          "value": 136022.15700660308
+        },
+        {
+          "regionId": "440000",
+          "value": 113419.98600202193
+        },
+        {
+          "regionId": "150000",
+          "value": 111850.92127303182
+        },
+        {
+          "regionId": "420000",
+          "value": 107831.52641541904
+        },
+        {
+          "regionId": "500000",
+          "value": 105915.20616454257
+        },
+        {
+          "regionId": "370000",
+          "value": 102755.15284277606
+        },
+        {
+          "regionId": "610000",
+          "value": 92464.2044017202
+        },
+        {
+          "regionId": "340000",
+          "value": 87124.30121670502
+        },
+        {
+          "regionId": "430000",
+          "value": 85195.08626001234
+        },
+        {
+          "regionId": "540000",
+          "value": 81942.97297297297
+        },
+        {
+          "regionId": "650000",
+          "value": 81829.11392405062
+        },
+        {
+          "regionId": "510000",
+          "value": 81348.08848280837
+        },
+        {
+          "regionId": "360000",
+          "value": 80509.61108627627
+        },
+        {
+          "regionId": "210000",
+          "value": 80326.55531348342
+        },
+        {
+          "regionId": "640000",
+          "value": 77820.90163934426
+        },
+        {
+          "regionId": "460000",
+          "value": 76861.1374407583
+        },
+        {
+          "regionId": "140000",
+          "value": 74461.52318480378
+        },
+        {
+          "regionId": "530000",
+          "value": 70555.08182601206
+        },
+        {
+          "regionId": "630000",
+          "value": 69625.67567567568
+        },
+        {
+          "regionId": "410000",
+          "value": 68096.87276443535
+        },
+        {
+          "regionId": "130000",
+          "value": 66827.32447817837
+        },
+        {
+          "regionId": "220000",
+          "value": 64617.50909459675
+        },
+        {
+          "regionId": "520000",
+          "value": 61089.369976665796
+        },
+        {
+          "regionId": "450000",
+          "value": 59585.98917618762
+        },
+        {
+          "regionId": "620000",
+          "value": 56068.358575521896
+        },
+        {
+          "regionId": "230000",
+          "value": 55721.3601848795
+        }
+      ]
+    }
+  ]
+}

@@ -28,6 +28,42 @@ function validateGdpDataset(dataset, catalog) {
   )
     invalid();
   const regions = new Map(catalog.map((region) => [region.id, region]));
+  if (dataset.metrics !== undefined) {
+    if (!Array.isArray(dataset.metrics)) invalid();
+    const ids = new Set(['gdp']);
+    for (const metric of dataset.metrics) {
+      if (
+        !metric ||
+        typeof metric.id !== 'string' ||
+        !/^[a-z][a-z0-9-]{0,39}$/.test(metric.id) ||
+        ids.has(metric.id) ||
+        !['label', 'unit', 'basis', 'source'].every(
+          (key) => typeof metric[key] === 'string' && metric[key].trim(),
+        ) ||
+        !Array.isArray(metric.thresholds) ||
+        metric.thresholds.length !== 4 ||
+        !metric.thresholds.every(
+          (value, i) => Number.isFinite(value) && value > (metric.thresholds[i - 1] ?? 0),
+        ) ||
+        !Array.isArray(metric.records) ||
+        !metric.records.length
+      )
+        invalid();
+      ids.add(metric.id);
+      const covered = new Set();
+      for (const row of metric.records) {
+        if (
+          !row ||
+          !regions.has(row.regionId) ||
+          covered.has(row.regionId) ||
+          !Number.isFinite(row.value) ||
+          row.value <= 0
+        )
+          invalid();
+        covered.add(row.regionId);
+      }
+    }
+  }
   const seen = new Set();
   for (const row of dataset.records) {
     const region = regions.get(row.regionId);

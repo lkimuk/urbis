@@ -32,6 +32,7 @@ export const DEFAULTS = Object.freeze({
   title: '',
   thematic: 'none',
   gdpYear: null,
+  gdpMetric: 'gdp',
 });
 
 export function normalizeSettings(value) {
@@ -50,6 +51,8 @@ export function normalizeSettings(value) {
   if (['none', 'gdp'].includes(value.thematic)) result.thematic = value.thematic;
   if (Number.isInteger(value.gdpYear) && value.gdpYear >= 1900 && value.gdpYear <= 2100)
     result.gdpYear = value.gdpYear;
+  if (typeof value.gdpMetric === 'string' && /^[a-z][a-z0-9-]{0,39}$/.test(value.gdpMetric))
+    result.gdpMetric = value.gdpMetric;
   if ([1, 2, 3, 4].includes(value.scale)) result.scale = value.scale;
   if (Number.isFinite(value.width) && value.width >= 0.3 && value.width <= 3)
     result.width = value.width;

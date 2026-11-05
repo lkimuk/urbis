@@ -26,13 +26,13 @@ export function createGdpPanel(document) {
             (record.source.publishedOn ? ' · ' + record.source.publishedOn : ''),
         ),
         paragraph(record.source.title),
-        paragraph(record.source.url, 'gdp-source-url'),
       );
+      if (record.source.url) section.append(paragraph(record.source.url, 'gdp-source-url'));
     } else if (observation.status === 'missing') section.append(paragraph('暂无数据'));
     return section;
   }
   return {
-    render({ enabled, state, model, region }) {
+    render({ enabled, state, model, region, preferredMetric }) {
       element('gdp-controls').hidden = !enabled;
       if (!enabled) return;
       const year = element('gdp-year');
@@ -49,18 +49,48 @@ export function createGdpPanel(document) {
       }
       year.value = state.year == null ? '' : String(state.year);
       year.disabled = !values.length;
+      const selector = element('gdp-metric');
+      const metrics = [
+        { id: 'gdp', label: '地区生产总值（GDP）' },
+        ...(state.index?.metrics.values() ?? []),
+      ];
+      if (
+        metrics.some(
+          ({ id, label }, i) =>
+            selector.options[i]?.value !== id || selector.options[i]?.textContent !== label,
+        ) ||
+        selector.options.length !== metrics.length
+      ) {
+        selector.replaceChildren(
+          ...metrics.map(({ id, label }) => {
+            const option = document.createElement('option');
+            option.value = id;
+            option.textContent = label;
+            return option;
+          }),
+        );
+      }
+      selector.value = metrics.some(({ id }) => id === preferredMetric) ? preferredMetric : 'gdp';
+      selector.disabled = state.status !== 'ready';
       element('gdp-state').classList.toggle('error', state.status === 'error');
       element('gdp-state').textContent =
         state.status === 'error'
           ? state.error.message
           : state.status !== 'ready'
-            ? '正在读取 GDP 数据…'
+            ? '正在读取年度指标…'
             : !model
               ? '等待地图就绪'
               : model.choropleth
-                ? '已收录 ' + model.covered + '/' + model.total + ' 个分区 · 现价，亿元'
+                ? '已收录 ' +
+                  model.covered +
+                  '/' +
+                  model.total +
+                  ' 个分区 · ' +
+                  model.basis +
+                  '，' +
+                  model.unit
                 : model.current.status === 'available'
-                  ? formatGdp(model.current.record.value) + ' 亿元 · 现价'
+                  ? formatGdp(model.current.record.value) + ' ' + model.unit + ' · ' + model.basis
                   : model.current.status === 'excluded'
                     ? '统计范围待核实'
                     : '该地区暂无数据';
@@ -73,7 +103,9 @@ export function createGdpPanel(document) {
       const content = document.createDocumentFragment();
       content.append(
         paragraph(
-          '采用所存年度发布版本，未保证涵盖全部后续修订。资料获取：' + model.retrievedOn + '。',
+          model.metricId === 'gdp'
+            ? '采用所存年度发布版本，未保证涵盖全部后续修订。资料获取：' + model.retrievedOn + '。'
+            : model.label + ' · ' + model.basis,
         ),
       );
       content.append(sourceSection(region.name, model.current, model.unit));
