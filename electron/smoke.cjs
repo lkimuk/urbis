@@ -171,6 +171,21 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
     assert.ok(image.getSize().width > 0);
     return image.getSize();
   }
+  await input('thematic', 'gdp', 'change');
+  await waitFor('document.getElementById("map").dataset.gdpReady==="true"');
+  await select('310000');
+  await input('gdp-year', '2024', 'change');
+  await waitFor('document.getElementById("map").dataset.gdpReady==="true"');
+  assert.match(await js('document.getElementById("gdp-state").textContent'), /16\/16/);
+  assert.match(
+    await js('document.getElementById("gdp-sources").textContent'),
+    /17,752\.28.*用户提供/,
+  );
+  await input('gdp-year', '2025', 'change');
+  await waitFor('document.getElementById("map").dataset.gdpReady==="true"');
+  await input('thematic', 'none', 'change');
+  await select('100000');
+  console.log('PASS: Shanghai 2024 district GDP coverage');
   const validation = await js(
     '(async()=>{let count=0,lines=0;for(const r of await atlas.getRegions())for(const variant of ["districts","outline"]){const data=await atlas.getMap({regionId:r.id,variant});const parsed=echarts.parseGeoJSON(data);if(parsed.length!==data.features.length)throw Error(r.id);for(const part of parsed){const b=part.getBoundingRect();if(![b.x,b.y,b.width,b.height].every(Number.isFinite)||b.width<=0||b.height<=0)throw Error(r.id);}lines+=(data.boundaryLines||[]).length;count++;}return {count,lines};})()',
   );
@@ -369,14 +384,14 @@ exports.run = async function run(window, output, { errors, networkRequests }) {
   await gdpReady();
   assert.deepEqual(
     (await js('atlas.listGdpDatasets()')).map((row) => row.year),
-    [2025],
+    [2025, 2024],
   );
   const shippedGdp = JSON.parse(
     await fs.readFile(path.join(__dirname, '../resources/gdp/2025.json'), 'utf8'),
   );
   assert.deepEqual(await js('(await atlas.getGdp({year:2025})).records'), shippedGdp.records);
   assert.equal(
-    await js('(async()=>{try{await atlas.getGdp({year:2024});}catch(e){return e.code;}})()'),
+    await js('(async()=>{try{await atlas.getGdp({year:2023});}catch(e){return e.code;}})()'),
     'GDP_YEAR_NOT_FOUND',
   );
   const option = () =>

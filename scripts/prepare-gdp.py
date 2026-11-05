@@ -362,6 +362,23 @@ def build(data_dir, catalog, year=2024):
     if county_count != 122:
         raise ValueError('Expected 122 Guangdong county observations, got ' + str(county_count))
 
+    shanghai_source = sources['shanghai-2024-districts']
+    workbook, transcription = shanghai_source['files']
+    if not all(name in manifest['files'] for name in (workbook, transcription)):
+        raise ValueError('Unverified Shanghai workbook or transcription')
+    districts = {r['name']: r for r in catalog
+                 if r['level'] == 'county' and r.get('parentId') == '310000'}
+    imported = set()
+    with (data_dir / 'sources' / transcription).open(encoding='utf-8', newline='') as file:
+        for row_number, row in enumerate(csv.DictReader(file), start=5):
+            name = row['name']
+            if name not in districts or row['cell'] != f'B{row_number}':
+                raise ValueError('Shanghai workbook mapping mismatch: ' + name)
+            add(districts[name], name, row['value'], shanghai_source['id'], workbook)
+            imported.add(name)
+    if len(imported) != 16 or imported != districts.keys():
+        raise ValueError('Incomplete Shanghai district coverage')
+
     # Do not duplicate city totals into the catalog's whole-city county proxies.
     covered = set(record['regionId'] for record in records)
     missing_provinces = [r['id'] for r in catalog if r['level'] == 'province' and r['id'] not in covered]

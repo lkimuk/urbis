@@ -4,12 +4,21 @@
     "country": 1,
     "province": 31,
     "city": 21,
-    "county": 122
+    "county": 138
   },
-  "total": 175,
-  "missingProvinceIds": ["710000", "810000", "820000"],
-  "missingGuangdongCountyIds": ["tdt-county-441900", "tdt-county-442000"],
-  "scopeExceptions": ["tdt-county-441521"],
+  "total": 191,
+  "missingProvinceIds": [
+    "710000",
+    "810000",
+    "820000"
+  ],
+  "missingGuangdongCountyIds": [
+    "tdt-county-441900",
+    "tdt-county-442000"
+  ],
+  "scopeExceptions": [
+    "tdt-county-441521"
+  ],
   "nationalValue": 1349083.5,
   "provinceSum": 1340312.8,
   "notes": [

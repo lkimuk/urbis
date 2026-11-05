@@ -74,7 +74,12 @@ export function gdpGraphics(model, settings, width, height) {
           .map((area) => GDP_STATUS[area.record.status]),
       ),
     ];
-    const source = model.metricId === 'gdp' ? '各地统计部门' : '用户工作簿';
+    const source =
+      model.metricId !== 'gdp' || statuses.every((status) => status === GDP_STATUS['user-supplied'])
+        ? '用户工作簿'
+        : statuses.includes(GDP_STATUS['user-supplied'])
+          ? '统计资料及用户工作簿'
+          : '各地统计部门';
     text('gdp-basis', '来源：' + source + ' · ' + statuses.join(' / '), left, height - 22, 10);
   } else {
     const current = model.current;

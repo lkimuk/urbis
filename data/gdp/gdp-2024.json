@@ -3,7 +3,7 @@
   "unit": "亿元",
   "currency": "CNY",
   "priceBasis": "current",
-  "retrievedOn": "2026-11-02",
+  "retrievedOn": "2026-11-05",
   "records": [
     {
       "regionId": "100000",
@@ -534,6 +534,166 @@
       "sourceId": "gd-2025-cities",
       "sourceFile": "gd-2025-02-24-0.htm",
       "status": "as-published"
+    },
+    {
+      "regionId": "tdt-county-310101",
+      "regionName": "黄浦区",
+      "level": "county",
+      "sourceName": "黄浦区",
+      "value": 3344.41,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310104",
+      "regionName": "徐汇区",
+      "level": "county",
+      "sourceName": "徐汇区",
+      "value": 3931.2,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310105",
+      "regionName": "长宁区",
+      "level": "county",
+      "sourceName": "长宁区",
+      "value": 2789.31,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310106",
+      "regionName": "静安区",
+      "level": "county",
+      "sourceName": "静安区",
+      "value": 3369.93,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310107",
+      "regionName": "普陀区",
+      "level": "county",
+      "sourceName": "普陀区",
+      "value": 1590.67,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310109",
+      "regionName": "虹口区",
+      "level": "county",
+      "sourceName": "虹口区",
+      "value": 1524.53,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310110",
+      "regionName": "杨浦区",
+      "level": "county",
+      "sourceName": "杨浦区",
+      "value": 2668.64,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310112",
+      "regionName": "闵行区",
+      "level": "county",
+      "sourceName": "闵行区",
+      "value": 4119.25,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310113",
+      "regionName": "宝山区",
+      "level": "county",
+      "sourceName": "宝山区",
+      "value": 2110.57,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310114",
+      "regionName": "嘉定区",
+      "level": "county",
+      "sourceName": "嘉定区",
+      "value": 3029.6,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310115",
+      "regionName": "浦东新区",
+      "level": "county",
+      "sourceName": "浦东新区",
+      "value": 17752.28,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310116",
+      "regionName": "金山区",
+      "level": "county",
+      "sourceName": "金山区",
+      "value": 1238.05,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310117",
+      "regionName": "松江区",
+      "level": "county",
+      "sourceName": "松江区",
+      "value": 2276.23,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310118",
+      "regionName": "青浦区",
+      "level": "county",
+      "sourceName": "青浦区",
+      "value": 1825.24,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310120",
+      "regionName": "奉贤区",
+      "level": "county",
+      "sourceName": "奉贤区",
+      "value": 1680.07,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
+    },
+    {
+      "regionId": "tdt-county-310151",
+      "regionName": "崇明区",
+      "level": "county",
+      "sourceName": "崇明区",
+      "value": 448.81,
+      "sourceId": "shanghai-2024-districts",
+      "sourceFile": "shanghai-2024-districts.xlsx",
+      "status": "user-supplied"
     },
     {
       "regionId": "tdt-county-440103",

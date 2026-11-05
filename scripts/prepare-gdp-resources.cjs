@@ -11,12 +11,20 @@ function prepareGdpResources(dataDirectory, outputDirectory, catalog) {
     throw new Error('No GDP datasets configured');
   const generated = [];
   const years = new Set();
-  for (const { year, exclusions, metricsFile } of config.datasets) {
+  for (const {
+    year,
+    exclusions,
+    metricsFile,
+    manifestFile = 'manifest-' + year + '.json',
+  } of config.datasets) {
     if (!Number.isInteger(year) || year < 1900 || year > 2100 || years.has(year))
       throw new Error('Invalid or duplicate GDP year');
     years.add(year);
     const snapshot = read('gdp-' + year + '.json');
-    const manifest = read('manifest-' + year + '.json');
+    const yearbook = manifestFile === 'manifest.json';
+    if (!yearbook && manifestFile !== 'manifest-' + year + '.json')
+      throw new Error('Invalid GDP manifest filename');
+    const manifest = read(manifestFile);
     if (snapshot.year !== year || manifest.year !== year) throw new Error('GDP year mismatch');
     if (
       ['unit', 'currency', 'priceBasis', 'retrievedOn'].some(
@@ -31,22 +39,27 @@ function prepareGdpResources(dataDirectory, outputDirectory, catalog) {
         throw new Error('GDP source changed: ' + filename);
     }
     const sources = new Map(manifest.sources.map((source) => [source.id, source]));
-    if (sources.size !== manifest.sources.length || sources.size !== snapshot.records.length)
+    if (
+      sources.size !== manifest.sources.length ||
+      (!yearbook && sources.size !== snapshot.records.length)
+    )
       throw new Error('GDP source/observation count mismatch');
     const records = snapshot.records.map((row) => {
       const source = sources.get(row.sourceId);
       const region = catalog.find((region) => region.id === row.regionId);
       if (
         !source ||
-        source.regionId !== row.regionId ||
-        source.regionName !== row.regionName ||
-        source.year !== year ||
-        Number(source.value) !== row.value ||
+        (yearbook
+          ? !source.files?.includes(row.sourceFile)
+          : source.regionId !== row.regionId ||
+            source.regionName !== row.regionName ||
+            source.year !== year ||
+            Number(source.value) !== row.value ||
+            source.file !== row.sourceFile ||
+            source.publishedOn !== row.publishedOn ||
+            source.scopeNote !== row.scopeNote) ||
         source.status !== row.status ||
-        source.file !== row.sourceFile ||
-        !Object.hasOwn(manifest.files, source.file) ||
-        source.publishedOn !== row.publishedOn ||
-        source.scopeNote !== row.scopeNote ||
+        !Object.hasOwn(manifest.files, row.sourceFile) ||
         !region ||
         region.level !== row.level ||
         (source.parentId && source.parentId !== region.parentId)
@@ -60,8 +73,8 @@ function prepareGdpResources(dataDirectory, outputDirectory, catalog) {
         source: {
           publisher: source.publisher,
           title: source.title,
-          url: source.publicationUrl || source.url,
-          publishedOn: source.publishedOn,
+          url: source.publicationUrl || source.url || null,
+          publishedOn: source.publishedOn ?? null,
         },
         ...(row.scopeNote || source.scopeNote
           ? { scopeNote: row.scopeNote || source.scopeNote }

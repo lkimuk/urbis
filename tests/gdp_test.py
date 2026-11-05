@@ -26,7 +26,7 @@ class GdpSnapshotTest(unittest.TestCase):
     def test_snapshot_and_coverage_are_reproducible(self):
         for filename, value in [('gdp-2024.json', self.snapshot), ('coverage-2024.json', self.report)]:
             self.assertEqual(value, json.loads((ROOT / 'data/gdp' / filename).read_text(encoding='utf-8')))
-        self.assertEqual(self.report['counts'], {'country': 1, 'province': 31, 'city': 21, 'county': 122})
+        self.assertEqual(self.report['counts'], {'country': 1, 'province': 31, 'city': 21, 'county': 138})
         self.assertEqual(self.report['missingProvinceIds'], ['710000', '810000', '820000'])
         self.assertEqual(self.report['missingGuangdongCountyIds'], ['tdt-county-441900', 'tdt-county-442000'])
 
@@ -41,6 +41,9 @@ class GdpSnapshotTest(unittest.TestCase):
         self.assertLess(self.report['provinceSum'], self.report['nationalValue'])
         self.assertEqual(self.records['110000']['status'], 'preliminary')
         self.assertEqual(self.records['tdt-440100']['status'], 'as-published')
+        self.assertEqual(self.records['tdt-county-310115']['value'], 17752.28)
+        self.assertEqual(self.records['tdt-county-310151']['value'], 448.81)
+        self.assertEqual(self.records['tdt-county-310115']['status'], 'user-supplied')
 
     def test_changed_source_bytes_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:

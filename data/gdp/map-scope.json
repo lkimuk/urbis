@@ -9,6 +9,11 @@
           "reason": "两江新区涉及2025年区划调整，尚未核实年度统计范围与当前地图边界的对应关系。"
         }
       ]
+    },
+    {
+      "year": 2024,
+      "manifestFile": "manifest.json",
+      "exclusions": []
     }
   ]
 }

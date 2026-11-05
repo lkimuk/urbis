@@ -1,5 +1,5 @@
 {
-  "retrievedOn": "2026-11-02",
+  "retrievedOn": "2026-11-05",
   "year": 2024,
   "unit": "亿元",
   "currency": "CNY",
@@ -61,6 +61,18 @@
         "取2024年GDP列，不取2023年或指数列。",
         "海丰县不含深汕合作区，保留范围差异，不直接用于全县面着色。"
       ]
+    },
+    {
+      "id": "shanghai-2024-districts",
+      "publisher": "用户提供",
+      "title": "上海16区GDP_2024.xlsx · 2024各区GDP!A5:B20",
+      "files": ["shanghai-2024-districts.xlsx", "shanghai-2024-districts.csv"],
+      "status": "user-supplied",
+      "extraction": "manual-transcription",
+      "notes": [
+        "转录工作簿中的区级 GDP 总量，单位为亿元。",
+        "工作簿注明数据来自各区统计公报，本次按表收录。"
+      ]
     }
   ],
   "files": {
@@ -71,6 +83,8 @@
     "gd-2025-02-24-0.htm": "fa97b8b4984f960f8558fd8f8e10c4df70ec166585893c5892f4ecd954be4b08",
     "gd-2025-23-01-0.htm": "f5f4fc34d34948f691f93e6e6c86cae537a098b9e46a27cf339f933851072932",
     "gd-2025-23-01-1.htm": "1f61a22bb73814abb223d97ef5040a61b399e5c599a3fb6c28100b1fcdbc88a9",
-    "gd-2025-23-01-2.htm": "8265d6dbf7724955c2ce73b7a0c99eda419c74b83971ed33ff6a3c564c35a50c"
+    "gd-2025-23-01-2.htm": "8265d6dbf7724955c2ce73b7a0c99eda419c74b83971ed33ff6a3c564c35a50c",
+    "shanghai-2024-districts.xlsx": "9e193c46e12a85be84ec0f5a2bdfdaaacad01ea2e2b689b6cb2bc506929d9389",
+    "shanghai-2024-districts.csv": "0887ed5147772f47d74103d96dee8f3a6832c669adf360baebb9d3b1b5f67aec"
   }
 }

@@ -114,19 +114,21 @@ function validateGdpDataset(dataset, catalog) {
       !Number.isFinite(row.value) ||
       row.value <= 0 ||
       seen.has(row.regionId) ||
-      !['preliminary', 'final', 'as-published'].includes(row.status)
+      !['preliminary', 'final', 'as-published', 'user-supplied'].includes(row.status)
     )
       invalid();
     const source = row.source;
     if (
       !source ||
-      !['publisher', 'title', 'url'].every(
+      !['publisher', 'title'].every(
         (key) => typeof source[key] === 'string' && source[key].trim().length > 0,
       )
     )
       invalid();
-    const url = new URL(source.url);
-    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) invalid();
+    if (source.url != null || row.status !== 'user-supplied') {
+      const url = new URL(source.url);
+      if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) invalid();
+    }
     if (
       source.publishedOn != null &&
       (!validDate(source.publishedOn) || source.publishedOn > dataset.retrievedOn)
